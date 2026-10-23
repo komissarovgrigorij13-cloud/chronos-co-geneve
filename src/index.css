@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-obsidian-900 text-platinum-400 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  ::selection {
+    @apply bg-gold-600/40 text-gold-300;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-obsidian-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold-600/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold-500/70;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-medium tracking-widest uppercase
+           border border-gold-500/60 text-gold-400 bg-transparent
+           transition-all duration-300 ease-out
+           hover:bg-gold-500/10 hover:border-gold-400 hover:text-gold-300
+           active:scale-[0.98];
+  }
+
+  .btn-gold-solid {
+    @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-medium tracking-widest uppercase
+           bg-gold-500/20 border border-gold-500/60 text-gold-400
+           transition-all duration-300 ease-out
+           hover:bg-gold-500/30 hover:border-gold-400 hover:text-gold-300
+           active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 text-sm font-medium tracking-widest uppercase
+           border border-platinum-600/30 text-platinum-500 bg-transparent
+           transition-all duration-300 ease-out
+           hover:border-platinum-500/50 hover:text-platinum-400
+           active:scale-[0.98];
+  }
+
+  .card-luxury {
+    @apply bg-obsidian-800 border border-platinum-600/10
+           transition-all duration-500 ease-out
+           hover:border-gold-600/30;
+  }
+
+  .divider-gold {
+    @apply h-px bg-gradient-to-r from-transparent via-gold-600/40 to-transparent;
+  }
+
+  .text-label {
+    @apply text-xs font-medium tracking-[0.2em] uppercase text-platinum-600;
+  }
+
+  .input-luxury {
+    @apply w-full bg-obsidian-700 border border-platinum-600/20 text-platinum-300
+           placeholder-platinum-600/50 px-4 py-3 text-sm
+           focus:outline-none focus:border-gold-500/50 focus:bg-obsidian-600
+           transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .shimmer-gold {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(197, 168, 128, 0.08) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #D4AF37 0%, #C5A880 50%, #A88B50 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-gradient-gold {
+    border-image: linear-gradient(135deg, #D4AF37, #A88B50) 1;
+  }
+
+  .backdrop-blur-luxury {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+}
