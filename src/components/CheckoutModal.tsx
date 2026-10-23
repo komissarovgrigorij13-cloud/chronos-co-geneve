@@ -34,6 +34,7 @@ export function CheckoutModal({
 }: CheckoutModalProps) {
   const [delivery, setDelivery] = useState<DeliveryMethod>('courier');
   const [cityId, setCityId] = useState(ORDERED_BOUTIQUE_CITIES[0]?.id ?? 'geneva');
+  const [citySelectionConfirmed, setCitySelectionConfirmed] = useState(false);
   const [payment, setPayment] = useState<PaymentMethod>('wire');
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
@@ -43,6 +44,13 @@ export function CheckoutModal({
   const total = items.reduce((s, i) => s + i.watch.priceUSD, 0);
   const selectedCity = ORDERED_BOUTIQUE_CITIES.find((city) => city.id === cityId) ?? ORDERED_BOUTIQUE_CITIES[0];
   const selectedCityLabel = selectedCity?.labels[language].city ?? '';
+  const changeCityLabel = language === 'RU'
+    ? 'Изменить город'
+    : language === 'FR'
+      ? 'Changer de ville'
+      : language === 'AR'
+        ? 'تغيير المدينة'
+        : 'Change city';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,36 +193,93 @@ export function CheckoutModal({
                         onSelect={() => setDelivery('showroom')}
                       >
                         {delivery === 'showroom' && (
-                          <div
-                            className="mt-2.5 grid max-h-56 touch-pan-y grid-cols-1 gap-1.5 overflow-y-auto overscroll-contain pr-1 sm:grid-cols-2"
+                          <motion.div
+                            layout
+                            className={`mt-2.5 touch-pan-y overflow-y-auto overscroll-contain pr-1 ${citySelectionConfirmed
+                              ? 'flex min-h-56 items-center justify-center'
+                              : 'grid max-h-56 grid-cols-1 gap-1.5 sm:grid-cols-2'
+                              }`}
                             onWheel={(event) => event.stopPropagation()}
                             onTouchMove={(event) => event.stopPropagation()}
                           >
-                            {ORDERED_BOUTIQUE_CITIES.map((boutique) => {
+                            <AnimatePresence initial={false} mode="popLayout">
+                            {ORDERED_BOUTIQUE_CITIES
+                              .filter((boutique) => !citySelectionConfirmed || boutique.id === cityId)
+                              .map((boutique, index) => {
                               const label = boutique.labels[language];
-                              const selected = cityId === boutique.id;
+                              const isSelected = cityId === boutique.id;
                               return (
-                              <button
+                              <motion.button
+                                layout
+                                layoutId={`showroom-city-${boutique.id}`}
                                 key={boutique.id}
                                 type="button"
-                                onClick={() => setCityId(boutique.id)}
+                                onClick={() => {
+                                  setCityId(boutique.id);
+                                  setCitySelectionConfirmed(true);
+                                }}
                                 aria-label={`${label.city}, ${label.country}`}
-                                className={`flex min-h-10 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-colors ${
-                                  selected
-                                    ? 'border-gold-400 bg-gold-500/15 text-gold-300'
-                                    : 'border-platinum-600/20 text-platinum-500 hover:border-gold-500/40 hover:text-platinum-300'
+                                initial={isSelected ? { opacity: 0, scale: 0.92 } : { opacity: 1, scale: 1 }}
+                                animate={{
+                                  opacity: 1,
+                                  scale: citySelectionConfirmed && isSelected ? 1.04 : 1,
+                                  y: 0,
+                                }}
+                                exit={{
+                                  opacity: 0,
+                                  scale: 0.72,
+                                  x: index % 2 === 0 ? -34 : 34,
+                                  y: 22,
+                                  rotate: index % 2 === 0 ? -4 : 4,
+                                }}
+                                transition={{
+                                  layout: { duration: 0.62, ease: [0.22, 1, 0.36, 1] },
+                                  duration: 0.5,
+                                  ease: [0.22, 1, 0.36, 1],
+                                }}
+                                className={`relative flex min-h-10 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left ${citySelectionConfirmed && isSelected
+                                  ? 'min-h-16 w-full max-w-[330px] border-gold-300 bg-gold-500/15 px-4 py-3 text-gold-200 shadow-lg shadow-gold-500/15'
+                                  : 'border-platinum-600/20 text-platinum-500 hover:border-gold-500/40 hover:text-platinum-300'
                                 }`}
                               >
                                 <CountryFlag countryId={boutique.countryId} className="h-4 w-[26px]" />
                                 <span className="min-w-0">
                                   <span className="block truncate text-[10px] font-medium uppercase tracking-[0.08em]">{label.city}</span>
-                                  <span className="block truncate text-[9px] text-platinum-600">{label.country}</span>
+                                  <span className={`block truncate text-[9px] ${citySelectionConfirmed && isSelected ? 'text-platinum-400' : 'text-platinum-600'}`}>{label.country}</span>
                                 </span>
-                              </button>
+                                <AnimatePresence>
+                                  {citySelectionConfirmed && isSelected && (
+                                    <motion.span
+                                      initial={{ opacity: 0, scale: 0.35, x: 10 }}
+                                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                                      transition={{ type: 'spring', stiffness: 420, damping: 18, delay: 0.18 }}
+                                      className="ml-auto flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.25)]"
+                                    >
+                                      <CheckCircle2 size={17} strokeWidth={2.4} />
+                                    </motion.span>
+                                  )}
+                                </AnimatePresence>
+                              </motion.button>
                               );
                             })}
-                          </div>
+                            </AnimatePresence>
+                          </motion.div>
                         )}
+                        <AnimatePresence initial={false}>
+                          {delivery === 'showroom' && citySelectionConfirmed && (
+                            <motion.button
+                              type="button"
+                              initial={{ opacity: 0, y: -8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -8 }}
+                              transition={{ duration: 0.3 }}
+                              onClick={() => setCitySelectionConfirmed(false)}
+                              className="mx-auto mt-2 block text-[9px] uppercase tracking-[0.18em] text-platinum-500 transition-colors hover:text-gold-300"
+                            >
+                              {changeCityLabel}
+                            </motion.button>
+                          )}
+                        </AnimatePresence>
                       </DeliveryOption>
                     </div>
                   </fieldset>
