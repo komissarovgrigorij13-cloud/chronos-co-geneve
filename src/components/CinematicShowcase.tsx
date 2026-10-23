@@ -2,7 +2,9 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { Shield, Sparkles, Building2, Clock, ArrowDown, Lock, ChevronRight } from 'lucide-react';
 import { translations, type Language } from '../data/translations';
+import { ORDERED_BOUTIQUE_CITIES, rotationForCity } from '../data/globe';
 import { GlobalBoutiqueGlobe } from './GlobalBoutiqueGlobe';
+import { CountryFlag } from './CountryFlag';
 
 interface CinematicShowcaseProps {
   language: Language;
@@ -10,6 +12,7 @@ interface CinematicShowcaseProps {
 }
 
 interface VaultCard {
+  countryId?: string;
   city: string;
   country: string;
   address: string;
@@ -221,12 +224,68 @@ const VAULT_ITEMS: Record<Language, VaultCard[]> = {
   ],
 };
 
+const FALLBACK_VAULT_COPY: Record<Language, { address: string; transit: string; badge: string; desc: string }> = {
+  EN: {
+    address: 'Private salon · by appointment',
+    transit: 'Appointment Only',
+    badge: 'Private Boutique',
+    desc: 'A discreet local salon for private viewings, authentication and confidential acquisitions.',
+  },
+  RU: {
+    address: 'Приватный салон · по записи',
+    transit: 'Только по записи',
+    badge: 'Приватный Бутик',
+    desc: 'Закрытый локальный салон для просмотра, экспертизы и конфиденциального приобретения часов.',
+  },
+  FR: {
+    address: 'Salon privé · sur rendez-vous',
+    transit: 'Sur Rendez-vous',
+    badge: 'Boutique Privée',
+    desc: 'Un salon discret dédié aux présentations privées, à l’authentification et aux acquisitions confidentielles.',
+  },
+  AR: {
+    address: 'صالون خاص · بموعد مسبق',
+    transit: 'بموعد مسبق',
+    badge: 'بوتيك خاص',
+    desc: 'صالون محلي سري للمعاينة الخاصة وفحص الأصالة والاستحواذ على الساعات بسرية تامة.',
+  },
+};
+
+function buildVaultItems(language: Language) {
+  const curatedItems = VAULT_ITEMS[language] || VAULT_ITEMS.EN;
+  const fallback = FALLBACK_VAULT_COPY[language] || FALLBACK_VAULT_COPY.EN;
+
+  return ORDERED_BOUTIQUE_CITIES.map((city) => {
+    const label = city.labels[language];
+    const curated = curatedItems.find((item) => item.city === label.city);
+    return curated
+      ? { ...curated, countryId: city.countryId }
+      : {
+        city: label.city,
+        country: label.country,
+        address: fallback.address,
+        transit: fallback.transit,
+        badge: fallback.badge,
+        desc: fallback.desc,
+        countryId: city.countryId,
+      };
+  });
+}
+
 export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowcaseProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const vaultViewportRef = useRef<HTMLDivElement>(null);
   const vaultTrackRef = useRef<HTMLDivElement>(null);
   const [vaultTravel, setVaultTravel] = useState({ start: 0, end: 0 });
-  const [globeProgress, setGlobeProgress] = useState(0);
+  const [globeState, setGlobeState] = useState<{
+    progress: number;
+    index: number;
+    rotation: [number, number, number];
+  }>({
+    progress: 0,
+    index: 0,
+    rotation: rotationForCity(ORDERED_BOUTIQUE_CITIES[0]),
+  });
   const t = translations[language];
 
   useLayoutEffect(() => {
@@ -275,17 +334,36 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.52 ? 'flex' : 'none'));
 
   // Let the final vault card arrive fully before fading this scene away.
-  const p3Opacity = useTransform(scrollYProgress, [0.54, 0.58, 0.86, 0.90], [0, 1, 1, 0]);
-  const p3TrackX = useTransform(scrollYProgress, [0.58, 0.82], [vaultTravel.start, vaultTravel.end]);
-  const p3GlobeProgress = useTransform(scrollYProgress, [0.54, 0.86], [0, 1]);
-  useMotionValueEvent(p3GlobeProgress, 'change', setGlobeProgress);
+  const p3Opacity = useTransform(scrollYProgress, [0.50, 0.54, 0.92, 0.96], [0, 1, 1, 0]);
+  const p3TrackX = useTransform(scrollYProgress, [0.54, 0.92], [vaultTravel.start, vaultTravel.end]);
+  const p3GlobeProgress = useTransform(scrollYProgress, [0.54, 0.92], [0, 1]);
+  useMotionValueEvent(p3GlobeProgress, 'change', (value) => {
+    const progress = Math.max(0, Math.min(1, value));
+    const position = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
+    const lowerIndex = Math.floor(position);
+    const upperIndex = Math.min(ORDERED_BOUTIQUE_CITIES.length - 1, lowerIndex + 1);
+    const mix = position - lowerIndex;
+    const fromRotation = rotationForCity(ORDERED_BOUTIQUE_CITIES[lowerIndex]);
+    const toRotation = rotationForCity(ORDERED_BOUTIQUE_CITIES[upperIndex]);
+
+    setGlobeState({
+      progress,
+      index: Math.round(position),
+      rotation: [
+        fromRotation[0] + (toRotation[0] - fromRotation[0]) * mix,
+        fromRotation[1] + (toRotation[1] - fromRotation[1]) * mix,
+        0,
+      ],
+    });
+  });
 
   // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
-  const p4Opacity = useTransform(scrollYProgress, [0.90, 0.95, 1.0], [0, 1, 1]);
-  const p4Scale = useTransform(scrollYProgress, [0.90, 0.96], [0.92, 1]);
-  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.90 ? 'flex' : 'none'));
+  const p4Opacity = useTransform(scrollYProgress, [0.94, 0.97, 1.0], [0, 1, 1]);
+  const p4Scale = useTransform(scrollYProgress, [0.94, 0.98], [0.92, 1]);
+  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.94 ? 'flex' : 'none'));
 
-  const vaultItems = VAULT_ITEMS[language] || VAULT_ITEMS.EN;
+  const vaultItems = buildVaultItems(language);
+  const activeGlobeCity = ORDERED_BOUTIQUE_CITIES[globeState.index];
 
   return (
     <div ref={containerRef} className="relative h-[650vh] bg-[#0a0a0a]">
@@ -435,7 +513,15 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
         >
           <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-3 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
             <div className="hidden justify-center lg:flex">
-              <GlobalBoutiqueGlobe language={language} interactive={false} highlightProgress={globeProgress} showLabels className="max-w-[620px] scale-105" />
+              <GlobalBoutiqueGlobe
+                language={language}
+                interactive={false}
+                highlightProgress={globeState.progress}
+                rotation={globeState.rotation}
+                activeCityId={activeGlobeCity.id}
+                showLabels
+                className="max-w-[620px] scale-105"
+              />
             </div>
 
             <div className="min-w-0">
@@ -463,7 +549,10 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                   {vaultItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="w-[286px] sm:w-[350px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl border border-gold-600/30 p-5 sm:p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden"
+                      className={`w-[286px] sm:w-[350px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden transition-all duration-700 ${idx === globeState.index
+                        ? 'border border-gold-400/75 shadow-gold-500/15 scale-[1.02]'
+                        : 'border border-gold-600/25 opacity-70'
+                      }`}
                     >
                       <div className="flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3 mb-4">
                         <div>
@@ -473,11 +562,14 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                           <h4 className="font-display text-2xl text-platinum-100">{item.city}</h4>
                           <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
-                          <p className="text-xs font-medium text-emerald-400 flex items-center justify-end gap-1 mt-0.5">
-                            <Clock size={12} /> {item.transit}
-                          </p>
+                        <div className="flex flex-col items-end gap-2 text-right">
+                          <CountryFlag countryId={item.countryId} />
+                          <div>
+                            <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
+                            <p className="text-xs font-medium text-emerald-400 flex items-center justify-end gap-1 mt-0.5">
+                              <Clock size={12} /> {item.transit}
+                            </p>
+                          </div>
                         </div>
                       </div>
 

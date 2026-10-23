@@ -220,3 +220,34 @@ export const BOUTIQUE_CITIES: BoutiqueCity[] = [
 ];
 
 export const boutiqueCountryIds = new Set(BOUTIQUE_CITIES.map((city) => city.countryId));
+
+const cityById = new Map(BOUTIQUE_CITIES.map((city) => [city.id, city]));
+const SCROLL_CITY_ORDER = [
+  'sydney',
+  'tokyo',
+  'beijing',
+  'dubai',
+  'doha',
+  'moscow',
+  'istanbul',
+  'warsaw',
+  'munich',
+  'oslo',
+  'milan',
+  'monaco',
+  'geneva',
+  'paris',
+  'london',
+  'lisbon',
+  'brasilia',
+  'new-york',
+  'toronto',
+] as const;
+
+export const ORDERED_BOUTIQUE_CITIES = SCROLL_CITY_ORDER
+  .map((cityId) => cityById.get(cityId))
+  .filter((city): city is BoutiqueCity => Boolean(city));
+
+export function rotationForCity(city: BoutiqueCity): [number, number, number] {
+  return [-city.coordinates[0], -city.coordinates[1], 0];
+}

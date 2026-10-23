@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { MapPin, ShieldCheck, X } from 'lucide-react';
 import type { Language } from '../data/translations';
 import { translations } from '../data/translations';
-import { BOUTIQUE_CITIES } from '../data/globe';
+import { ORDERED_BOUTIQUE_CITIES } from '../data/globe';
 import { GlobalBoutiqueGlobe } from './GlobalBoutiqueGlobe';
+import { CountryFlag } from './CountryFlag';
 
 interface GlobalNetworkModalProps {
   open: boolean;
@@ -62,7 +63,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
             </div>
 
             <div className="max-h-[calc(100vh-18rem)] space-y-2.5 overflow-y-auto pr-1">
-              {BOUTIQUE_CITIES.map((city) => {
+              {ORDERED_BOUTIQUE_CITIES.map((city) => {
                 const label = city.labels[language];
                 return (
                   <div key={city.id} className="group flex items-center justify-between gap-4 rounded-2xl border border-platinum-600/15 bg-obsidian-950/55 px-4 py-3 transition-colors hover:border-gold-500/45 hover:bg-gold-500/[0.06]">
@@ -75,6 +76,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
                         <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em] text-platinum-500">{label.country}</p>
                       </div>
                     </div>
+                    <CountryFlag countryId={city.countryId} />
                     <ShieldCheck size={15} className="shrink-0 text-emerald-400/80" />
                   </div>
                 );
@@ -83,7 +85,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
 
             <div className="mt-8 flex items-center gap-3 rounded-2xl border border-gold-500/20 bg-gold-500/[0.06] px-4 py-3 text-[10px] uppercase tracking-[0.16em] text-gold-400">
               <span className="h-2 w-2 rounded-full bg-gold-300 shadow-[0_0_12px_rgba(240,208,96,0.9)]" />
-              <span>{BOUTIQUE_CITIES.length} {t.globeLocations}</span>
+              <span>{ORDERED_BOUTIQUE_CITIES.length} {t.globeLocations}</span>
             </div>
           </aside>
         </div>

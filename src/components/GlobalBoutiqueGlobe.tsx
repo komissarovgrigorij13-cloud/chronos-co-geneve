@@ -6,13 +6,16 @@ import type { Topology } from 'topojson-specification';
 import world from 'world-atlas/countries-110m.json';
 import { Crosshair, Globe2, RotateCw } from 'lucide-react';
 import type { Language } from '../data/translations';
-import { BOUTIQUE_CITIES, boutiqueCountryIds, type BoutiqueCity } from '../data/globe';
+import { ORDERED_BOUTIQUE_CITIES, boutiqueCountryIds, type BoutiqueCity } from '../data/globe';
 
 interface GlobalBoutiqueGlobeProps {
   language: Language;
   interactive?: boolean;
   highlightProgress?: number;
   showLabels?: boolean;
+  rotation?: [number, number, number];
+  autoRotate?: boolean;
+  activeCityId?: string;
   className?: string;
 }
 
@@ -31,6 +34,9 @@ export function GlobalBoutiqueGlobe({
   interactive = true,
   highlightProgress = 1,
   showLabels = true,
+  rotation,
+  autoRotate = false,
+  activeCityId,
   className = '',
 }: GlobalBoutiqueGlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -38,10 +44,10 @@ export function GlobalBoutiqueGlobe({
   const rotationRef = useRef<[number, number, number]>([-18, -12, 0]);
   const dragRef = useRef({ active: false, x: 0, y: 0 });
   const hitPointsRef = useRef<Array<{ city: BoutiqueCity; x: number; y: number }>>([]);
-  const propsRef = useRef({ language, highlightProgress, showLabels });
+  const propsRef = useRef({ language, highlightProgress, showLabels, rotation, autoRotate, activeCityId });
   const [hoveredCity, setHoveredCity] = useState<BoutiqueCity | null>(null);
 
-  propsRef.current = { language, highlightProgress, showLabels };
+  propsRef.current = { language, highlightProgress, showLabels, rotation, autoRotate, activeCityId };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -75,6 +81,10 @@ export function GlobalBoutiqueGlobe({
       context.clearRect(0, 0, width, height);
 
       const radius = Math.min(width, height) * 0.43;
+      if (propsRef.current.rotation && !dragRef.current.active) {
+        rotationRef.current = propsRef.current.rotation;
+      }
+
       const projection = geoOrthographic()
         .translate([width / 2, height / 2])
         .scale(radius)
@@ -83,8 +93,8 @@ export function GlobalBoutiqueGlobe({
       const path = geoPath(projection, context);
       const progress = Math.max(0, Math.min(1, propsRef.current.highlightProgress));
       const activeCountryIds = new Set(
-        BOUTIQUE_CITIES
-          .slice(0, Math.ceil(progress * BOUTIQUE_CITIES.length))
+        ORDERED_BOUTIQUE_CITIES
+          .slice(0, Math.max(1, Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length)))
           .map((city) => city.countryId),
       );
 
@@ -124,23 +134,33 @@ export function GlobalBoutiqueGlobe({
 
       hitPointsRef.current = [];
       const drawnLabels: Array<[number, number]> = [];
-      for (const city of BOUTIQUE_CITIES) {
+      const isScrollSequence = Boolean(propsRef.current.activeCityId);
+      const activeCityPosition = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
+      const focusedLabelIndices = new Set([
+        Math.floor(activeCityPosition),
+        Math.ceil(activeCityPosition),
+      ]);
+      for (const city of ORDERED_BOUTIQUE_CITIES) {
         const point = projection(city.coordinates);
         if (!point) continue;
-        const cityIndex = BOUTIQUE_CITIES.findIndex((candidate) => candidate.id === city.id);
-        const isActive = cityIndex < Math.ceil(progress * BOUTIQUE_CITIES.length);
+        const cityIndex = ORDERED_BOUTIQUE_CITIES.findIndex((candidate) => candidate.id === city.id);
+        const isActive = cityIndex < Math.max(1, Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length));
+        const isCurrent = city.id === propsRef.current.activeCityId;
+        const labelOpacity = isScrollSequence
+          ? Math.max(0, 1 - Math.abs(activeCityPosition - cityIndex))
+          : 1;
         hitPointsRef.current.push({ city, x: point[0], y: point[1] });
 
         context.save();
         context.beginPath();
-        context.arc(point[0], point[1], isActive ? 4 : 2.5, 0, Math.PI * 2);
+        context.arc(point[0], point[1], isCurrent ? 5.5 : isActive ? 4 : 2.5, 0, Math.PI * 2);
         context.fillStyle = isActive ? '#F0D060' : 'rgba(214, 220, 213, 0.5)';
         context.shadowColor = isActive ? 'rgba(240, 208, 96, 0.95)' : 'transparent';
-        context.shadowBlur = isActive ? 15 : 0;
+        context.shadowBlur = isCurrent ? 24 : isActive ? 15 : 0;
         context.fill();
-        if (isActive) {
+        if (isActive || isCurrent) {
           context.beginPath();
-          context.arc(point[0], point[1], 8, 0, Math.PI * 2);
+          context.arc(point[0], point[1], isCurrent ? 12 : 8, 0, Math.PI * 2);
           context.strokeStyle = 'rgba(240, 208, 96, 0.36)';
           context.lineWidth = 1;
           context.stroke();
@@ -148,19 +168,25 @@ export function GlobalBoutiqueGlobe({
         context.restore();
 
         const hasNearbyLabel = drawnLabels.some(([labelX, labelY]) => Math.hypot(labelX - point[0], labelY - point[1]) < 54);
-        if (showLabels && isActive && width > 520 && !hasNearbyLabel) {
+        const shouldDrawLabel = isScrollSequence
+          ? focusedLabelIndices.has(cityIndex)
+          : isActive && !hasNearbyLabel;
+        if (showLabels && width > 520 && shouldDrawLabel) {
           const label = city.labels[propsRef.current.language];
-          context.font = '600 10px Inter, sans-serif';
+          context.save();
+          context.globalAlpha = labelOpacity;
+          context.font = `${isCurrent ? '700' : '600'} ${isCurrent ? '11' : '10'}px Inter, sans-serif`;
           context.fillStyle = '#F0D060';
           context.fillText(label.city, point[0] + 10, point[1] - 4);
           context.font = '9px Inter, sans-serif';
           context.fillStyle = 'rgba(220, 224, 220, 0.72)';
           context.fillText(label.country, point[0] + 10, point[1] + 9);
+          context.restore();
           drawnLabels.push(point);
         }
       }
 
-      if (!dragRef.current.active) {
+      if (!dragRef.current.active && propsRef.current.autoRotate) {
         rotationRef.current[0] += 0.055;
       }
       frameRef.current = requestAnimationFrame(draw);
@@ -239,7 +265,7 @@ export function GlobalBoutiqueGlobe({
       {!interactive && (
         <div className="pointer-events-none absolute bottom-[4%] left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-platinum-500">
           <Crosshair size={11} className="text-gold-400" />
-          <span>{BOUTIQUE_CITIES.length} boutique locations</span>
+          <span>{ORDERED_BOUTIQUE_CITIES.length} boutique locations</span>
         </div>
       )}
     </div>
