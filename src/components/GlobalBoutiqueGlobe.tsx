@@ -86,7 +86,6 @@ function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x
     case '208': context.fillStyle = '#c8102e'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 2; context.beginPath(); context.moveTo(x + width * .32, y); context.lineTo(x + width * .32, y + height); context.moveTo(x, y + height * .4); context.lineTo(x + width, y + height * .4); context.stroke(); break;
     case '578': context.fillStyle = '#ba0c2f'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 4; context.beginPath(); context.moveTo(x + width * .32, y); context.lineTo(x + width * .32, y + height); context.moveTo(x, y + height * .4); context.lineTo(x + width, y + height * .4); context.stroke(); break;
     case '764': stripe(['#a51931', '#f4f5f8', '#2d2a4a', '#f4f5f8', '#a51931']); break;
-    case '616': stripe(['#fff', '#dc143c']); break;
     default: stripe(['#284d89', '#fff', '#d9363e']);
   }
   context.restore();
