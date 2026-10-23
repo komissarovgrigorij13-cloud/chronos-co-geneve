@@ -334,9 +334,9 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.52 ? 'flex' : 'none'));
 
   // Let the final vault card arrive fully before fading this scene away.
-  const p3Opacity = useTransform(scrollYProgress, [0.38, 0.48, 0.95, 0.99], [0, 1, 1, 0]);
-  const p3TrackX = useTransform(scrollYProgress, [0.53, 0.95], [vaultTravel.start, vaultTravel.end]);
-  const p3GlobeProgress = useTransform(scrollYProgress, [0.53, 0.95], [0, 1]);
+  const p3Opacity = useTransform(scrollYProgress, [0.46, 0.55, 0.985, 0.995], [0, 1, 1, 0]);
+  const p3TrackX = useTransform(scrollYProgress, [0.58, 0.98], [vaultTravel.start, vaultTravel.end]);
+  const p3GlobeProgress = useTransform(scrollYProgress, [0.58, 0.98], [0, 1]);
   useMotionValueEvent(p3GlobeProgress, 'change', (value) => {
     const progress = Math.max(0, Math.min(1, value));
     const position = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
@@ -358,15 +358,15 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   });
 
   // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
-  const p4Opacity = useTransform(scrollYProgress, [0.97, 0.99, 1.0], [0, 1, 1]);
-  const p4Scale = useTransform(scrollYProgress, [0.97, 0.995], [0.92, 1]);
-  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.97 ? 'flex' : 'none'));
+  const p4Opacity = useTransform(scrollYProgress, [0.99, 0.997, 1.0], [0, 1, 1]);
+  const p4Scale = useTransform(scrollYProgress, [0.99, 0.999], [0.92, 1]);
+  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.99 ? 'flex' : 'none'));
 
   const vaultItems = buildVaultItems(language);
   const activeGlobeCity = ORDERED_BOUTIQUE_CITIES[globeState.index];
 
   return (
-    <div ref={containerRef} className="relative h-[1100vh] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative h-[1400vh] bg-[#0a0a0a]">
       {/* ── STICKY PINNED FULLSCREEN VIEWPORT ── */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0a0a0a] flex items-center justify-center z-20">
         {/* Subtle Luxury Vignette & Radial Light */}

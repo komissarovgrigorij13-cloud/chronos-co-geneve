@@ -29,6 +29,24 @@ const countries = feature(
   worldTopology.objects.countries,
 ) as FeatureCollection<Geometry, CountryProperties>;
 
+function roundedRect(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number,
+) {
+  const r = Math.min(radius, width / 2, height / 2);
+  context.beginPath();
+  context.moveTo(x + r, y);
+  context.arcTo(x + width, y, x + width, y + height, r);
+  context.arcTo(x + width, y + height, x, y + height, r);
+  context.arcTo(x, y + height, x, y, r);
+  context.arcTo(x, y, x + width, y, r);
+  context.closePath();
+}
+
 export function GlobalBoutiqueGlobe({
   language,
   interactive = true,
@@ -133,14 +151,17 @@ export function GlobalBoutiqueGlobe({
       context.stroke();
 
       hitPointsRef.current = [];
-      const drawnLabels: Array<[number, number]> = [];
       const isScrollSequence = Boolean(propsRef.current.activeCityId);
       const activeCityPosition = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
       const focusedLabelIndices = new Set([
         Math.floor(activeCityPosition),
         Math.ceil(activeCityPosition),
       ]);
-      for (const city of ORDERED_BOUTIQUE_CITIES) {
+      const drawnLabels: Array<{ x: number; y: number; width: number; height: number }> = [];
+      const citiesToDraw = isScrollSequence
+        ? [...ORDERED_BOUTIQUE_CITIES].sort((a, b) => Number(b.id === propsRef.current.activeCityId) - Number(a.id === propsRef.current.activeCityId))
+        : ORDERED_BOUTIQUE_CITIES;
+      for (const city of citiesToDraw) {
         const point = projection(city.coordinates);
         if (!point) continue;
         const cityIndex = ORDERED_BOUTIQUE_CITIES.findIndex((candidate) => candidate.id === city.id);
@@ -167,22 +188,44 @@ export function GlobalBoutiqueGlobe({
         }
         context.restore();
 
-        const hasNearbyLabel = drawnLabels.some(([labelX, labelY]) => Math.hypot(labelX - point[0], labelY - point[1]) < 54);
         const shouldDrawLabel = isScrollSequence
           ? focusedLabelIndices.has(cityIndex)
-          : isActive && !hasNearbyLabel;
+          : isActive;
         if (showLabels && width > 520 && shouldDrawLabel) {
           const label = city.labels[propsRef.current.language];
+          const cityFontSize = isScrollSequence ? 14 : 12;
+          const countryFontSize = isScrollSequence ? 11 : 10;
+          context.font = `700 ${cityFontSize}px Inter, sans-serif`;
+          const cityWidth = context.measureText(label.city).width;
+          context.font = `${countryFontSize}px Inter, sans-serif`;
+          const countryWidth = context.measureText(label.country).width;
+          const labelWidth = Math.max(cityWidth, countryWidth) + 18;
+          const labelHeight = isScrollSequence ? 38 : 34;
+          const labelX = Math.max(8, Math.min(width - labelWidth - 8, point[0] + 10));
+          const labelY = Math.max(8, Math.min(height - labelHeight - 8, point[1] - labelHeight - 8));
+          const hasNearbyLabel = drawnLabels.some((drawn) => (
+            labelX < drawn.x + drawn.width + 12
+            && labelX + labelWidth + 12 > drawn.x
+            && labelY < drawn.y + drawn.height + 10
+            && labelY + labelHeight + 10 > drawn.y
+          ));
+          if (hasNearbyLabel && !isCurrent) continue;
           context.save();
           context.globalAlpha = labelOpacity;
-          context.font = `${isCurrent ? '700' : '600'} ${isCurrent ? '11' : '10'}px Inter, sans-serif`;
-          context.fillStyle = '#F0D060';
-          context.fillText(label.city, point[0] + 10, point[1] - 4);
-          context.font = '9px Inter, sans-serif';
+          roundedRect(context, labelX, labelY, labelWidth, labelHeight, 8);
+          context.fillStyle = 'rgba(8, 10, 10, 0.86)';
+          context.fill();
+          context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
+          context.lineWidth = 1;
+          context.stroke();
+          context.font = `700 ${cityFontSize}px Inter, sans-serif`;
+          context.fillStyle = '#F4D66D';
+          context.fillText(label.city, labelX + 9, labelY + cityFontSize + 3);
+          context.font = `${countryFontSize}px Inter, sans-serif`;
           context.fillStyle = 'rgba(220, 224, 220, 0.72)';
-          context.fillText(label.country, point[0] + 10, point[1] + 9);
+          context.fillText(label.country, labelX + 9, labelY + cityFontSize + countryFontSize + 5);
           context.restore();
-          drawnLabels.push(point);
+          drawnLabels.push({ x: labelX, y: labelY, width: labelWidth, height: labelHeight });
         }
       }
 
