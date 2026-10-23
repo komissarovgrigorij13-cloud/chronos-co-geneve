@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Truck, Building2, CreditCard, Bitcoin, Landmark, CheckCircle2, User, Clock } from 'lucide-react';
 import type { CartItem } from '../hooks/useStore';
@@ -40,6 +40,20 @@ export function CheckoutModal({
   const [clientEmail, setClientEmail] = useState('');
   const [assignedConcierge] = useState(() => consiergeNames[Math.floor(Math.random() * consiergeNames.length)]);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previousOverscrollBehavior = document.body.style.overscrollBehavior;
+    document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.overscrollBehavior = previousOverscrollBehavior;
+    };
+  }, [open]);
+
   const t = translations[language];
   const total = items.reduce((s, i) => s + i.watch.priceUSD, 0);
   const selectedCity = ORDERED_BOUTIQUE_CITIES.find((city) => city.id === cityId) ?? ORDERED_BOUTIQUE_CITIES[0];
@@ -63,7 +77,7 @@ export function CheckoutModal({
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-4 sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -79,7 +93,9 @@ export function CheckoutModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="relative w-full max-w-lg rounded-3xl bg-obsidian-850 border border-gold-600/35 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
+            onWheel={(event) => event.stopPropagation()}
+            onTouchMove={(event) => event.stopPropagation()}
+            className="relative w-full max-w-lg rounded-3xl bg-obsidian-850 border border-gold-600/35 overflow-x-hidden max-h-[90vh] overflow-y-auto overscroll-contain z-10 shadow-2xl shadow-black"
           >
             {/* Close button */}
             {!bookingRef && (
