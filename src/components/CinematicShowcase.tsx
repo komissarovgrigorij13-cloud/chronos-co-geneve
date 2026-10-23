@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { Shield, Sparkles, Building2, Clock, ArrowDown, Lock, ChevronRight } from 'lucide-react';
 import { translations, type Language } from '../data/translations';
+import { GlobalBoutiqueGlobe } from './GlobalBoutiqueGlobe';
 
 interface CinematicShowcaseProps {
   language: Language;
@@ -225,6 +226,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const vaultViewportRef = useRef<HTMLDivElement>(null);
   const vaultTrackRef = useRef<HTMLDivElement>(null);
   const [vaultTravel, setVaultTravel] = useState({ start: 0, end: 0 });
+  const [globeProgress, setGlobeProgress] = useState(0);
   const t = translations[language];
 
   useLayoutEffect(() => {
@@ -275,6 +277,8 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   // Let the final vault card arrive fully before fading this scene away.
   const p3Opacity = useTransform(scrollYProgress, [0.54, 0.58, 0.86, 0.90], [0, 1, 1, 0]);
   const p3TrackX = useTransform(scrollYProgress, [0.58, 0.82], [vaultTravel.start, vaultTravel.end]);
+  const p3GlobeProgress = useTransform(scrollYProgress, [0.54, 0.86], [0, 1]);
+  useMotionValueEvent(p3GlobeProgress, 'change', setGlobeProgress);
 
   // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
   const p4Opacity = useTransform(scrollYProgress, [0.90, 0.95, 1.0], [0, 1, 1]);
@@ -424,63 +428,73 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
             STAGE 3: GLOBAL VAULTS NETWORK (Horizontal Carousel) [0.55 - 0.80]
         ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          ref={vaultViewportRef}
           style={{
             opacity: p3Opacity,
           }}
-          className="absolute inset-0 flex flex-col justify-center px-6 z-10 pointer-events-none overflow-hidden"
+          className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 z-10 pointer-events-none overflow-hidden"
         >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Building2 size={16} className="text-gold-400" />
-              <span className="text-label text-gold-400 tracking-[0.4em] text-[10px] sm:text-xs uppercase">
-                {t.scrollyVaults}
-              </span>
+          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-3 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+            <div className="hidden justify-center lg:flex">
+              <GlobalBoutiqueGlobe language={language} interactive={false} highlightProgress={globeProgress} showLabels />
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl text-platinum-100 font-light">
-              Confidential Depository Network
-            </h2>
-          </div>
 
-          {/* Smooth Sliding Track */}
-          <motion.div
-            ref={vaultTrackRef}
-            style={{ x: p3TrackX }}
-            className="flex gap-6 sm:gap-8 items-center cursor-grab active:cursor-grabbing w-max px-8"
-          >
-            {vaultItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="w-[320px] sm:w-[380px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl border border-gold-600/30 p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden"
-              >
-                <div className="flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3 mb-4">
-                  <div>
-                    <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest text-gold-400 font-medium mb-1">
-                      <Lock size={10} /> {item.badge}
-                    </span>
-                    <h4 className="font-display text-2xl text-platinum-100">{item.city}</h4>
-                    <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
-                    <p className="text-xs font-medium text-emerald-400 flex items-center justify-end gap-1 mt-0.5">
-                      <Clock size={12} /> {item.transit}
-                    </p>
-                  </div>
+            <div className="min-w-0">
+              <div className="mb-5 text-center lg:text-left">
+                <div className="mb-2 flex items-center justify-center gap-2 lg:justify-start">
+                  <Building2 size={16} className="text-gold-400" />
+                  <span className="text-label text-gold-400 tracking-[0.4em] text-[10px] sm:text-xs uppercase">
+                    {t.scrollyVaults}
+                  </span>
                 </div>
-
-                <p className="text-xs text-platinum-400 font-light leading-relaxed mb-4">
-                  {item.desc}
+                <h2 className="font-display text-3xl sm:text-5xl text-platinum-100 font-light">
+                  {t.globeTitle}
+                </h2>
+                <p className="mx-auto mt-2 max-w-xl text-xs font-light leading-relaxed text-platinum-500 lg:mx-0">
+                  {t.globeSubtitle}
                 </p>
-
-                <div className="flex items-center justify-between pt-2 border-t border-platinum-600/10 text-[10px] uppercase tracking-wider text-gold-400/80">
-                  <span>Vault Access Status</span>
-                  <span className="text-platinum-300 font-mono">Tier I Validated</span>
-                </div>
               </div>
-            ))}
-          </motion.div>
+
+              <div ref={vaultViewportRef} className="overflow-hidden">
+                <motion.div
+                  ref={vaultTrackRef}
+                  style={{ x: p3TrackX }}
+                  className="flex items-center gap-4 sm:gap-6 w-max cursor-grab active:cursor-grabbing px-2"
+                >
+                  {vaultItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="w-[286px] sm:w-[350px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl border border-gold-600/30 p-5 sm:p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden"
+                    >
+                      <div className="flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3 mb-4">
+                        <div>
+                          <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest text-gold-400 font-medium mb-1">
+                            <Lock size={10} /> {item.badge}
+                          </span>
+                          <h4 className="font-display text-2xl text-platinum-100">{item.city}</h4>
+                          <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
+                          <p className="text-xs font-medium text-emerald-400 flex items-center justify-end gap-1 mt-0.5">
+                            <Clock size={12} /> {item.transit}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-platinum-400 font-light leading-relaxed mb-4">
+                        {item.desc}
+                      </p>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-platinum-600/10 text-[10px] uppercase tracking-wider text-gold-400/80">
+                        <span>Vault Access Status</span>
+                        <span className="text-platinum-300 font-mono">Tier I Validated</span>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* ══════════════════════════════════════════════════════════════════

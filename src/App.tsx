@@ -10,6 +10,7 @@ import { QuickViewModal } from './components/QuickViewModal';
 import { CartDrawer } from './components/CartDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { VIPPortalModal } from './components/VIPPortalModal';
+import { GlobalNetworkModal } from './components/GlobalNetworkModal';
 import { ToastContainer } from './components/Toast';
 import { useStore } from './hooks/useStore';
 import { translations } from './data/translations';
@@ -18,6 +19,7 @@ import type { Watch } from './data/watches';
 export default function App() {
   const catalogRef = useRef<HTMLElement>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: -1000, y: -1000 });
+  const [globeOpen, setGlobeOpen] = useState(false);
 
   // ── Lenis Smooth Kinetic Scrolling ─────────────────────────────────────────
   useEffect(() => {
@@ -122,6 +124,7 @@ export default function App() {
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
         onOpenVip={() => setVipOpen(true)}
+        onOpenGlobe={() => setGlobeOpen(true)}
       />
 
       {/* ── Hero Section ── */}
@@ -283,6 +286,12 @@ export default function App() {
         onAddToCart={handleAddToCartWithToast}
         chatMessages={chatMessages}
         onSendMessage={sendChatMessage}
+      />
+
+      <GlobalNetworkModal
+        open={globeOpen}
+        language={language}
+        onClose={() => setGlobeOpen(false)}
       />
 
       <ToastContainer toasts={toasts} onDismiss={removeToast} />

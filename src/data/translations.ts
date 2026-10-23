@@ -104,6 +104,11 @@ export interface Translations {
   scrollyPantheon: string;
   scrollyVaults: string;
   scrollyExplore: string;
+  globeTab: string;
+  globeTitle: string;
+  globeSubtitle: string;
+  globeDragHint: string;
+  globeLocations: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -211,6 +216,11 @@ export const translations: Record<Language, Translations> = {
     scrollyPantheon: 'The Pantheon',
     scrollyVaults: 'Global Private Vaults',
     scrollyExplore: 'Enter The Catalogue',
+    globeTab: 'Global Network',
+    globeTitle: 'A Private Network Without Borders',
+    globeSubtitle: 'Rotate the globe to explore the cities where our private boutiques welcome collectors by appointment.',
+    globeDragHint: 'Drag to rotate',
+    globeLocations: 'boutique locations',
   },
   RU: {
     tagline: 'Chronos & Co.',
@@ -316,6 +326,11 @@ export const translations: Record<Language, Translations> = {
     scrollyPantheon: 'Пантеон Мануфактур',
     scrollyVaults: 'Мировая Сеть Приватных Хранилищ',
     scrollyExplore: 'Перейти в Каталог Шедевров',
+    globeTab: 'Мировая сеть',
+    globeTitle: 'Приватная сеть без границ',
+    globeSubtitle: 'Вращайте глобус и исследуйте города, где наши закрытые бутики принимают коллекционеров по записи.',
+    globeDragHint: 'Потяните, чтобы вращать',
+    globeLocations: 'бутиков по всему миру',
   },
   FR: {
     tagline: 'Chronos & Co.',
@@ -421,6 +436,11 @@ export const translations: Record<Language, Translations> = {
     scrollyPantheon: 'Le Panthéon des Manufactures',
     scrollyVaults: 'Réseau Mondial de Coffres Privés',
     scrollyExplore: 'Entrer dans la Collection',
+    globeTab: 'Réseau mondial',
+    globeTitle: 'Un réseau privé sans frontières',
+    globeSubtitle: 'Faites pivoter le globe pour découvrir les villes où nos boutiques privées accueillent les collectionneurs sur rendez-vous.',
+    globeDragHint: 'Glisser pour tourner',
+    globeLocations: 'boutiques privées',
   },
   AR: {
     tagline: 'Chronos & Co.',
@@ -526,5 +546,10 @@ export const translations: Record<Language, Translations> = {
     scrollyPantheon: 'صناع الزمن الخالدون',
     scrollyVaults: 'شبكة الخزائن الخاصة العالمية',
     scrollyExplore: 'استعراض المجموعة الحصرية',
+    globeTab: 'الشبكة العالمية',
+    globeTitle: 'شبكة خاصة بلا حدود',
+    globeSubtitle: 'أدر الكرة الأرضية لاستكشاف المدن التي تستقبل فيها متاجرنا الخاصة جامعي الساعات بموعد مسبق.',
+    globeDragHint: 'اسحب للتدوير',
+    globeLocations: 'مواقع البوتيكات',
   },
 };

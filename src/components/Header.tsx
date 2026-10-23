@@ -1,4 +1,4 @@
-import { Search, ShoppingBag, ChevronDown, Crown } from 'lucide-react';
+import { Search, ShoppingBag, ChevronDown, Crown, Globe2 } from 'lucide-react';
 import type { CurrencyCode } from '../data/watches';
 import { currencies } from '../data/watches';
 import { translations, type Language } from '../data/translations';
@@ -13,6 +13,7 @@ interface HeaderProps {
   cartCount: number;
   onCartOpen: () => void;
   onOpenVip: () => void;
+  onOpenGlobe: () => void;
 }
 
 export function Header({
@@ -25,6 +26,7 @@ export function Header({
   cartCount,
   onCartOpen,
   onOpenVip,
+  onOpenGlobe,
 }: HeaderProps) {
   const currencyCodes = Object.keys(currencies) as CurrencyCode[];
   const languages: Language[] = ['EN', 'RU', 'FR', 'AR'];
@@ -117,6 +119,18 @@ export function Header({
               ))}
             </div>
           </div>
+
+          <div className="h-4 w-px bg-platinum-600/20" />
+
+          {/* Global Boutique Network */}
+          <button
+            onClick={onOpenGlobe}
+            className="flex items-center gap-1.5 rounded-full border border-platinum-600/25 px-2.5 py-1 text-[11px] tracking-widest uppercase text-platinum-400 transition-all duration-200 hover:border-gold-500/60 hover:bg-gold-500/10 hover:text-gold-400"
+            title={t.globeTab}
+          >
+            <Globe2 size={13} className="text-gold-400" />
+            <span className="hidden lg:inline">{t.globeTab}</span>
+          </button>
 
           <div className="h-4 w-px bg-platinum-600/20" />
 
