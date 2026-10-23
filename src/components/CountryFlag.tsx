@@ -101,9 +101,17 @@ export function CountryFlag({ countryId = '', className = '' }: CountryFlagProps
       {countryId === '036' && (
         <>
           <rect width="32" height="20" fill="#132b55" />
-          <path d="M0 0 14 9M32 0 18 9M0 20 14 11M32 20 18 11" stroke="#fff" strokeWidth="2.2" />
-          <path d="M0 0 14 9M32 0 18 9M0 20 14 11M32 20 18 11" stroke="#c8102e" strokeWidth="1" />
-          <circle cx="24" cy="5" r="1.1" fill="#fff" /><circle cx="27" cy="11" r="1" fill="#fff" /><circle cx="23" cy="15" r="1" fill="#fff" />
+          <rect width="14" height="10" fill="#173f78" />
+          <path d="M0 0 14 10M14 0 0 10" stroke="#fff" strokeWidth="2.2" />
+          <path d="M0 0 14 10M14 0 0 10" stroke="#cf2030" strokeWidth="0.9" />
+          <path d="M7 0v10M0 5h14" stroke="#fff" strokeWidth="2.4" />
+          <path d="M7 0v10M0 5h14" stroke="#cf2030" strokeWidth="1.1" />
+          <path d="m10 2.1.45 1.15 1.22.06-.94.76.3 1.18-.98-.65-.98.65.3-1.18-.94-.76 1.22-.06z" fill="#fff" />
+          <path d="m24 3 .55 1.45 1.55.08-1.2.96.38 1.48-1.28-.8-1.28.8.38-1.48-1.2-.96 1.55-.08z" fill="#fff" />
+          <path d="m27.3 9.1.43 1.08 1.14.06-.88.7.28 1.1-.97-.59-.95.59.27-1.1-.88-.7 1.15-.06z" fill="#fff" />
+          <path d="m24.2 14.1.45 1.12 1.18.06-.9.72.28 1.14-.98-.63-.98.63.28-1.14-.9-.72 1.18-.06z" fill="#fff" />
+          <path d="m19 13.3.38.95 1 .05-.77.61.24.98-.85-.53-.85.53.24-.98-.77-.61 1-.05z" fill="#fff" />
+          <path d="m7 13.2.55 1.4 1.5.08-1.16.92.36 1.43-1.25-.77-1.25.77.36-1.43-1.16-.92 1.5-.08z" fill="#fff" />
         </>
       )}
       {countryId === '578' && (

@@ -301,7 +301,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
       const firstCardWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
       const trackPadding = parseFloat(getComputedStyle(track).paddingLeft);
       const start = Math.max(0, (availableWidth - firstCardWidth) / 2 - trackPadding);
-      const end = Math.min(start, availableWidth - track.scrollWidth);
+      const end = Math.min(start, availableWidth - track.scrollWidth - firstCardWidth);
       setVaultTravel({ start, end });
     };
 
@@ -334,9 +334,9 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.52 ? 'flex' : 'none'));
 
   // Let the final vault card arrive fully before fading this scene away.
-  const p3Opacity = useTransform(scrollYProgress, [0.50, 0.54, 0.92, 0.96], [0, 1, 1, 0]);
-  const p3TrackX = useTransform(scrollYProgress, [0.54, 0.92], [vaultTravel.start, vaultTravel.end]);
-  const p3GlobeProgress = useTransform(scrollYProgress, [0.54, 0.92], [0, 1]);
+  const p3Opacity = useTransform(scrollYProgress, [0.38, 0.48, 0.95, 0.99], [0, 1, 1, 0]);
+  const p3TrackX = useTransform(scrollYProgress, [0.53, 0.95], [vaultTravel.start, vaultTravel.end]);
+  const p3GlobeProgress = useTransform(scrollYProgress, [0.53, 0.95], [0, 1]);
   useMotionValueEvent(p3GlobeProgress, 'change', (value) => {
     const progress = Math.max(0, Math.min(1, value));
     const position = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
@@ -358,15 +358,15 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   });
 
   // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
-  const p4Opacity = useTransform(scrollYProgress, [0.94, 0.97, 1.0], [0, 1, 1]);
-  const p4Scale = useTransform(scrollYProgress, [0.94, 0.98], [0.92, 1]);
-  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.94 ? 'flex' : 'none'));
+  const p4Opacity = useTransform(scrollYProgress, [0.97, 0.99, 1.0], [0, 1, 1]);
+  const p4Scale = useTransform(scrollYProgress, [0.97, 0.995], [0.92, 1]);
+  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.97 ? 'flex' : 'none'));
 
   const vaultItems = buildVaultItems(language);
   const activeGlobeCity = ORDERED_BOUTIQUE_CITIES[globeState.index];
 
   return (
-    <div ref={containerRef} className="relative h-[650vh] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative h-[1100vh] bg-[#0a0a0a]">
       {/* ── STICKY PINNED FULLSCREEN VIEWPORT ── */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0a0a0a] flex items-center justify-center z-20">
         {/* Subtle Luxury Vignette & Radial Light */}
@@ -503,7 +503,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
         </motion.div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            STAGE 3: GLOBAL VAULTS NETWORK (Horizontal Carousel) [0.55 - 0.80]
+            STAGE 3: GLOBAL VAULTS NETWORK (Slow Scroll Sequence) [0.53 - 0.95]
         ══════════════════════════════════════════════════════════════════ */}
         <motion.div
           style={{
@@ -511,8 +511,8 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
           }}
           className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 z-10 pointer-events-none overflow-hidden"
         >
-          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-3 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-            <div className="hidden justify-center lg:flex">
+          <div className="relative h-full w-full max-w-[1500px]">
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex">
               <GlobalBoutiqueGlobe
                 language={language}
                 interactive={false}
@@ -520,13 +520,13 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 rotation={globeState.rotation}
                 activeCityId={activeGlobeCity.id}
                 showLabels
-                className="max-w-[620px] scale-105"
+                className="w-[min(78vw,680px)] max-w-none scale-105"
               />
             </div>
 
-            <div className="min-w-0">
-              <div className="mb-5 text-center lg:text-left">
-                <div className="mb-2 flex items-center justify-center gap-2 lg:justify-start">
+            <div className="absolute inset-x-0 top-[11%] px-4 text-center">
+              <div className="mb-5">
+                <div className="mb-2 flex items-center justify-center gap-2">
                   <Building2 size={16} className="text-gold-400" />
                   <span className="text-label text-gold-400 tracking-[0.4em] text-[10px] sm:text-xs uppercase">
                     {t.scrollyVaults}
@@ -535,56 +535,56 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 <h2 className="font-display text-3xl sm:text-5xl text-platinum-100 font-light">
                   {t.globeTitle}
                 </h2>
-                <p className="mx-auto mt-2 max-w-xl text-xs font-light leading-relaxed text-platinum-500 lg:mx-0">
+                <p className="mx-auto mt-2 max-w-xl text-xs font-light leading-relaxed text-platinum-500">
                   {t.globeSubtitle}
                 </p>
               </div>
+            </div>
 
-              <div ref={vaultViewportRef} className="overflow-hidden">
-                <motion.div
-                  ref={vaultTrackRef}
-                  style={{ x: p3TrackX }}
-                  className="flex items-center gap-4 sm:gap-6 w-max cursor-grab active:cursor-grabbing px-2"
-                >
-                  {vaultItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-[286px] sm:w-[350px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl p-5 sm:p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden transition-all duration-700 ${idx === globeState.index
+            <div ref={vaultViewportRef} className="absolute left-1/2 top-[72%] w-full max-w-[1080px] -translate-x-1/2 -translate-y-1/2 overflow-hidden px-2">
+              <motion.div
+                ref={vaultTrackRef}
+                style={{ x: p3TrackX }}
+                className="flex w-max items-center gap-4 px-2 sm:gap-6"
+              >
+                {vaultItems.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-[300px] flex-shrink-0 rounded-2xl bg-obsidian-900/95 p-5 text-left shadow-2xl shadow-black backdrop-blur-xl transition-all duration-700 sm:w-[370px] sm:p-6 ${idx === globeState.index
                         ? 'border border-gold-400/75 shadow-gold-500/15 scale-[1.02]'
                         : 'border border-gold-600/25 opacity-70'
                       }`}
-                    >
-                      <div className="flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3 mb-4">
-                        <div>
-                          <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-widest text-gold-400 font-medium mb-1">
-                            <Lock size={10} /> {item.badge}
-                          </span>
-                          <h4 className="font-display text-2xl text-platinum-100">{item.city}</h4>
-                          <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
-                        </div>
-                        <div className="flex flex-col items-end gap-2 text-right">
-                          <CountryFlag countryId={item.countryId} />
-                          <div>
-                            <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
-                            <p className="text-xs font-medium text-emerald-400 flex items-center justify-end gap-1 mt-0.5">
-                              <Clock size={12} /> {item.transit}
-                            </p>
-                          </div>
-                        </div>
+                  >
+                    <div className="mb-4 flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3">
+                      <div>
+                        <span className="mb-1 inline-flex items-center gap-1 text-[9px] font-medium uppercase tracking-widest text-gold-400">
+                          <Lock size={10} /> {item.badge}
+                        </span>
+                        <h4 className="font-display text-2xl text-platinum-100">{item.city}</h4>
+                        <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
                       </div>
-
-                      <p className="text-xs text-platinum-400 font-light leading-relaxed mb-4">
-                        {item.desc}
-                      </p>
-
-                      <div className="flex items-center justify-between pt-2 border-t border-platinum-600/10 text-[10px] uppercase tracking-wider text-gold-400/80">
-                        <span>Vault Access Status</span>
-                        <span className="text-platinum-300 font-mono">Tier I Validated</span>
+                      <div className="flex flex-col items-end gap-2 text-right">
+                        <CountryFlag countryId={item.countryId} />
+                        <div>
+                          <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
+                          <p className="mt-0.5 flex items-center justify-end gap-1 text-xs font-medium text-emerald-400">
+                            <Clock size={12} /> {item.transit}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </motion.div>
-              </div>
+
+                    <p className="mb-4 text-xs font-light leading-relaxed text-platinum-400">
+                      {item.desc}
+                    </p>
+
+                    <div className="flex items-center justify-between border-t border-platinum-600/10 pt-2 text-[10px] uppercase tracking-wider text-gold-400/80">
+                      <span>Vault Access Status</span>
+                      <span className="font-mono text-platinum-300">Tier I Validated</span>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </motion.div>
