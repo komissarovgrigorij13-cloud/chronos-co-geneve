@@ -122,6 +122,49 @@
     -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
+  .language-flag {
+    display: inline-block;
+    width: 18px;
+    height: 12px;
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    flex: 0 0 auto;
+  }
+
+  .language-flag-en {
+    background:
+      linear-gradient(90deg, transparent 42%, #fff 42% 58%, #cf2030 58% 66%, #fff 66% 74%, transparent 74%),
+      linear-gradient(0deg, transparent 34%, #fff 34% 66%, transparent 66%),
+      linear-gradient(90deg, transparent 46%, #cf2030 46% 54%, transparent 54%),
+      linear-gradient(0deg, transparent 40%, #cf2030 40% 60%, transparent 60%),
+      #173f78;
+  }
+
+  .language-flag-ru {
+    background: linear-gradient(to bottom, #fff 0 33%, #2455a4 33% 66%, #d9363e 66%);
+  }
+
+  .language-flag-fr {
+    background: linear-gradient(to right, #1f4e9b 0 33%, #fff 33% 66%, #e23d4f 66%);
+  }
+
+  .language-flag-ar {
+    background: #176b45;
+    position: relative;
+  }
+
+  .language-flag-ar::after {
+    content: '✦';
+    position: absolute;
+    inset: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 7px;
+    line-height: 10px;
+    text-align: center;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;

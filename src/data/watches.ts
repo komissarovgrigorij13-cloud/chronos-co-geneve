@@ -273,20 +273,20 @@ export const watches: Watch[] = [
 export const currencies = {
   USD: { symbol: '$', label: 'USD', rate: 1 },
   EUR: { symbol: '€', label: 'EUR', rate: 0.91 },
-  CHF: { symbol: 'CHF', label: 'CHF', rate: 0.89 },
-  AED: { symbol: 'AED', label: 'AED', rate: 3.67 },
+  CHF: { symbol: '₣', label: 'CHF', rate: 0.89 },
+  AED: { symbol: 'د.إ', label: 'AED', rate: 3.67 },
 } as const;
 
 export type CurrencyCode = keyof typeof currencies;
 
 export function formatPrice(usd: number, currency: CurrencyCode): string {
-  const { symbol, rate, label } = currencies[currency];
+  const { symbol, rate } = currencies[currency];
   const value = Math.round(usd * rate);
   const formatted = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
-  return label === 'CHF' ? `${label} ${formatted}` : `${symbol}${formatted}`;
+  return `${symbol}${formatted}`;
 }
 
 export const brands: Brand[] = ['Rolex', 'Audemars Piguet', 'Patek Philippe', 'Richard Mille', 'Vacheron Constantin'];

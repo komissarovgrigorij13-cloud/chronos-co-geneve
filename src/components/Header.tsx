@@ -66,6 +66,7 @@ export function Header({
           <div className="relative group">
             <button className="flex items-center gap-1 text-[11px] font-medium tracking-widest uppercase text-platinum-400 hover:text-gold-400 transition-colors py-1">
               {language}
+              <LanguageFlag language={language} />
               <ChevronDown size={11} />
             </button>
             <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[75px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
@@ -79,7 +80,10 @@ export function Header({
                       : 'text-platinum-400 hover:text-gold-400 hover:bg-obsidian-700'
                     }`}
                 >
-                  {lang}
+                  <span className="inline-flex items-center gap-2">
+                    <LanguageFlag language={lang} />
+                    {lang}
+                  </span>
                 </button>
               ))}
             </div>
@@ -90,7 +94,7 @@ export function Header({
           {/* Currency Switcher */}
           <div className="relative group">
             <button className="flex items-center gap-1 text-[11px] font-medium tracking-widest uppercase text-platinum-400 hover:text-gold-400 transition-colors py-1">
-              {currencies[currency].label}
+              {currencies[currency].symbol}
               <ChevronDown size={11} />
             </button>
             <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[80px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
@@ -104,7 +108,7 @@ export function Header({
                       : 'text-platinum-400 hover:text-gold-400 hover:bg-obsidian-700'
                     }`}
                 >
-                  {currencies[code].symbol} {code}
+                  {currencies[code].symbol}
                 </button>
               ))}
             </div>
@@ -140,4 +144,15 @@ export function Header({
       </div>
     </header>
   );
+}
+
+function LanguageFlag({ language }: { language: Language }) {
+  const country = language === 'EN' ? 'United Kingdom' : language === 'RU' ? 'Russia' : language === 'FR' ? 'France' : 'Saudi Arabia';
+  const flagClasses: Record<Language, string> = {
+    EN: 'language-flag-en',
+    RU: 'language-flag-ru',
+    FR: 'language-flag-fr',
+    AR: 'language-flag-ar',
+  };
+  return <span className={`language-flag ${flagClasses[language]}`} role="img" aria-label={country} />;
 }
