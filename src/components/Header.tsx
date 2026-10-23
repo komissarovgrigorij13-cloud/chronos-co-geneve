@@ -94,10 +94,11 @@ export function Header({
           {/* Currency Switcher */}
           <div className="relative group">
             <button className="flex items-center gap-1 text-[11px] font-medium tracking-widest uppercase text-platinum-400 hover:text-gold-400 transition-colors py-1">
-              {currencies[currency].symbol}
+              <span>{currencies[currency].symbol}</span>
+              <span className="text-platinum-500 tracking-[0.12em]">{currency}</span>
               <ChevronDown size={11} />
             </button>
-            <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[80px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
+            <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[128px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
               {currencyCodes.map((code) => (
                 <button
                   key={code}
@@ -108,7 +109,10 @@ export function Header({
                       : 'text-platinum-400 hover:text-gold-400 hover:bg-obsidian-700'
                     }`}
                 >
-                  {currencies[code].symbol}
+                  <span className="flex w-full items-center justify-between gap-4">
+                    <span>{currencies[code].symbol}</span>
+                    <span className="text-platinum-500 tracking-[0.12em]">{code}</span>
+                  </span>
                 </button>
               ))}
             </div>
@@ -148,11 +152,38 @@ export function Header({
 
 function LanguageFlag({ language }: { language: Language }) {
   const country = language === 'EN' ? 'United Kingdom' : language === 'RU' ? 'Russia' : language === 'FR' ? 'France' : 'Saudi Arabia';
-  const flagClasses: Record<Language, string> = {
-    EN: 'language-flag-en',
-    RU: 'language-flag-ru',
-    FR: 'language-flag-fr',
-    AR: 'language-flag-ar',
-  };
-  return <span className={`language-flag ${flagClasses[language]}`} role="img" aria-label={country} />;
+  return (
+    <svg className="language-flag" viewBox="0 0 28 18" role="img" aria-label={country}>
+      {language === 'EN' && (
+        <>
+          <rect width="28" height="18" fill="#173f78" />
+          <path d="M0 0 28 18M28 0 0 18" stroke="#fff" strokeWidth="4" />
+          <path d="M0 0 28 18M28 0 0 18" stroke="#cf2030" strokeWidth="1.6" />
+          <path d="M14 0v18M0 9h28" stroke="#fff" strokeWidth="6" />
+          <path d="M14 0v18M0 9h28" stroke="#cf2030" strokeWidth="3" />
+        </>
+      )}
+      {language === 'RU' && (
+        <>
+          <rect width="28" height="6" fill="#fff" />
+          <rect y="6" width="28" height="6" fill="#2455a4" />
+          <rect y="12" width="28" height="6" fill="#d9363e" />
+        </>
+      )}
+      {language === 'FR' && (
+        <>
+          <rect width="9.33" height="18" fill="#1f4e9b" />
+          <rect x="9.33" width="9.34" height="18" fill="#fff" />
+          <rect x="18.67" width="9.33" height="18" fill="#e23d4f" />
+        </>
+      )}
+      {language === 'AR' && (
+        <>
+          <rect width="28" height="18" fill="#176b45" />
+          <path d="M5 7.5h18M7 10.5h14" stroke="#fff" strokeWidth="1" strokeLinecap="round" />
+          <path d="M7 13.2h14" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  );
 }
