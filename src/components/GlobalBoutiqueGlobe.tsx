@@ -212,7 +212,17 @@ export function GlobalBoutiqueGlobe({
 
       const radius = Math.min(width, height) * 0.43;
       if (propsRef.current.rotation && !dragRef.current.active) {
-        rotationRef.current = propsRef.current.rotation;
+        const target = propsRef.current.rotation;
+        const follow = width < 520 ? 0.075 : 0.16;
+        const shortestAngleDelta = (from: number, to: number) => {
+          let delta = to - from;
+          while (delta > 180) delta -= 360;
+          while (delta < -180) delta += 360;
+          return delta;
+        };
+        rotationRef.current[0] += shortestAngleDelta(rotationRef.current[0], target[0]) * follow;
+        rotationRef.current[1] += (target[1] - rotationRef.current[1]) * follow;
+        rotationRef.current[2] += (target[2] - rotationRef.current[2]) * follow;
       }
 
       const projection = geoOrthographic()

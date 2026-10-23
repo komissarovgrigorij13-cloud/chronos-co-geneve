@@ -276,6 +276,12 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const containerRef = useRef<HTMLDivElement>(null);
   const vaultViewportRef = useRef<HTMLDivElement>(null);
   const vaultTrackRef = useRef<HTMLDivElement>(null);
+  const globeFrameRef = useRef<number | null>(null);
+  const pendingGlobeStateRef = useRef<{
+    progress: number;
+    index: number;
+    rotation: [number, number, number];
+  } | null>(null);
   const [vaultTravel, setVaultTravel] = useState({ start: 0, end: 0 });
   const [globeState, setGlobeState] = useState<{
     progress: number;
@@ -309,7 +315,10 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
     observer.observe(viewport);
     observer.observe(track);
     measure();
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (globeFrameRef.current !== null) cancelAnimationFrame(globeFrameRef.current);
+    };
   }, []);
 
   // Global scroll progress through the pinned showcase
@@ -345,16 +354,29 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
     const mix = position - lowerIndex;
     const fromRotation = rotationForCity(ORDERED_BOUTIQUE_CITIES[lowerIndex]);
     const toRotation = rotationForCity(ORDERED_BOUTIQUE_CITIES[upperIndex]);
+    const shortestAngleDelta = (from: number, to: number) => {
+      let delta = to - from;
+      while (delta > 180) delta -= 360;
+      while (delta < -180) delta += 360;
+      return delta;
+    };
 
-    setGlobeState({
+    pendingGlobeStateRef.current = {
       progress,
       index: Math.round(position),
       rotation: [
-        fromRotation[0] + (toRotation[0] - fromRotation[0]) * mix,
+        fromRotation[0] + shortestAngleDelta(fromRotation[0], toRotation[0]) * mix,
         fromRotation[1] + (toRotation[1] - fromRotation[1]) * mix,
         0,
       ],
-    });
+    };
+
+    if (globeFrameRef.current === null) {
+      globeFrameRef.current = requestAnimationFrame(() => {
+        if (pendingGlobeStateRef.current) setGlobeState(pendingGlobeStateRef.current);
+        globeFrameRef.current = null;
+      });
+    }
   });
 
   // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
