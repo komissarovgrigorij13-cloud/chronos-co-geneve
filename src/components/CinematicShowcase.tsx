@@ -623,7 +623,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                         <p className="text-[11px] text-platinum-500">{item.address}, {item.country}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2 text-right">
-                        <CountryFlag countryId={item.countryId} />
+                        <CountryFlag countryId={item.countryId} className={item.countryId === '410' ? 'h-6 w-10' : ''} />
                         <div>
                           <p className="text-[9px] uppercase tracking-wider text-platinum-500">Logistics</p>
                           <p className="mt-0.5 flex items-center justify-end gap-1 text-xs font-medium text-emerald-400">

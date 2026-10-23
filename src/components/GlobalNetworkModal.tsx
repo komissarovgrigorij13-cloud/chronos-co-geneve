@@ -76,7 +76,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
                         <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em] text-platinum-500">{label.country}</p>
                       </div>
                     </div>
-                    <CountryFlag countryId={city.countryId} />
+                    <CountryFlag countryId={city.countryId} className={city.countryId === '410' ? 'h-6 w-10' : ''} />
                     <ShieldCheck size={15} className="shrink-0 text-emerald-400/80" />
                   </div>
                 );

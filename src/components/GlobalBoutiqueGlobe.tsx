@@ -71,8 +71,14 @@ function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x
       stripe(['#b22234', '#fff', '#b22234', '#fff', '#b22234', '#fff', '#b22234']);
       context.fillStyle = '#3c3b6e'; context.fillRect(x, y, width * 0.45, height * 0.55); break;
     case '124': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#d52b3f'; context.fillRect(x, y, width * .25, height); context.fillRect(x + width * .75, y, width * .25, height); break;
+    case '036':
+      context.fillStyle = '#132b55'; context.fillRect(x, y, width, height);
+      context.fillStyle = '#173f78'; context.fillRect(x, y, width * .44, height * .52);
+      context.strokeStyle = '#fff'; context.lineWidth = 2; context.beginPath(); context.moveTo(x, y); context.lineTo(x + width * .44, y + height * .52); context.moveTo(x + width * .44, y); context.lineTo(x, y + height * .52); context.stroke();
+      context.strokeStyle = '#cf2030'; context.lineWidth = 0.8; context.stroke(); break;
     case '826': context.fillStyle = '#173f78'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 3; context.beginPath(); context.moveTo(x, y); context.lineTo(x + width, y + height); context.moveTo(x + width, y); context.lineTo(x, y + height); context.moveTo(x + width / 2, y); context.lineTo(x + width / 2, y + height); context.moveTo(x, y + height / 2); context.lineTo(x + width, y + height / 2); context.stroke(); context.strokeStyle = '#cf2030'; context.lineWidth = 1; context.stroke(); break;
     case '756': context.fillStyle = '#d52b3f'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.fillRect(x + width * .42, y + height * .2, width * .16, height * .6); context.fillRect(x + width * .2, y + height * .4, width * .6, height * .2); break;
+    case '492': context.fillStyle = '#ce1126'; context.fillRect(x, y, width, height / 2); context.fillStyle = '#fff'; context.fillRect(x, y + height / 2, width, height / 2); break;
     case '784': context.fillStyle = '#17834b'; context.fillRect(x, y, width, height / 3); context.fillStyle = '#fff'; context.fillRect(x, y + height / 3, width, height / 3); context.fillStyle = '#111'; context.fillRect(x, y + height * 2 / 3, width, height / 3); context.fillStyle = '#ce1126'; context.fillRect(x, y, width * .25, height); break;
     case '634': context.fillStyle = '#8a1538'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.fillRect(x, y, width * .3, height); break;
     case '792': context.fillStyle = '#e30a17'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.beginPath(); context.arc(x + width * .45, y + height / 2, 4, 0, Math.PI * 2); context.fill(); context.fillStyle = '#e30a17'; context.beginPath(); context.arc(x + width * .51, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
