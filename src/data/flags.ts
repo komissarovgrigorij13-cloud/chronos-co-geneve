@@ -7,6 +7,22 @@ export const countryNames: Record<string, string> = {
   '752': 'Sweden', '410': 'South Korea', '470': 'Malta', '233': 'Estonia', '208': 'Denmark',
 };
 
+// One source of truth for every flag rendered in cards and on the canvas globe.
+// The SVGs are vendored in public/assets/flags so they work without VPN or a
+// third-party image host on both the root site and GitHub Pages.
+export const countryAlpha2: Record<string, string> = {
+  '756': 'ch', '784': 'ae', '492': 'mc', '826': 'gb', '392': 'jp', '643': 'ru',
+  '250': 'fr', '840': 'us', '124': 'ca', '036': 'au', '578': 'no', '156': 'cn',
+  '616': 'pl', '276': 'de', '620': 'pt', '380': 'it', '634': 'qa', '792': 'tr',
+  '076': 'br', '724': 'es', '702': 'sg', '428': 'lv', '398': 'kz', '764': 'th',
+  '752': 'se', '410': 'kr', '470': 'mt', '233': 'ee', '208': 'dk',
+};
+
+export function getCountryFlagAssetPath(countryId: string): string {
+  const code = countryAlpha2[countryId] ?? 'un';
+  return `assets/flags/${code}.svg`;
+}
+
 const star = (cx: number, cy: number, radius: number, fill = '#ffde00') => {
   const points = Array.from({ length: 10 }, (_, index) => {
     const angle = -Math.PI / 2 + index * Math.PI / 5;

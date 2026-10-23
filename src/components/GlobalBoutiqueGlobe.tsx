@@ -7,7 +7,7 @@ import world from 'world-atlas/countries-110m.json';
 import { Crosshair, Globe2, RotateCw } from 'lucide-react';
 import type { Language } from '../data/translations';
 import { ORDERED_BOUTIQUE_CITIES, boutiqueCountryIds, type BoutiqueCity } from '../data/globe';
-import { getCountryFlagMarkup } from '../data/flags';
+import { getCountryFlagAssetPath } from '../data/flags';
 
 interface GlobalBoutiqueGlobeProps {
   language: Language;
@@ -54,7 +54,7 @@ function drawSharedCountryFlag(context: CanvasRenderingContext2D, countryId: str
   let image = flagImageCache.get(countryId);
   if (!image) {
     image = new Image();
-    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 20">${getCountryFlagMarkup(countryId)}</svg>`)}`;
+    image.src = getCountryFlagAssetPath(countryId);
     flagImageCache.set(countryId, image);
   }
 
