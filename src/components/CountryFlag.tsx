@@ -23,6 +23,9 @@ const countryNames: Record<string, string> = {
   '634': 'Qatar',
   '792': 'Turkey',
   '076': 'Brazil',
+  '724': 'Spain',
+  '702': 'Singapore',
+  '428': 'Latvia',
 };
 
 export function CountryFlag({ countryId = '', className = '' }: CountryFlagProps) {
@@ -153,6 +156,34 @@ export function CountryFlag({ countryId = '', className = '' }: CountryFlagProps
       )}
       {countryId === '076' && (
         <><rect width="32" height="20" fill="#009c3b" /><path d="M16 2 29 10 16 18 3 10z" fill="#ffdf00" /><circle cx="16" cy="10" r="4.6" fill="#002776" /></>
+      )}
+      {countryId === '724' && (
+        <>
+          <rect width="32" height="20" fill="#f1c40f" />
+          <rect width="32" height="5" fill="#c60b1e" />
+          <rect y="15" width="32" height="5" fill="#c60b1e" />
+          <rect x="6" y="8" width="2.5" height="4" fill="#c60b1e" />
+        </>
+      )}
+      {countryId === '702' && (
+        <>
+          <rect width="32" height="10" fill="#ed2939" />
+          <rect y="10" width="32" height="10" fill="#fff" />
+          <circle cx="7" cy="5" r="3.2" fill="#fff" />
+          <circle cx="8.2" cy="5" r="2.6" fill="#ed2939" />
+          {[0, 1, 2, 3, 4].map((star) => {
+            const angle = (star * Math.PI * 2) / 5 - Math.PI / 2;
+            const x = 11.5 + Math.cos(angle) * 2.8;
+            const y = 5 + Math.sin(angle) * 2.8;
+            return <circle key={star} cx={x} cy={y} r="0.65" fill="#fff" />;
+          })}
+        </>
+      )}
+      {countryId === '428' && (
+        <>
+          <rect width="32" height="20" fill="#9e3039" />
+          <rect y="7" width="32" height="6" fill="#fff" />
+        </>
       )}
       {!countryNames[countryId] && <rect width="32" height="20" fill="#5a6060" />}
     </svg>

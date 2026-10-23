@@ -217,6 +217,105 @@ export const BOUTIQUE_CITIES: BoutiqueCity[] = [
       AR: { city: 'برازيليا', country: 'البرازيل' },
     },
   },
+  {
+    id: 'shanghai',
+    countryId: '156',
+    coordinates: [121.4737, 31.2304],
+    labels: {
+      EN: { city: 'Shanghai', country: 'China' },
+      RU: { city: 'Шанхай', country: 'Китай' },
+      FR: { city: 'Shanghai', country: 'Chine' },
+      AR: { city: 'شنغهاي', country: 'الصين' },
+    },
+  },
+  {
+    id: 'washington',
+    countryId: '840',
+    coordinates: [-77.0369, 38.9072],
+    labels: {
+      EN: { city: 'Washington, D.C.', country: 'United States' },
+      RU: { city: 'Вашингтон', country: 'США' },
+      FR: { city: 'Washington', country: 'États-Unis' },
+      AR: { city: 'واشنطن', country: 'الولايات المتحدة' },
+    },
+  },
+  {
+    id: 'rome',
+    countryId: '380',
+    coordinates: [12.4964, 41.9028],
+    labels: {
+      EN: { city: 'Rome', country: 'Italy' },
+      RU: { city: 'Рим', country: 'Италия' },
+      FR: { city: 'Rome', country: 'Italie' },
+      AR: { city: 'روما', country: 'إيطاليا' },
+    },
+  },
+  {
+    id: 'barcelona',
+    countryId: '724',
+    coordinates: [2.1734, 41.3851],
+    labels: {
+      EN: { city: 'Barcelona', country: 'Spain' },
+      RU: { city: 'Барселона', country: 'Испания' },
+      FR: { city: 'Barcelone', country: 'Espagne' },
+      AR: { city: 'برشلونة', country: 'إسبانيا' },
+    },
+  },
+  {
+    id: 'frankfurt',
+    countryId: '276',
+    coordinates: [8.6821, 50.1109],
+    labels: {
+      EN: { city: 'Frankfurt am Main', country: 'Germany' },
+      RU: { city: 'Франкфурт-на-Майне', country: 'Германия' },
+      FR: { city: 'Francfort-sur-le-Main', country: 'Allemagne' },
+      AR: { city: 'فرانكفورت', country: 'ألمانيا' },
+    },
+  },
+  {
+    id: 'st-petersburg',
+    countryId: '643',
+    coordinates: [30.3351, 59.9343],
+    labels: {
+      EN: { city: 'Saint Petersburg', country: 'Russia' },
+      RU: { city: 'Санкт-Петербург', country: 'Россия' },
+      FR: { city: 'Saint-Pétersbourg', country: 'Russie' },
+      AR: { city: 'سانت بطرسبرغ', country: 'روسيا' },
+    },
+  },
+  {
+    id: 'singapore',
+    countryId: '702',
+    coordinates: [103.8198, 1.3521],
+    labels: {
+      EN: { city: 'Singapore', country: 'Singapore' },
+      RU: { city: 'Сингапур', country: 'Сингапур' },
+      FR: { city: 'Singapour', country: 'Singapour' },
+      AR: { city: 'سنغافورة', country: 'سنغافورة' },
+    },
+  },
+  {
+    id: 'zurich',
+    countryId: '756',
+    coordinates: [8.5417, 47.3769],
+    labels: {
+      EN: { city: 'Zurich', country: 'Switzerland' },
+      RU: { city: 'Цюрих', country: 'Швейцария' },
+      FR: { city: 'Zurich', country: 'Suisse' },
+      AR: { city: 'زيورخ', country: 'سويسرا' },
+    },
+  },
+  {
+    id: 'riga',
+    countryId: '428',
+    coordinates: [24.1052, 56.9496],
+    labels: {
+      EN: { city: 'Riga', country: 'Latvia' },
+      RU: { city: 'Рига', country: 'Латвия' },
+      FR: { city: 'Riga', country: 'Lettonie' },
+      AR: { city: 'ريغا', country: 'لاتفيا' },
+    },
+  },
 ];
 
 export const boutiqueCountryIds = new Set(BOUTIQUE_CITIES.map((city) => city.countryId));
@@ -224,23 +323,32 @@ export const boutiqueCountryIds = new Set(BOUTIQUE_CITIES.map((city) => city.cou
 const cityById = new Map(BOUTIQUE_CITIES.map((city) => [city.id, city]));
 const SCROLL_CITY_ORDER = [
   'sydney',
+  'singapore',
   'tokyo',
+  'shanghai',
   'beijing',
   'dubai',
   'doha',
   'moscow',
+  'st-petersburg',
   'istanbul',
   'warsaw',
+  'riga',
   'munich',
+  'frankfurt',
   'oslo',
   'milan',
+  'rome',
+  'zurich',
   'monaco',
   'geneva',
   'paris',
+  'barcelona',
   'london',
   'lisbon',
   'brasilia',
   'new-york',
+  'washington',
   'toronto',
 ] as const;
 
