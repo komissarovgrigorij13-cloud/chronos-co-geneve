@@ -48,7 +48,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The Cosmograph Daytona 116500LN represents the pinnacle of Rolex sports chronography. Powered by the proprietary Calibre 4130 — featuring a column wheel, vertical clutch and COSC-certified movement — it is defined by its ceramic black bezel and panda dial. Supplied with full box and papers, this specimen is in unworn condition.',
-    imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1523275335684-37898b6baf30.jpg',
     imageAlt: 'Rolex Daytona 116500LN Panda Dial Macro Photography',
     isNew: false,
   },
@@ -72,7 +72,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The Royal Oak Offshore Diver combines the iconic AP octagonal porthole design with professional dive credentials. The Mega Tapisserie blue dial sits within a steel case with unidirectional rotating ceramic bezel, rated to 300m. Calibre 4308 delivers 60 hours of autonomy and is beautifully finished through the sapphire caseback.',
-    imageUrl: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1547996160-81dfa63595aa.jpg',
     imageAlt: 'Audemars Piguet Royal Oak Offshore Diver Blue Dial Macro',
     isNew: true,
   },
@@ -96,7 +96,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The last steel Nautilus 5711 ever produced, featuring the exclusive Olive Green dial. Patek Philippe discontinued the 5711 in 2021, making this final edition the most sought-after sports watch of the modern era. Complete with original box, papers, and Patek certificate of origin. Authenticated and inspected by master watchmakers.',
-    imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1522335789203-aabd1fc54bc9.jpg',
     imageAlt: 'Patek Philippe Nautilus 5711 Olive Green Dial Macro',
     isNew: false,
   },
@@ -120,7 +120,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "The RM 011 stands as Richard Mille's most celebrated model — an aerospace-grade tonneau case in NTPT carbon paired with titanium components. The skeletonized RMAC3 movement provides flyback chronograph, annual calendar and GMT functions. A tourbillon-level statement piece worn by Formula 1 champion Felipe Massa.",
-    imageUrl: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1509042239860-f550ce710b93.jpg',
     imageAlt: 'Richard Mille RM 011 NTPT Carbon Skeleton Macro',
     isNew: false,
   },
@@ -144,7 +144,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "Vacheron Constantin's Overseas embodies the Maison's 270-year watchmaking legacy in a contemporary sporting guise. The Calibre 5100 movement bears the Hallmark of Geneva, the ultimate certification of quality. Delivered with three interchangeable straps — integrated steel bracelet, rubber, and alligator leather.",
-    imageUrl: 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1614164185128-e4ec99c436d7.jpg',
     imageAlt: 'Vacheron Constantin Overseas Blue Dial Macro Photography',
     isNew: true,
   },
@@ -168,7 +168,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "The Sky-Dweller is Rolex's most complex watch, housing the proprietary Calibre 9002 with annual calendar and dual time zone via the Saros system. In 18k Everose gold with a warm chocolate dial, this is the apex of Rolex's precious metal sports collection — presented unworn with full Rolex set.",
-    imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1524805444758-089113d48a6d.jpg',
     imageAlt: 'Rolex Sky-Dweller 326935 Everose Chocolate Dial Macro',
     isNew: false,
   },
@@ -192,7 +192,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "An unprecedented union of frosted gold finish and Audemars Piguet's haute complication mastery. The Calibre 2935 delivers 10 days of power reserve via its twin barrels, while the flying tourbillon — visible through the signature AP openworked dial — beats at the heart of this masterpiece.",
-    imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1548036328-c9fa89d128fa.jpg',
     imageAlt: 'Audemars Piguet Royal Oak Concept Flying Tourbillon Macro',
     isNew: false,
   },
@@ -216,7 +216,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "Patek Philippe's Aquanaut in 18k white gold with a striking khaki green 'Tropical' dial — the most coveted color in Aquanaut history. The embossed rubber strap mirrors the octagonal bezel motif. Calibre 26-330 S C is a masterwork of Geneva craftsmanship inside an unconventional athlete's shell.",
-    imageUrl: 'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1533139502658-0198f920d8e8.jpg',
     imageAlt: 'Patek Philippe Aquanaut 5168G Khaki Green Macro',
     isNew: true,
   },
@@ -240,7 +240,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "Built for Rafael Nadal's wrist on the ATP circuit, the RM 035-02 Americas endures 5,000 g-forces — tested beyond anything a manufacturing watchmaker has conceived. The RMAL1 caliber features a baseplate of grade 5 titanium micro-blasted to aerospace specification. One of 30 produced for the Americas edition.",
-    imageUrl: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1542496658-e33a6d0d50f6.jpg',
     imageAlt: 'Richard Mille RM 035-02 Americas Rafael Nadal Macro',
     isNew: false,
   },
@@ -264,7 +264,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       "Vacheron Constantin's Calibre 2260 holds the world record for power reserve in a tourbillon wristwatch: an extraordinary 14 days wound through four interconnected spring barrels. In 18k pink gold, the Patrimony Traditionnelle presents this extraordinary complication with the restrained elegance that has defined the Maison since 1755.",
-    imageUrl: 'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1587836374828-4dbafa94cf0e.jpg',
     imageAlt: 'Vacheron Constantin Traditionnelle 14-Day Tourbillon Macro',
     isNew: false,
   },
@@ -288,7 +288,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A modern travel icon with the instantly recognizable blue-and-red Cerachrom bezel. The independently adjustable 24-hour hand makes the GMT-Master II a precise companion for crossing time zones, while the Jubilee bracelet gives this sports reference a distinctly refined presence.',
-    imageUrl: '/assets/watches/rolex-gmt-pepsi.png',
+    imageUrl: 'assets/watches/rolex-gmt-pepsi.png',
     imageAlt: 'Steel GMT watch with blue and red bezel on a dark stone pedestal',
     isNew: true,
   },
@@ -312,7 +312,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The green-bezel Submariner Date brings the disciplined clarity of a professional dive instrument into an unmistakably collectible form. Its ceramic bezel, Chromalight display and 300-metre rating make it equally convincing in the vault or at sea.',
-    imageUrl: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1547996160-81dfa63595aa.jpg',
     imageAlt: 'Luxury steel diver watch with dark blue dial',
     isNew: true,
   },
@@ -336,7 +336,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A layered case architecture, sculpted lugs and a smoked purple dial give the Code 11.59 Chronograph its own architectural language. The integrated flyback mechanism is built for immediate, precise resets and finished to the standard expected from Le Brassus.',
-    imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1523275335684-37898b6baf30.jpg',
     imageAlt: 'Rose gold chronograph watch with a dark dial',
     isNew: false,
   },
@@ -360,7 +360,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A dramatic openworked interpretation of the Royal Oak silhouette. Black ceramic frames the rose-gold accents and exposes the layered bridges beneath the dial, turning every glance into a study of balance, depth and hand finishing.',
-    imageUrl: '/assets/watches/ap-royal-oak-skeleton.png',
+    imageUrl: 'assets/watches/ap-royal-oak-skeleton.png',
     imageAlt: 'Black ceramic and rose gold skeleton watch with integrated bracelet',
     isNew: true,
   },
@@ -384,7 +384,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A quietly monumental perpetual calendar in platinum, pairing a midnight-blue dial with the floating architecture of the ultra-thin Calibre 240 Q. The calendar remains accurate through the changing length of every month and requires correction only once every century.',
-    imageUrl: '/assets/watches/patek-perpetual-midnight.png',
+    imageUrl: 'assets/watches/patek-perpetual-midnight.png',
     imageAlt: 'Platinum perpetual calendar watch with a deep blue dial',
     isNew: false,
   },
@@ -408,7 +408,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The Calatrava distills the dress watch to its essential proportions. A hand-guilloched ivory dial, razor-sharp dauphine hands and a warm rose-gold case create a piece designed for close conversation rather than spectacle.',
-    imageUrl: '/assets/watches/patek-rectangular-rose.png',
+    imageUrl: 'assets/watches/patek-rectangular-rose.png',
     imageAlt: 'Rose gold rectangular dress watch with guilloche dial',
     isNew: true,
   },
@@ -432,7 +432,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A high-energy Aquanaut with a white-gold case, embossed black composite strap and an orange-accented chronograph display. Its flyback action is crisp and intuitive, while the sporty profile remains unmistakably Patek Philippe.',
-    imageUrl: 'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1533139502658-0198f920d8e8.jpg',
     imageAlt: 'Patek Philippe inspired sporty chronograph with dark strap',
     isNew: false,
   },
@@ -456,7 +456,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The RM 029 pairs Richard Mille’s signature tonneau architecture with a highly legible dual-time display. NTPT carbon, grade 5 titanium and a layered skeleton movement deliver the feeling of an aerospace instrument built for constant movement.',
-    imageUrl: '/assets/watches/rm-carbon-tourbillon.png',
+    imageUrl: 'assets/watches/rm-carbon-tourbillon.png',
     imageAlt: 'Black NTPT carbon tonneau watch with skeleton tourbillon movement',
     isNew: false,
   },
@@ -480,7 +480,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The RM 67-01 is Richard Mille’s answer to a genuinely wearable ultra-flat sports watch. Its grade 5 titanium case and openworked architecture keep the piece exceptionally light, while the lateral date display gives the dial a technical, graphic rhythm.',
-    imageUrl: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1542496658-e33a6d0d50f6.jpg',
     imageAlt: 'Slim skeletonized titanium sports watch on a dark strap',
     isNew: true,
   },
@@ -504,7 +504,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A travelling complication with a vivid blue centre depicting the world’s continents and a 24-hour day-and-night ring. The Overseas World Time turns global timekeeping into a tactile ritual, with a quick-set system designed for life between cities.',
-    imageUrl: '/assets/watches/vc-world-time.png',
+    imageUrl: 'assets/watches/vc-world-time.png',
     imageAlt: 'Steel world-time watch with blue map dial and leather strap',
     isNew: true,
   },
@@ -528,7 +528,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A formal calendar watch with an opaline silver dial, applied gold indexes and a moonphase that adds a quiet point of poetry. Its complete calendar balances daily usability with the discreet grandeur of the Geneva tradition.',
-    imageUrl: 'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1587836374828-4dbafa94cf0e.jpg',
     imageAlt: 'Vacheron Constantin inspired gold calendar watch on leather strap',
     isNew: false,
   },
@@ -552,7 +552,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The Datejust 36 is a study in proportion, now refreshed by a luminous mint-green dial. The fluted bezel catches the light with every movement, while the Oystersteel case keeps the piece durable enough for daily rotation.',
-    imageUrl: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1524805444758-089113d48a6d.jpg',
     imageAlt: 'Classic steel date watch with a pale green dial',
     isNew: true,
   },
@@ -576,7 +576,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The rose-gold Nautilus Travel Time Chronograph is built around the realities of modern travel: two time zones, a flyback chronograph and a date aperture aligned with local time. The blue-grey dial gives the complicated layout an unusually calm presence.',
-    imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1522335789203-aabd1fc54bc9.jpg',
     imageAlt: 'Rose gold integrated-bracelet travel chronograph watch',
     isNew: false,
   },
@@ -600,7 +600,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'The perpetual calendar complication takes on the Royal Oak’s sharp geometry in a black ceramic case with a blue Grande Tapisserie dial. Four subdials keep the calendar balanced and legible without compromising the collection’s unmistakable visual tension.',
-    imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1548036328-c9fa89d128fa.jpg',
     imageAlt: 'Black ceramic perpetual calendar watch with blue textured dial',
     isNew: false,
   },
@@ -624,7 +624,7 @@ export const watches: Watch[] = [
     boxAndPapers: true,
     description:
       'A modern reading of the roaring twenties, the American 1921 turns its dial diagonally toward the wearer. The cushion case and white-gold finish make the unusual orientation feel deliberate, elegant and surprisingly intimate on the wrist.',
-    imageUrl: 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1000&q=80',
+    imageUrl: 'assets/watches/unsplash-1614164185128-e4ec99c436d7.jpg',
     imageAlt: 'Elegant white gold cushion-shaped dress watch',
     isNew: true,
   },

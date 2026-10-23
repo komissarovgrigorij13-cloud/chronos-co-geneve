@@ -495,7 +495,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
               {/* Image Preview with Studio Lighting */}
               <div className="relative aspect-square rounded-2xl overflow-hidden bg-obsidian-800 border border-platinum-600/20 shadow-inner">
                 <img
-                  src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=80"
+                  src="assets/watches/unsplash-1522335789203-aabd1fc54bc9.jpg"
                   alt="Patek Philippe Grand Complication"
                   className="w-full h-full object-cover scale-105"
                 />
