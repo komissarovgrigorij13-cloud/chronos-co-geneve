@@ -29,7 +29,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
     <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-black/80 p-4 backdrop-blur-md sm:p-8" onMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose();
     }}>
-      <div className={`relative my-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-gold-500/25 bg-obsidian-950 shadow-2xl shadow-black ${language === 'AR' ? 'dir-rtl' : ''}`}>
+      <div className={`relative my-auto max-h-[calc(100vh-2rem)] w-full max-w-7xl overflow-x-hidden overflow-y-auto rounded-[2rem] border border-gold-500/25 bg-obsidian-950 shadow-2xl shadow-black ${language === 'AR' ? 'dir-rtl' : ''}`}>
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_35%_45%,rgba(212,175,55,0.11),transparent_36%),radial-gradient(circle_at_85%_20%,rgba(197,168,128,0.06),transparent_30%)]" />
 
         <button
@@ -40,10 +40,10 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
           <X size={17} />
         </button>
 
-        <div className="relative grid min-h-[min(760px,calc(100vh-64px))] grid-cols-1 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative grid min-h-[min(760px,calc(100vh-64px))] grid-cols-1 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="flex flex-col justify-center px-5 pb-3 pt-16 sm:px-10 lg:px-14 lg:py-12">
             <div className="mb-[-2rem] flex justify-center sm:mb-[-3rem] lg:mb-[-1rem]">
-              <GlobalBoutiqueGlobe language={language} interactive showLabels className="max-w-[620px]" />
+              <GlobalBoutiqueGlobe language={language} interactive showLabels className="max-h-[calc(100vh-8rem)] max-w-[680px]" />
             </div>
             <div className="relative z-10 mt-[-1rem] text-center lg:mt-[-0.5rem]">
               <p className="mb-2 text-[10px] uppercase tracking-[0.36em] text-gold-400">{t.globeDragHint}</p>
@@ -61,7 +61,7 @@ export function GlobalNetworkModal({ open, language, onClose }: GlobalNetworkMod
               <div className="mt-5 h-px w-20 bg-gold-400/70" />
             </div>
 
-            <div className="space-y-2.5">
+            <div className="max-h-[calc(100vh-18rem)] space-y-2.5 overflow-y-auto pr-1">
               {BOUTIQUE_CITIES.map((city) => {
                 const label = city.labels[language];
                 return (

@@ -433,9 +433,9 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
           }}
           className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 z-10 pointer-events-none overflow-hidden"
         >
-          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-3 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+          <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-3 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
             <div className="hidden justify-center lg:flex">
-              <GlobalBoutiqueGlobe language={language} interactive={false} highlightProgress={globeProgress} showLabels />
+              <GlobalBoutiqueGlobe language={language} interactive={false} highlightProgress={globeProgress} showLabels className="max-w-[620px] scale-105" />
             </div>
 
             <div className="min-w-0">

@@ -123,6 +123,7 @@ export function GlobalBoutiqueGlobe({
       context.stroke();
 
       hitPointsRef.current = [];
+      const drawnLabels: Array<[number, number]> = [];
       for (const city of BOUTIQUE_CITIES) {
         const point = projection(city.coordinates);
         if (!point) continue;
@@ -146,7 +147,8 @@ export function GlobalBoutiqueGlobe({
         }
         context.restore();
 
-        if (showLabels && isActive && width > 520) {
+        const hasNearbyLabel = drawnLabels.some(([labelX, labelY]) => Math.hypot(labelX - point[0], labelY - point[1]) < 54);
+        if (showLabels && isActive && width > 520 && !hasNearbyLabel) {
           const label = city.labels[propsRef.current.language];
           context.font = '600 10px Inter, sans-serif';
           context.fillStyle = '#F0D060';
@@ -154,6 +156,7 @@ export function GlobalBoutiqueGlobe({
           context.font = '9px Inter, sans-serif';
           context.fillStyle = 'rgba(220, 224, 220, 0.72)';
           context.fillText(label.country, point[0] + 10, point[1] + 9);
+          drawnLabels.push(point);
         }
       }
 
@@ -206,7 +209,7 @@ export function GlobalBoutiqueGlobe({
   const hoveredLabel = hoveredCity?.labels[language];
 
   return (
-    <div className={`relative aspect-square w-full max-w-[560px] ${className}`}>
+    <div className={`relative aspect-square w-full max-w-full ${className}`}>
       <div className="absolute inset-[5%] rounded-full bg-[#121514] shadow-[0_0_90px_rgba(212,175,55,0.12)]" />
       <canvas
         ref={canvasRef}

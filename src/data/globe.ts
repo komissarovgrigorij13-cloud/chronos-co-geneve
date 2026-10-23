@@ -74,6 +74,149 @@ export const BOUTIQUE_CITIES: BoutiqueCity[] = [
       AR: { city: 'موسكو', country: 'روسيا' },
     },
   },
+  {
+    id: 'paris',
+    countryId: '250',
+    coordinates: [2.3522, 48.8566],
+    labels: {
+      EN: { city: 'Paris', country: 'France' },
+      RU: { city: 'Париж', country: 'Франция' },
+      FR: { city: 'Paris', country: 'France' },
+      AR: { city: 'باريس', country: 'فرنسا' },
+    },
+  },
+  {
+    id: 'new-york',
+    countryId: '840',
+    coordinates: [-74.006, 40.7128],
+    labels: {
+      EN: { city: 'New York', country: 'United States' },
+      RU: { city: 'Нью-Йорк', country: 'США' },
+      FR: { city: 'New York', country: 'États-Unis' },
+      AR: { city: 'نيويورك', country: 'الولايات المتحدة' },
+    },
+  },
+  {
+    id: 'toronto',
+    countryId: '124',
+    coordinates: [-79.3832, 43.6532],
+    labels: {
+      EN: { city: 'Toronto', country: 'Canada' },
+      RU: { city: 'Торонто', country: 'Канада' },
+      FR: { city: 'Toronto', country: 'Canada' },
+      AR: { city: 'تورنتو', country: 'كندا' },
+    },
+  },
+  {
+    id: 'sydney',
+    countryId: '036',
+    coordinates: [151.2093, -33.8688],
+    labels: {
+      EN: { city: 'Sydney', country: 'Australia' },
+      RU: { city: 'Сидней', country: 'Австралия' },
+      FR: { city: 'Sydney', country: 'Australie' },
+      AR: { city: 'سيدني', country: 'أستراليا' },
+    },
+  },
+  {
+    id: 'oslo',
+    countryId: '578',
+    coordinates: [10.7522, 59.9139],
+    labels: {
+      EN: { city: 'Oslo', country: 'Norway' },
+      RU: { city: 'Осло', country: 'Норвегия' },
+      FR: { city: 'Oslo', country: 'Norvège' },
+      AR: { city: 'أوسلو', country: 'النرويج' },
+    },
+  },
+  {
+    id: 'beijing',
+    countryId: '156',
+    coordinates: [116.4074, 39.9042],
+    labels: {
+      EN: { city: 'Beijing', country: 'China' },
+      RU: { city: 'Пекин', country: 'Китай' },
+      FR: { city: 'Pékin', country: 'Chine' },
+      AR: { city: 'بكين', country: 'الصين' },
+    },
+  },
+  {
+    id: 'warsaw',
+    countryId: '616',
+    coordinates: [21.0122, 52.2297],
+    labels: {
+      EN: { city: 'Warsaw', country: 'Poland' },
+      RU: { city: 'Варшава', country: 'Польша' },
+      FR: { city: 'Varsovie', country: 'Pologne' },
+      AR: { city: 'وارسو', country: 'بولندا' },
+    },
+  },
+  {
+    id: 'munich',
+    countryId: '276',
+    coordinates: [11.582, 48.1351],
+    labels: {
+      EN: { city: 'Munich', country: 'Germany' },
+      RU: { city: 'Мюнхен', country: 'Германия' },
+      FR: { city: 'Munich', country: 'Allemagne' },
+      AR: { city: 'ميونخ', country: 'ألمانيا' },
+    },
+  },
+  {
+    id: 'lisbon',
+    countryId: '620',
+    coordinates: [-9.1393, 38.7223],
+    labels: {
+      EN: { city: 'Lisbon', country: 'Portugal' },
+      RU: { city: 'Лиссабон', country: 'Португалия' },
+      FR: { city: 'Lisbonne', country: 'Portugal' },
+      AR: { city: 'لشبونة', country: 'البرتغال' },
+    },
+  },
+  {
+    id: 'milan',
+    countryId: '380',
+    coordinates: [9.19, 45.4642],
+    labels: {
+      EN: { city: 'Milan', country: 'Italy' },
+      RU: { city: 'Милан', country: 'Италия' },
+      FR: { city: 'Milan', country: 'Italie' },
+      AR: { city: 'ميلانو', country: 'إيطاليا' },
+    },
+  },
+  {
+    id: 'doha',
+    countryId: '634',
+    coordinates: [51.531, 25.2854],
+    labels: {
+      EN: { city: 'Doha', country: 'Qatar' },
+      RU: { city: 'Доха', country: 'Катар' },
+      FR: { city: 'Doha', country: 'Qatar' },
+      AR: { city: 'الدوحة', country: 'قطر' },
+    },
+  },
+  {
+    id: 'istanbul',
+    countryId: '792',
+    coordinates: [28.9784, 41.0082],
+    labels: {
+      EN: { city: 'Istanbul', country: 'Turkey' },
+      RU: { city: 'Стамбул', country: 'Турция' },
+      FR: { city: 'Istanbul', country: 'Turquie' },
+      AR: { city: 'إسطنبول', country: 'تركيا' },
+    },
+  },
+  {
+    id: 'brasilia',
+    countryId: '076',
+    coordinates: [-47.8825, -15.7942],
+    labels: {
+      EN: { city: 'Brasília', country: 'Brazil' },
+      RU: { city: 'Бразилиа', country: 'Бразилия' },
+      FR: { city: 'Brasília', country: 'Brésil' },
+      AR: { city: 'برازيليا', country: 'البرازيل' },
+    },
+  },
 ];
 
 export const boutiqueCountryIds = new Set(BOUTIQUE_CITIES.map((city) => city.countryId));
