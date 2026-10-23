@@ -47,6 +47,15 @@ function roundedRect(
   context.closePath();
 }
 
+const countryFlags: Record<string, string> = {
+  '036': '🇦🇺', '076': '🇧🇷', '124': '🇨🇦', '156': '🇨🇳', '208': '🇩🇰',
+  '233': '🇪🇪', '250': '🇫🇷', '276': '🇩🇪', '380': '🇮🇹', '392': '🇯🇵',
+  '398': '🇰🇿', '410': '🇰🇷', '428': '🇱🇻', '470': '🇲🇹', '492': '🇲🇨',
+  '578': '🇳🇴', '616': '🇵🇱', '620': '🇵🇹', '634': '🇶🇦', '643': '🇷🇺',
+  '702': '🇸🇬', '724': '🇪🇸', '752': '🇸🇪', '756': '🇨🇭', '764': '🇹🇭',
+  '784': '🇦🇪', '792': '🇹🇷', '826': '🇬🇧', '840': '🇺🇸',
+};
+
 export function GlobalBoutiqueGlobe({
   language,
   interactive = true,
@@ -195,11 +204,13 @@ export function GlobalBoutiqueGlobe({
           const label = city.labels[propsRef.current.language];
           const cityFontSize = isScrollSequence ? 14 : 12;
           const countryFontSize = isScrollSequence ? 11 : 10;
+          const flag = countryFlags[city.countryId] ?? '•';
+          const flagWidth = 23;
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           const cityWidth = context.measureText(label.city).width;
           context.font = `${countryFontSize}px Inter, sans-serif`;
           const countryWidth = context.measureText(label.country).width;
-          const labelWidth = Math.max(cityWidth, countryWidth) + 18;
+          const labelWidth = Math.max(cityWidth, countryWidth) + flagWidth + 22;
           const labelHeight = isScrollSequence ? 38 : 34;
           const labelX = Math.max(8, Math.min(width - labelWidth - 8, point[0] + 10));
           const labelY = Math.max(8, Math.min(height - labelHeight - 8, point[1] - labelHeight - 8));
@@ -218,12 +229,14 @@ export function GlobalBoutiqueGlobe({
           context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
           context.lineWidth = 1;
           context.stroke();
+          context.font = `${isScrollSequence ? 17 : 15}px "Segoe UI Emoji", "Apple Color Emoji", sans-serif`;
+          context.fillText(flag, labelX + 8, labelY + (isScrollSequence ? 18 : 16));
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           context.fillStyle = '#F4D66D';
-          context.fillText(label.city, labelX + 9, labelY + cityFontSize + 3);
+          context.fillText(label.city, labelX + flagWidth + 5, labelY + cityFontSize + 3);
           context.font = `${countryFontSize}px Inter, sans-serif`;
           context.fillStyle = 'rgba(220, 224, 220, 0.72)';
-          context.fillText(label.country, labelX + 9, labelY + cityFontSize + countryFontSize + 5);
+          context.fillText(label.country, labelX + flagWidth + 5, labelY + cityFontSize + countryFontSize + 5);
           context.restore();
           drawnLabels.push({ x: labelX, y: labelY, width: labelWidth, height: labelHeight });
         }
