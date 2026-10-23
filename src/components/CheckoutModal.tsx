@@ -5,6 +5,8 @@ import type { CartItem } from '../hooks/useStore';
 import type { CurrencyCode } from '../data/watches';
 import { formatPrice, consiergeNames } from '../data/watches';
 import { translations, type Language } from '../data/translations';
+import { ORDERED_BOUTIQUE_CITIES } from '../data/globe';
+import { CountryFlag } from './CountryFlag';
 
 interface CheckoutModalProps {
   open: boolean;
@@ -19,7 +21,6 @@ interface CheckoutModalProps {
 
 type DeliveryMethod = 'courier' | 'showroom';
 type PaymentMethod = 'wire' | 'crypto' | 'banking';
-type ShowroomCity = 'Geneva' | 'Dubai' | 'London';
 
 export function CheckoutModal({
   open,
@@ -32,7 +33,7 @@ export function CheckoutModal({
   onReset,
 }: CheckoutModalProps) {
   const [delivery, setDelivery] = useState<DeliveryMethod>('courier');
-  const [city, setCity] = useState<ShowroomCity>('Geneva');
+  const [cityId, setCityId] = useState(ORDERED_BOUTIQUE_CITIES[0]?.id ?? 'geneva');
   const [payment, setPayment] = useState<PaymentMethod>('wire');
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
@@ -40,13 +41,15 @@ export function CheckoutModal({
 
   const t = translations[language];
   const total = items.reduce((s, i) => s + i.watch.priceUSD, 0);
+  const selectedCity = ORDERED_BOUTIQUE_CITIES.find((city) => city.id === cityId) ?? ORDERED_BOUTIQUE_CITIES[0];
+  const selectedCityLabel = selectedCity?.labels[language].city ?? '';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!clientName.trim() || !clientEmail.trim()) return;
-    const deliveryLabel = delivery === 'courier' ? t.armoredCourier : `${t.showroomPickup} (${city})`;
+    const deliveryLabel = delivery === 'courier' ? t.armoredCourier : `${t.showroomPickup} (${selectedCityLabel})`;
     const paymentLabel = payment === 'wire' ? t.wireTransfer : payment === 'crypto' ? t.crypto : t.privateBanking;
-    onConfirm(assignedConcierge, deliveryLabel, paymentLabel, delivery === 'showroom' ? city : undefined);
+    onConfirm(assignedConcierge, deliveryLabel, paymentLabel, delivery === 'showroom' ? selectedCityLabel : undefined);
   };
 
   return (
@@ -182,21 +185,30 @@ export function CheckoutModal({
                         onSelect={() => setDelivery('showroom')}
                       >
                         {delivery === 'showroom' && (
-                          <div className="flex gap-2 mt-2.5">
-                            {(['Geneva', 'Dubai', 'London'] as ShowroomCity[]).map((c) => (
+                          <div className="mt-2.5 grid max-h-56 grid-cols-1 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-2">
+                            {ORDERED_BOUTIQUE_CITIES.map((boutique) => {
+                              const label = boutique.labels[language];
+                              const selected = cityId === boutique.id;
+                              return (
                               <button
-                                key={c}
+                                key={boutique.id}
                                 type="button"
-                                onClick={() => setCity(c)}
-                                className={`px-3 py-1 rounded-lg text-[10px] tracking-widest uppercase border transition-colors ${
-                                  city === c
-                                    ? 'bg-gold-500/20 border-gold-400 text-gold-300 font-medium'
-                                    : 'border-platinum-600/20 text-platinum-500 hover:text-platinum-300'
+                                onClick={() => setCityId(boutique.id)}
+                                aria-label={`${label.city}, ${label.country}`}
+                                className={`flex min-h-10 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-colors ${
+                                  selected
+                                    ? 'border-gold-400 bg-gold-500/15 text-gold-300'
+                                    : 'border-platinum-600/20 text-platinum-500 hover:border-gold-500/40 hover:text-platinum-300'
                                 }`}
                               >
-                                {c}
+                                <CountryFlag countryId={boutique.countryId} className="h-4 w-[26px]" />
+                                <span className="min-w-0">
+                                  <span className="block truncate text-[10px] font-medium uppercase tracking-[0.08em]">{label.city}</span>
+                                  <span className="block truncate text-[9px] text-platinum-600">{label.country}</span>
+                                </span>
                               </button>
-                            ))}
+                              );
+                            })}
                           </div>
                         )}
                       </DeliveryOption>
