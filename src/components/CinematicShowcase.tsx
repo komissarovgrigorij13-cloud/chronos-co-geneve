@@ -367,7 +367,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const globeSequenceReady = globeState.progress > 0;
 
   return (
-    <div ref={containerRef} className="relative h-[1400vh] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative h-[4200vh] bg-[#0a0a0a]">
       {/* ── STICKY PINNED FULLSCREEN VIEWPORT ── */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0a0a0a] flex items-center justify-center z-20">
         {/* Subtle Luxury Vignette & Radial Light */}
