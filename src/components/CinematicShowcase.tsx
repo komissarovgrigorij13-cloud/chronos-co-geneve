@@ -335,8 +335,8 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
 
   // Let the final vault card arrive fully before fading this scene away.
   const p3Opacity = useTransform(scrollYProgress, [0.153, 0.183, 0.985, 0.995], [0, 1, 1, 0]);
-  const p3TrackX = useTransform(scrollYProgress, [0.58, 0.98], [vaultTravel.start, vaultTravel.end]);
-  const p3GlobeProgress = useTransform(scrollYProgress, [0.58, 0.98], [0, 1]);
+  const p3TrackX = useTransform(scrollYProgress, [0.24, 0.98], [vaultTravel.start, vaultTravel.end]);
+  const p3GlobeProgress = useTransform(scrollYProgress, [0.24, 0.98], [0, 1]);
   useMotionValueEvent(p3GlobeProgress, 'change', (value) => {
     const progress = Math.max(0, Math.min(1, value));
     const position = progress * (ORDERED_BOUTIQUE_CITIES.length - 1);
