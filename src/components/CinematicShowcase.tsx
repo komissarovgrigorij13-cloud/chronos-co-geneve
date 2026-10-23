@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Shield, Sparkles, Building2, Clock, ArrowDown, Lock, ChevronRight } from 'lucide-react';
 import { translations, type Language } from '../data/translations';
@@ -222,9 +222,36 @@ const VAULT_ITEMS: Record<Language, VaultCard[]> = {
 
 export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowcaseProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const vaultViewportRef = useRef<HTMLDivElement>(null);
+  const vaultTrackRef = useRef<HTMLDivElement>(null);
+  const [vaultTravel, setVaultTravel] = useState({ start: 0, end: 0 });
   const t = translations[language];
 
-  // Global scroll progress through the 500vh container
+  useLayoutEffect(() => {
+    const viewport = vaultViewportRef.current;
+    const track = vaultTrackRef.current;
+    if (!viewport || !track) return;
+
+    const measure = () => {
+      const viewportStyle = getComputedStyle(viewport);
+      const availableWidth = viewport.clientWidth
+        - parseFloat(viewportStyle.paddingLeft)
+        - parseFloat(viewportStyle.paddingRight);
+      const firstCardWidth = track.firstElementChild?.getBoundingClientRect().width ?? 0;
+      const trackPadding = parseFloat(getComputedStyle(track).paddingLeft);
+      const start = Math.max(0, (availableWidth - firstCardWidth) / 2 - trackPadding);
+      const end = Math.min(start, availableWidth - track.scrollWidth);
+      setVaultTravel({ start, end });
+    };
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    observer.observe(track);
+    measure();
+    return () => observer.disconnect();
+  }, []);
+
+  // Global scroll progress through the pinned showcase
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -245,21 +272,19 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const p2RotateY = useTransform(scrollYProgress, [0.25, 0.35, 0.45], [-15, 0, 12]);
   const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.52 ? 'flex' : 'none'));
 
-  // ── PHASE 3: GLOBAL VAULTS NETWORK HORIZONTAL CAROUSEL [0.55 -> 0.80] ──
-  // Enters clean at 0.55, smooth horizontal carousel shift, fades to black by 0.78
-  const p3Opacity = useTransform(scrollYProgress, [0.54, 0.58, 0.76, 0.80], [0, 1, 1, 0]);
-  const p3TrackX = useTransform(scrollYProgress, [0.56, 0.76], ['25%', '-55%']);
-  const p3Display = useTransform(scrollYProgress, (v) => (v >= 0.53 && v < 0.82 ? 'flex' : 'none'));
+  // Let the final vault card arrive fully before fading this scene away.
+  const p3Opacity = useTransform(scrollYProgress, [0.54, 0.58, 0.86, 0.90], [0, 1, 1, 0]);
+  const p3TrackX = useTransform(scrollYProgress, [0.58, 0.82], [vaultTravel.start, vaultTravel.end]);
 
-  // ── PHASE 4: TRANSITION TO CATALOGUE [0.85 -> 1.00] ───────────────────
-  const p4Opacity = useTransform(scrollYProgress, [0.84, 0.90, 0.98, 1.0], [0, 1, 1, 1]);
-  const p4Scale = useTransform(scrollYProgress, [0.84, 0.92], [0.92, 1]);
-  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.83 ? 'flex' : 'none'));
+  // ── PHASE 4: TRANSITION TO CATALOGUE [0.90 -> 1.00] ───────────────────
+  const p4Opacity = useTransform(scrollYProgress, [0.90, 0.95, 1.0], [0, 1, 1]);
+  const p4Scale = useTransform(scrollYProgress, [0.90, 0.96], [0.92, 1]);
+  const p4Display = useTransform(scrollYProgress, (v) => (v >= 0.90 ? 'flex' : 'none'));
 
   const vaultItems = VAULT_ITEMS[language] || VAULT_ITEMS.EN;
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative h-[650vh] bg-[#0a0a0a]">
       {/* ── STICKY PINNED FULLSCREEN VIEWPORT ── */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0a0a0a] flex items-center justify-center z-20">
         {/* Subtle Luxury Vignette & Radial Light */}
@@ -343,20 +368,20 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
               rotateX: p2RotateX,
               rotateY: p2RotateY,
             }}
-            className="w-full max-w-3xl bg-obsidian-900/90 backdrop-blur-xl border border-[#C5A880]/30 shadow-2xl shadow-black p-6 sm:p-10 relative overflow-hidden"
+            className="w-full max-w-3xl rounded-3xl bg-obsidian-900/90 backdrop-blur-xl border border-[#C5A880]/30 shadow-2xl shadow-black p-6 sm:p-10 relative overflow-hidden"
           >
             {/* Shimmer gradient line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-left">
               {/* Image Preview with Studio Lighting */}
-              <div className="relative aspect-square overflow-hidden bg-obsidian-800 border border-platinum-600/20 shadow-inner">
+              <div className="relative aspect-square rounded-2xl overflow-hidden bg-obsidian-800 border border-platinum-600/20 shadow-inner">
                 <img
                   src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=80"
                   alt="Patek Philippe Grand Complication"
                   className="w-full h-full object-cover scale-105"
                 />
-                <div className="absolute top-3 left-3 px-2 py-0.5 bg-obsidian-950/90 border border-gold-500/40 text-gold-400 text-[9px] uppercase tracking-widest">
+                <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-obsidian-950/90 border border-gold-500/40 text-gold-400 text-[9px] uppercase tracking-widest">
                   Grand Complication
                 </div>
               </div>
@@ -399,8 +424,8 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
             STAGE 3: GLOBAL VAULTS NETWORK (Horizontal Carousel) [0.55 - 0.80]
         ══════════════════════════════════════════════════════════════════ */}
         <motion.div
+          ref={vaultViewportRef}
           style={{
-            display: p3Display,
             opacity: p3Opacity,
           }}
           className="absolute inset-0 flex flex-col justify-center px-6 z-10 pointer-events-none overflow-hidden"
@@ -420,13 +445,14 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
 
           {/* Smooth Sliding Track */}
           <motion.div
+            ref={vaultTrackRef}
             style={{ x: p3TrackX }}
             className="flex gap-6 sm:gap-8 items-center cursor-grab active:cursor-grabbing w-max px-8"
           >
             {vaultItems.map((item, idx) => (
               <div
                 key={idx}
-                className="w-[320px] sm:w-[380px] bg-obsidian-900/95 backdrop-blur-xl border border-gold-600/30 p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden"
+                className="w-[320px] sm:w-[380px] rounded-2xl bg-obsidian-900/95 backdrop-blur-xl border border-gold-600/30 p-6 shadow-2xl shadow-black flex-shrink-0 text-left relative overflow-hidden"
               >
                 <div className="flex items-center justify-between gap-2 border-b border-platinum-600/15 pb-3 mb-4">
                   <div>

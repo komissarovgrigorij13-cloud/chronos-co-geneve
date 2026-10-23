@@ -67,7 +67,7 @@ export function VIPPortalModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="relative w-full max-w-4xl bg-obsidian-800 border border-gold-600/30 shadow-2xl shadow-black flex flex-col max-h-[88vh] overflow-hidden z-10"
+            className="relative w-full max-w-4xl rounded-3xl bg-obsidian-800 border border-gold-600/30 shadow-2xl shadow-black flex flex-col max-h-[88vh] overflow-hidden z-10"
           >
             {/* Top Bar */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-platinum-600/15 bg-obsidian-850">
@@ -83,7 +83,7 @@ export function VIPPortalModal({
 
               <button
                 onClick={onClose}
-                className="p-2 text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-700 transition-colors"
+                className="p-2 rounded-full text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-700 transition-colors"
                 aria-label="Close VIP Lounge"
               >
                 <X size={18} />
@@ -123,7 +123,7 @@ export function VIPPortalModal({
               {activeTab === 'profile' && (
                 <div className="space-y-6">
                   {/* Status Banner */}
-                  <div className="p-5 border border-gold-500/40 bg-gradient-to-r from-gold-500/10 via-obsidian-800 to-obsidian-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="p-5 rounded-2xl border border-gold-500/40 bg-gradient-to-r from-gold-500/10 via-obsidian-800 to-obsidian-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 border border-gold-500/50 bg-gold-500/15 text-[10px] font-semibold tracking-widest uppercase text-gold-400 mb-2">
                         Tier I Member · Active
@@ -142,7 +142,7 @@ export function VIPPortalModal({
 
                   {/* Manager Card */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-obsidian-750 border border-platinum-600/15">
+                    <div className="p-4 rounded-2xl bg-obsidian-750 border border-platinum-600/15">
                       <p className="text-label text-platinum-500 mb-3">Dedicated Senior Concierge</p>
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-12 h-12 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center">
@@ -163,7 +163,7 @@ export function VIPPortalModal({
                       </button>
                     </div>
 
-                    <div className="p-4 bg-obsidian-750 border border-platinum-600/15 flex flex-col justify-between">
+                    <div className="p-4 rounded-2xl bg-obsidian-750 border border-platinum-600/15 flex flex-col justify-between">
                       <div>
                         <p className="text-label text-platinum-500 mb-2">Privileges & Benefits</p>
                         <ul className="space-y-2 text-xs text-platinum-400">
@@ -196,7 +196,7 @@ export function VIPPortalModal({
                     </div>
                   ) : (
                     orders.map((order) => (
-                      <div key={order.id} className="p-5 bg-obsidian-750 border border-platinum-600/15 space-y-4">
+                      <div key={order.id} className="p-5 rounded-2xl bg-obsidian-750 border border-platinum-600/15 space-y-4">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-platinum-600/10 pb-3">
                           <div>
                             <span className="font-mono text-sm tracking-widest text-gold-400 font-medium">
@@ -229,7 +229,7 @@ export function VIPPortalModal({
                           <p className="text-[10px] uppercase tracking-widest text-platinum-600">Timepieces In Allocation</p>
                           <div className="flex flex-wrap gap-2">
                             {order.items.map((watch) => (
-                              <div key={watch.id} className="flex items-center gap-2 p-2 bg-obsidian-800 border border-platinum-600/10 text-xs">
+                              <div key={watch.id} className="flex items-center gap-2 p-2 rounded-lg bg-obsidian-800 border border-platinum-600/10 text-xs">
                                 <span className="text-gold-400 font-medium">{watch.brand}</span>
                                 <span className="text-platinum-300">{watch.model}</span>
                                 <span className="text-[10px] text-platinum-500">({watch.ref})</span>
@@ -254,11 +254,11 @@ export function VIPPortalModal({
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {vaultedWatches.map((watch) => (
-                        <div key={watch.id} className="p-4 bg-obsidian-750 border border-platinum-600/15 flex gap-4">
+                        <div key={watch.id} className="p-4 rounded-2xl bg-obsidian-750 border border-platinum-600/15 flex gap-4">
                           <img
                             src={watch.imageUrl}
                             alt={watch.imageAlt}
-                            className="w-20 h-20 object-cover bg-obsidian-700 flex-shrink-0"
+                            className="w-20 h-20 rounded-xl object-cover bg-obsidian-700 flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0 flex flex-col justify-between">
                             <div>
@@ -271,13 +271,13 @@ export function VIPPortalModal({
                             <div className="flex gap-2 mt-3">
                               <button
                                 onClick={() => onViewWatch(watch)}
-                                className="px-2.5 py-1 text-[10px] uppercase tracking-wider border border-platinum-600/30 text-platinum-400 hover:border-gold-500/50 hover:text-gold-300 transition-colors"
+                                className="px-2.5 py-1 rounded-lg text-[10px] uppercase tracking-wider border border-platinum-600/30 text-platinum-400 hover:border-gold-500/50 hover:text-gold-300 transition-colors"
                               >
                                 {t.viewDetails}
                               </button>
                               <button
                                 onClick={() => onAddToCart(watch)}
-                                className="px-2.5 py-1 text-[10px] uppercase tracking-wider bg-gold-500/20 border border-gold-500/50 text-gold-300 hover:bg-gold-500/30 transition-colors"
+                                className="px-2.5 py-1 rounded-lg text-[10px] uppercase tracking-wider bg-gold-500/20 border border-gold-500/50 text-gold-300 hover:bg-gold-500/30 transition-colors"
                               >
                                 {t.inquire}
                               </button>
@@ -299,7 +299,7 @@ export function VIPPortalModal({
 
               {activeTab === 'chat' && (
                 <div className="flex flex-col h-[480px]">
-                  <div className="flex items-center justify-between p-3 bg-obsidian-850 border border-platinum-600/10 mb-3 text-xs">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-obsidian-850 border border-platinum-600/10 mb-3 text-xs">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <span className="text-platinum-300 font-medium">Élodie Marchetti</span>
@@ -309,7 +309,7 @@ export function VIPPortalModal({
                   </div>
 
                   {/* Messages Area */}
-                  <div className="flex-1 overflow-y-auto space-y-3 p-3 bg-obsidian-900/60 border border-platinum-600/10">
+                  <div className="flex-1 overflow-y-auto space-y-3 p-3 rounded-xl bg-obsidian-900/60 border border-platinum-600/10">
                     {chatMessages.map((msg) => (
                       <div
                         key={msg.id}

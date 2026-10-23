@@ -56,7 +56,7 @@ export function Header({
             placeholder={t.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="input-luxury pl-8 py-2 text-xs rounded-none bg-obsidian-800/80 border-platinum-600/15"
+            className="input-luxury pl-8 py-2 text-xs bg-obsidian-800/80 border-platinum-600/15"
           />
         </div>
 
@@ -68,7 +68,7 @@ export function Header({
               {language}
               <ChevronDown size={11} />
             </button>
-            <div className="absolute right-0 top-full mt-1 bg-obsidian-800 border border-gold-600/25 py-1 min-w-[75px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
+            <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[75px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
               {languages.map((lang) => (
                 <button
                   key={lang}
@@ -93,7 +93,7 @@ export function Header({
               {currencies[currency].label}
               <ChevronDown size={11} />
             </button>
-            <div className="absolute right-0 top-full mt-1 bg-obsidian-800 border border-gold-600/25 py-1 min-w-[80px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
+            <div className="absolute right-0 top-full mt-1 rounded-xl bg-obsidian-800 border border-gold-600/25 py-1 min-w-[80px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 shadow-xl shadow-black/80">
               {currencyCodes.map((code) => (
                 <button
                   key={code}
@@ -115,7 +115,7 @@ export function Header({
           {/* VIP Lounge Button */}
           <button
             onClick={onOpenVip}
-            className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] tracking-widest uppercase border border-gold-500/40 text-gold-400 bg-gold-500/10 hover:bg-gold-500/20 hover:border-gold-400 transition-all duration-200"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] tracking-widest uppercase border border-gold-500/40 text-gold-400 bg-gold-500/10 hover:bg-gold-500/20 hover:border-gold-400 transition-all duration-200"
             title="VIP Client Lounge"
           >
             <Crown size={12} className="text-gold-400" />

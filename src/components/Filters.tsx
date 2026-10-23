@@ -115,7 +115,7 @@ function FilterPill({
       onClick={onClick}
       className={`
         ${small ? 'px-2.5 py-1 text-[10px]' : 'px-3 py-1.5 text-xs'}
-        font-medium tracking-wider uppercase border transition-all duration-200
+        font-medium tracking-wider uppercase rounded-full border transition-all duration-300
         ${active
           ? 'bg-gold-500/15 border-gold-500/60 text-gold-400 font-semibold shadow-sm'
           : 'border-platinum-600/20 text-platinum-400 hover:border-platinum-500/40 hover:text-platinum-200 hover:bg-obsidian-800'

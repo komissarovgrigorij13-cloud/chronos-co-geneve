@@ -58,7 +58,7 @@ export function WatchCard({
     >
       {/* Top Left: New Badge */}
       {watch.isNew && (
-        <div className="absolute top-3 left-3 z-20 px-2.5 py-0.5 bg-gradient-to-r from-gold-500 to-gold-400 text-obsidian-950 text-[9px] font-bold tracking-[0.2em] uppercase shadow-lg shadow-black/50">
+        <div className="absolute top-3 left-3 z-20 px-2.5 py-0.5 rounded-md bg-gradient-to-r from-gold-500 to-gold-400 text-obsidian-950 text-[9px] font-bold tracking-[0.2em] uppercase shadow-lg shadow-black/50">
           {t.newArrival}
         </div>
       )}
@@ -112,7 +112,7 @@ export function WatchCard({
 
         {/* Hover Quick View Hint */}
         <div className="absolute inset-0 bg-obsidian-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 pointer-events-none">
-          <span className="text-[10px] tracking-widest uppercase text-gold-300 flex items-center gap-1 bg-obsidian-900/90 px-3 py-1.5 border border-gold-500/40 backdrop-blur-sm">
+          <span className="text-[10px] tracking-widest uppercase text-gold-300 flex items-center gap-1 rounded-lg bg-obsidian-900/90 px-3 py-1.5 border border-gold-500/40 backdrop-blur-sm">
             {t.viewDetails} <ArrowUpRight size={12} />
           </span>
         </div>
@@ -122,7 +122,7 @@ export function WatchCard({
       <div className="flex flex-col flex-1 p-5">
         {/* Status Badge & Condition */}
         <div className="flex items-center justify-between gap-2 mb-3">
-          <span className={`inline-flex items-center px-2 py-0.5 border text-[9px] font-semibold tracking-[0.15em] uppercase ${STATUS_STYLES[watch.status]}`}>
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[9px] font-semibold tracking-[0.15em] uppercase ${STATUS_STYLES[watch.status]}`}>
             {STATUS_LABELS[watch.status]}
           </span>
           <span className="text-label text-[10px] text-platinum-500">

@@ -65,13 +65,13 @@ export function QuickViewModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-          className="relative w-full max-w-4xl bg-obsidian-800 border border-gold-600/30 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
+          className="relative w-full max-w-4xl rounded-3xl bg-obsidian-800 border border-gold-600/30 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
         >
           {/* Close & Vault Buttons */}
           <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
             <button
               onClick={() => onToggleVault(watch.id)}
-              className={`p-2 border backdrop-blur-md transition-colors ${
+              className={`p-2 rounded-full border backdrop-blur-md transition-colors ${
                 isVaulted
                   ? 'bg-gold-500/20 border-gold-400 text-gold-400'
                   : 'bg-obsidian-900/70 border-platinum-600/20 text-platinum-400 hover:text-gold-400'
@@ -82,7 +82,7 @@ export function QuickViewModal({
             </button>
             <button
               onClick={onClose}
-              className="p-2 bg-obsidian-900/70 border border-platinum-600/20 text-platinum-400 hover:text-platinum-200 hover:bg-obsidian-700 transition-colors"
+              className="p-2 rounded-full bg-obsidian-900/70 border border-platinum-600/20 text-platinum-400 hover:text-platinum-200 hover:bg-obsidian-700 transition-colors"
               aria-label="Close"
             >
               <X size={16} />
@@ -106,7 +106,7 @@ export function QuickViewModal({
               )}
 
               {/* Provenance Badge */}
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-obsidian-900/95 px-3 py-2 border border-gold-600/40 backdrop-blur-sm">
+              <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-lg bg-obsidian-900/95 px-3 py-2 border border-gold-600/40 backdrop-blur-sm">
                 <Shield size={13} className="text-gold-400" />
                 <span className="text-[10px] tracking-widest uppercase text-gold-400 font-medium">
                   {watch.boxAndPapers ? t.fullSet : t.watchOnly}
@@ -148,7 +148,7 @@ export function QuickViewModal({
                   {watch.complications.map((c) => (
                     <span
                       key={c}
-                      className="px-2.5 py-0.5 border border-platinum-600/25 text-platinum-300 text-[10px] tracking-wider uppercase bg-obsidian-750"
+                      className="px-2.5 py-0.5 rounded-md border border-platinum-600/25 text-platinum-300 text-[10px] tracking-wider uppercase bg-obsidian-750"
                     >
                       {c}
                     </span>
@@ -171,7 +171,7 @@ export function QuickViewModal({
               <button
                 onClick={() => !inCart && watch.status !== 'Sold Out' && onAddToAllocation(watch)}
                 disabled={watch.status === 'Sold Out' || inCart}
-                className={`w-full justify-center mb-6 flex items-center gap-2 py-3.5 text-xs tracking-widest uppercase font-medium transition-all ${
+                className={`w-full justify-center mb-6 rounded-full flex items-center gap-2 py-3.5 text-xs tracking-widest uppercase font-medium transition-all ${
                   inCart
                     ? 'bg-emerald-950/50 border border-emerald-500/50 text-emerald-400 cursor-default'
                     : watch.status === 'Sold Out'
@@ -198,7 +198,7 @@ export function QuickViewModal({
               <div>
                 <p className="text-label text-platinum-500 mb-3">{t.directInquiry}</p>
                 {sent ? (
-                  <div className="flex items-center gap-3 p-4 bg-emerald-950/40 border border-emerald-500/40">
+                  <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40">
                     <CheckCircle2 size={16} className="text-emerald-400 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-emerald-300">{t.inquirySent}</p>

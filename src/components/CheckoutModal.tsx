@@ -68,13 +68,13 @@ export function CheckoutModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="relative w-full max-w-lg bg-obsidian-850 border border-gold-600/35 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
+            className="relative w-full max-w-lg rounded-3xl bg-obsidian-850 border border-gold-600/35 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
           >
             {/* Close button */}
             {!bookingRef && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-750 transition-colors z-10"
+                className="absolute top-4 right-4 p-2 rounded-full text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-750 transition-colors z-10"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -96,13 +96,13 @@ export function CheckoutModal({
                 </div>
 
                 {/* Booking Ref Card */}
-                <div className="w-full p-5 bg-obsidian-750/80 border border-gold-500/35">
+                <div className="w-full p-5 rounded-2xl bg-obsidian-750/80 border border-gold-500/35">
                   <p className="text-[10px] uppercase tracking-widest text-platinum-500 mb-2">{t.bookingRef}</p>
                   <p className="font-mono text-2xl sm:text-3xl tracking-[0.25em] text-gradient-gold font-medium">{bookingRef}</p>
                 </div>
 
                 {/* Concierge Assignment */}
-                <div className="flex items-center gap-4 w-full p-4 bg-obsidian-750/50 border border-platinum-600/15 text-left">
+                <div className="flex items-center gap-4 w-full p-4 rounded-2xl bg-obsidian-750/50 border border-platinum-600/15 text-left">
                   <div className="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500/35 flex items-center justify-center flex-shrink-0">
                     <User size={16} className="text-gold-400" />
                   </div>
@@ -188,7 +188,7 @@ export function CheckoutModal({
                                 key={c}
                                 type="button"
                                 onClick={() => setCity(c)}
-                                className={`px-3 py-1 text-[10px] tracking-widest uppercase border transition-colors ${
+                                className={`px-3 py-1 rounded-lg text-[10px] tracking-widest uppercase border transition-colors ${
                                   city === c
                                     ? 'bg-gold-500/20 border-gold-400 text-gold-300 font-medium'
                                     : 'border-platinum-600/20 text-platinum-500 hover:text-platinum-300'
@@ -235,7 +235,7 @@ export function CheckoutModal({
                   </fieldset>
 
                   {/* Concierge Desk */}
-                  <div className="flex items-center gap-3 p-3.5 bg-obsidian-750/70 border border-gold-600/25">
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-obsidian-750/70 border border-gold-600/25">
                     <div className="w-10 h-10 rounded-full bg-gold-500/15 border border-gold-500/35 flex items-center justify-center flex-shrink-0">
                       <User size={15} className="text-gold-400" />
                     </div>
@@ -287,7 +287,7 @@ function DeliveryOption({
     <div
       data-value={value}
       onClick={onSelect}
-      className={`p-3.5 border cursor-pointer transition-all duration-200 ${
+      className={`p-3.5 rounded-xl border cursor-pointer transition-all duration-300 ${
         selected
           ? 'bg-gold-500/10 border-gold-500/60 shadow-sm'
           : 'bg-obsidian-750/40 border-platinum-600/15 hover:border-platinum-500/30'

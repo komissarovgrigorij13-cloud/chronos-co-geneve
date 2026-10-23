@@ -46,7 +46,7 @@ export function CartDrawer({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-obsidian-850 border-l border-gold-600/25 flex flex-col shadow-2xl shadow-black"
+            className="fixed top-0 right-0 z-50 h-full w-full max-w-md rounded-l-3xl bg-obsidian-850 border-l border-gold-600/25 flex flex-col overflow-hidden shadow-2xl shadow-black"
             role="dialog"
             aria-modal="true"
             aria-label="Allocation list"
@@ -66,7 +66,7 @@ export function CartDrawer({
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-750 transition-colors"
+                className="p-2 rounded-full text-platinum-500 hover:text-platinum-300 hover:bg-obsidian-750 transition-colors"
                 aria-label="Close drawer"
               >
                 <X size={18} />
@@ -87,9 +87,9 @@ export function CartDrawer({
                 items.map((item) => (
                   <div
                     key={item.watch.id}
-                    className="flex gap-3 p-3 bg-obsidian-800/80 border border-platinum-600/15 hover:border-gold-500/30 transition-colors group"
+                    className="flex gap-3 p-3 rounded-2xl bg-obsidian-800/80 border border-platinum-600/15 hover:border-gold-500/30 transition-colors group"
                   >
-                    <div className="w-16 h-16 flex-shrink-0 bg-obsidian-750 overflow-hidden">
+                    <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-obsidian-750 overflow-hidden">
                       <img
                         src={item.watch.imageUrl}
                         alt={item.watch.imageAlt}

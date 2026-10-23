@@ -97,7 +97,7 @@ function TrustBadge({
   desc: string;
 }) {
   return (
-    <div className="flex flex-col items-center gap-1.5 p-3.5 border border-platinum-600/15 bg-obsidian-900/60 backdrop-blur-sm">
+    <div className="flex flex-col items-center gap-1.5 p-3.5 rounded-xl border border-platinum-600/15 bg-obsidian-900/60 backdrop-blur-sm">
       <Icon size={17} className="text-gold-400" strokeWidth={1.5} />
       <p className="text-[11px] font-medium text-platinum-300 tracking-wider uppercase text-center">{title}</p>
       <p className="text-[10px] text-platinum-500 text-center leading-snug">{desc}</p>
