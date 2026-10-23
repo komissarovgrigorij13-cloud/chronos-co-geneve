@@ -7,6 +7,7 @@ import world from 'world-atlas/countries-110m.json';
 import { Crosshair, Globe2, RotateCw } from 'lucide-react';
 import type { Language } from '../data/translations';
 import { ORDERED_BOUTIQUE_CITIES, boutiqueCountryIds, type BoutiqueCity } from '../data/globe';
+import { getCountryFlagMarkup } from '../data/flags';
 
 interface GlobalBoutiqueGlobeProps {
   language: Language;
@@ -45,6 +46,27 @@ function roundedRect(
   context.arcTo(x, y + height, x, y, r);
   context.arcTo(x, y, x + width, y, r);
   context.closePath();
+}
+
+const flagImageCache = new Map<string, HTMLImageElement>();
+
+function drawSharedCountryFlag(context: CanvasRenderingContext2D, countryId: string, x: number, y: number, width = 22, height = 14) {
+  let image = flagImageCache.get(countryId);
+  if (!image) {
+    image = new Image();
+    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 20">${getCountryFlagMarkup(countryId)}</svg>`)}`;
+    flagImageCache.set(countryId, image);
+  }
+
+  context.save();
+  roundedRect(context, x, y, width, height, 2);
+  context.clip();
+  if (image.complete) context.drawImage(image, x, y, width, height);
+  else {
+    context.fillStyle = '#5a6060';
+    context.fillRect(x, y, width, height);
+  }
+  context.restore();
 }
 
 function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x: number, y: number, width = 22, height = 14) {
@@ -134,6 +156,8 @@ function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x
   }
   context.restore();
 }
+
+void drawCountryFlag;
 
 export function GlobalBoutiqueGlobe({
   language,
@@ -307,7 +331,7 @@ export function GlobalBoutiqueGlobe({
           context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
           context.lineWidth = 1;
           context.stroke();
-          drawCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 24, isScrollSequence ? 16 : 14);
+          drawSharedCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 24, isScrollSequence ? 16 : 14);
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           context.fillStyle = '#F4D66D';
           context.fillText(label.city, labelX + flagWidth + 5, labelY + cityFontSize + 3);
