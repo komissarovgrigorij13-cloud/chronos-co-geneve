@@ -65,17 +65,46 @@ function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x
     case '616': stripe(['#fff', '#dc143c']); break;
     case '724': stripe(['#c60b1e', '#f1c40f', '#c60b1e']); break;
     case '620': stripe(['#006600', '#ff1d25'], true); break;
-    case '156': context.fillStyle = '#de2910'; context.fillRect(x, y, width, height); context.fillStyle = '#ffde00'; context.arc(x + 5, y + 4, 2.2, 0, Math.PI * 2); context.fill(); break;
+    case '156': {
+      context.fillStyle = '#de2910'; context.fillRect(x, y, width, height);
+      const star = (cx: number, cy: number, radius: number) => {
+        context.beginPath();
+        for (let point = 0; point < 10; point += 1) {
+          const angle = -Math.PI / 2 + point * Math.PI / 5;
+          const distance = point % 2 === 0 ? radius : radius * 0.42;
+          const px = cx + Math.cos(angle) * distance;
+          const py = cy + Math.sin(angle) * distance;
+          point === 0 ? context.moveTo(px, py) : context.lineTo(px, py);
+        }
+        context.closePath(); context.fill();
+      };
+      context.fillStyle = '#ffde00';
+      star(x + width * 0.2, y + height * 0.25, height * 0.2);
+      [[0.42, 0.12], [0.51, 0.28], [0.5, 0.48], [0.4, 0.6]].forEach(([starX, starY]) => star(x + width * starX, y + height * starY, height * 0.08));
+      break;
+    }
     case '392': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#bc002d'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
     case '840':
       stripe(['#b22234', '#fff', '#b22234', '#fff', '#b22234', '#fff', '#b22234']);
       context.fillStyle = '#3c3b6e'; context.fillRect(x, y, width * 0.45, height * 0.55); break;
-    case '124': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#d52b3f'; context.fillRect(x, y, width * .25, height); context.fillRect(x + width * .75, y, width * .25, height); break;
+    case '124': {
+      context.fillStyle = '#fff'; context.fillRect(x, y, width, height);
+      context.fillStyle = '#d52b3f'; context.fillRect(x, y, width * .25, height); context.fillRect(x + width * .75, y, width * .25, height);
+      context.beginPath();
+      const mapleLeaf = [[0.5, 0.12], [0.55, 0.35], [0.7, 0.25], [0.64, 0.46], [0.78, 0.52], [0.57, 0.58], [0.6, 0.84], [0.5, 0.68], [0.4, 0.84], [0.43, 0.58], [0.22, 0.52], [0.36, 0.46], [0.3, 0.25], [0.45, 0.35]];
+      mapleLeaf.forEach(([px, py], index) => index === 0 ? context.moveTo(x + width * px, y + height * py) : context.lineTo(x + width * px, y + height * py));
+      context.closePath(); context.fill(); break;
+    }
     case '036':
       context.fillStyle = '#132b55'; context.fillRect(x, y, width, height);
       context.fillStyle = '#173f78'; context.fillRect(x, y, width * .44, height * .52);
       context.strokeStyle = '#fff'; context.lineWidth = 2; context.beginPath(); context.moveTo(x, y); context.lineTo(x + width * .44, y + height * .52); context.moveTo(x + width * .44, y); context.lineTo(x, y + height * .52); context.stroke();
-      context.strokeStyle = '#cf2030'; context.lineWidth = 0.8; context.stroke(); break;
+      context.strokeStyle = '#cf2030'; context.lineWidth = 0.8; context.stroke();
+      context.fillStyle = '#fff';
+      [[0.72, 0.2, 1.6], [0.85, 0.34, 1.3], [0.7, 0.7, 1.4], [0.88, 0.78, 1.1], [0.58, 0.72, 0.9]].forEach(([starX, starY, size]) => {
+        context.beginPath(); context.arc(x + width * starX, y + height * starY, size / 3, 0, Math.PI * 2); context.fill();
+      });
+      break;
     case '826': context.fillStyle = '#173f78'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 3; context.beginPath(); context.moveTo(x, y); context.lineTo(x + width, y + height); context.moveTo(x + width, y); context.lineTo(x, y + height); context.moveTo(x + width / 2, y); context.lineTo(x + width / 2, y + height); context.moveTo(x, y + height / 2); context.lineTo(x + width, y + height / 2); context.stroke(); context.strokeStyle = '#cf2030'; context.lineWidth = 1; context.stroke(); break;
     case '756': context.fillStyle = '#d52b3f'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.fillRect(x + width * .42, y + height * .2, width * .16, height * .6); context.fillRect(x + width * .2, y + height * .4, width * .6, height * .2); break;
     case '492': context.fillStyle = '#ce1126'; context.fillRect(x, y, width, height / 2); context.fillStyle = '#fff'; context.fillRect(x, y + height / 2, width, height / 2); break;
@@ -84,7 +113,16 @@ function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x
     case '792': context.fillStyle = '#e30a17'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.beginPath(); context.arc(x + width * .45, y + height / 2, 4, 0, Math.PI * 2); context.fill(); context.fillStyle = '#e30a17'; context.beginPath(); context.arc(x + width * .51, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
     case '076': context.fillStyle = '#009c3b'; context.fillRect(x, y, width, height); context.fillStyle = '#ffdf00'; context.beginPath(); context.moveTo(x + width / 2, y + 1); context.lineTo(x + width - 2, y + height / 2); context.lineTo(x + width / 2, y + height - 1); context.lineTo(x + 2, y + height / 2); context.closePath(); context.fill(); context.fillStyle = '#002776'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
     case '398': context.fillStyle = '#00afca'; context.fillRect(x, y, width, height); context.fillStyle = '#f6d24a'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3, 0, Math.PI * 2); context.fill(); break;
-    case '410': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#cd2e3a'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.3, 0, Math.PI * 2); context.fill(); context.fillStyle = '#0047a0'; context.beginPath(); context.arc(x + width / 2, y + height / 2 + 1, 2.4, 0, Math.PI * 2); context.fill(); break;
+    case '410': {
+      context.fillStyle = '#fff'; context.fillRect(x, y, width, height);
+      context.fillStyle = '#cd2e3a'; context.beginPath(); context.arc(x + width / 2, y + height / 2 - 0.6, 3.3, 0, Math.PI * 2); context.fill();
+      context.fillStyle = '#0047a0'; context.beginPath(); context.arc(x + width / 2, y + height / 2 + 0.9, 2.4, 0, Math.PI * 2); context.fill();
+      context.strokeStyle = '#111'; context.lineWidth = 0.8;
+      [[0.17, 0.2, 0.32, 0.28], [0.17, 0.34, 0.32, 0.26], [0.68, 0.7, 0.83, 0.8], [0.68, 0.56, 0.83, 0.66]].forEach(([x1, y1, x2, y2]) => {
+        context.beginPath(); context.moveTo(x + width * x1, y + height * y1); context.lineTo(x + width * x2, y + height * y2); context.stroke();
+      });
+      break;
+    }
     case '702': stripe(['#ed2939', '#fff']); break;
     case '752': context.fillStyle = '#006aa7'; context.fillRect(x, y, width, height); context.fillStyle = '#fecc00'; context.fillRect(x + width * .28, y, width * .14, height); context.fillRect(x, y + height * .36, width, height * .18); break;
     case '470': stripe(['#fff', '#cf142b'], true); break;
@@ -245,13 +283,13 @@ export function GlobalBoutiqueGlobe({
           const label = city.labels[propsRef.current.language];
           const cityFontSize = isScrollSequence ? 14 : 12;
           const countryFontSize = isScrollSequence ? 11 : 10;
-          const flagWidth = 23;
+          const flagWidth = 29;
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           const cityWidth = context.measureText(label.city).width;
           context.font = `${countryFontSize}px Inter, sans-serif`;
           const countryWidth = context.measureText(label.country).width;
           const labelWidth = Math.max(cityWidth, countryWidth) + flagWidth + 22;
-          const labelHeight = isScrollSequence ? 38 : 34;
+          const labelHeight = isScrollSequence ? 42 : 38;
           const labelX = Math.max(8, Math.min(width - labelWidth - 8, point[0] + 10));
           const labelY = Math.max(8, Math.min(height - labelHeight - 8, point[1] - labelHeight - 8));
           const hasNearbyLabel = drawnLabels.some((drawn) => (
@@ -269,7 +307,7 @@ export function GlobalBoutiqueGlobe({
           context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
           context.lineWidth = 1;
           context.stroke();
-          drawCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 20, isScrollSequence ? 14 : 12);
+          drawCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 24, isScrollSequence ? 16 : 14);
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           context.fillStyle = '#F4D66D';
           context.fillText(label.city, labelX + flagWidth + 5, labelY + cityFontSize + 3);
