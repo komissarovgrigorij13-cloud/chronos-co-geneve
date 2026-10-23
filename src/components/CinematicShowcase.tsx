@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { Shield, Sparkles, Building2, Clock, ArrowDown, Lock, ChevronRight } from 'lucide-react';
+import { Shield, Sparkles, Building2, Clock, ArrowDown, Lock, ChevronRight, BadgeCheck, Fingerprint, ScanLine } from 'lucide-react';
 import { translations, type Language } from '../data/translations';
 import { ORDERED_BOUTIQUE_CITIES, rotationForCity } from '../data/globe';
 import { GlobalBoutiqueGlobe } from './GlobalBoutiqueGlobe';
@@ -450,10 +450,23 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
               rotateX: p2RotateX,
               rotateY: p2RotateY,
             }}
-            className="w-full max-w-3xl rounded-3xl bg-obsidian-900/90 backdrop-blur-xl border border-[#C5A880]/30 shadow-2xl shadow-black p-6 sm:p-10 relative overflow-hidden"
+            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-[#C5A880]/30 bg-obsidian-900/90 p-6 shadow-2xl shadow-black backdrop-blur-xl sm:p-8 lg:p-10"
           >
             {/* Shimmer gradient line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
+            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full border border-gold-400/10" />
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full border border-gold-400/10" />
+
+            <div className="mb-6 flex items-center justify-between border-b border-platinum-600/15 pb-4">
+              <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-gold-400">
+                <Fingerprint size={13} />
+                <span>Private provenance dossier</span>
+              </div>
+              <div className="flex items-center gap-2 text-[9px] uppercase tracking-widest text-emerald-400">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                Archive node 01 · live
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-left">
               {/* Image Preview with Studio Lighting */}
@@ -499,7 +512,52 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 </div>
               </div>
             </div>
+
+            <div className="mt-8 grid grid-cols-3 gap-2 border-t border-platinum-600/15 pt-5">
+              {[
+                ['100%', 'Provenance'],
+                ['14-day', 'Reserve hold'],
+                ['Tier I', 'Access level'],
+              ].map(([value, label]) => (
+                <div key={label} className="rounded-xl border border-platinum-600/15 bg-obsidian-950/45 px-3 py-3 text-center">
+                  <p className="font-mono text-sm text-gold-400">{value}</p>
+                  <p className="mt-1 text-[8px] uppercase tracking-widest text-platinum-500">{label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 border-t border-platinum-600/15 pt-5">
+              <div className="mb-3 flex items-center justify-between text-[9px] uppercase tracking-[0.25em] text-platinum-500">
+                <span>Chain of custody</span>
+                <span className="flex items-center gap-1 text-gold-400"><BadgeCheck size={12} /> 4 checkpoints verified</span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[
+                  ['01', 'Acquired', 'Geneva'],
+                  ['02', 'Inspected', 'Master atelier'],
+                  ['03', 'Certified', 'Geneva Seal'],
+                  ['04', 'Secured', 'Private vault'],
+                ].map(([step, title, detail], index) => (
+                  <div key={step} className="relative flex items-start gap-2">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gold-400/50 bg-gold-500/10 font-mono text-[9px] text-gold-400">
+                      {step}
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-platinum-300">{title}</p>
+                      <p className="mt-0.5 text-[9px] text-platinum-500">{detail}</p>
+                    </div>
+                    {index < 3 && <div className="absolute left-7 top-3 hidden h-px w-[calc(100%-1.5rem)] bg-gradient-to-r from-gold-400/40 to-transparent sm:block" />}
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
+
+          <div className="mt-6 flex items-center gap-2 text-[9px] uppercase tracking-[0.35em] text-platinum-500">
+            <ScanLine size={13} className="text-gold-400" />
+            <span>Scroll to unlock the global private vault network</span>
+            <ArrowDown size={13} className="text-gold-400" />
+          </div>
         </motion.div>
 
         {/* ══════════════════════════════════════════════════════════════════
