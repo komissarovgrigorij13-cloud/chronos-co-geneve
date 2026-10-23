@@ -47,14 +47,50 @@ function roundedRect(
   context.closePath();
 }
 
-const countryFlags: Record<string, string> = {
-  '036': '🇦🇺', '076': '🇧🇷', '124': '🇨🇦', '156': '🇨🇳', '208': '🇩🇰',
-  '233': '🇪🇪', '250': '🇫🇷', '276': '🇩🇪', '380': '🇮🇹', '392': '🇯🇵',
-  '398': '🇰🇿', '410': '🇰🇷', '428': '🇱🇻', '470': '🇲🇹', '492': '🇲🇨',
-  '578': '🇳🇴', '616': '🇵🇱', '620': '🇵🇹', '634': '🇶🇦', '643': '🇷🇺',
-  '702': '🇸🇬', '724': '🇪🇸', '752': '🇸🇪', '756': '🇨🇭', '764': '🇹🇭',
-  '784': '🇦🇪', '792': '🇹🇷', '826': '🇬🇧', '840': '🇺🇸',
-};
+function drawCountryFlag(context: CanvasRenderingContext2D, countryId: string, x: number, y: number, width = 22, height = 14) {
+  context.save();
+  roundedRect(context, x, y, width, height, 2);
+  context.clip();
+  const stripe = (colors: string[], vertical = false) => colors.forEach((color, index) => {
+    context.fillStyle = color;
+    if (vertical) context.fillRect(x + (width / colors.length) * index, y, width / colors.length + 0.5, height);
+    else context.fillRect(x, y + (height / colors.length) * index, width, height / colors.length + 0.5);
+  });
+
+  switch (countryId) {
+    case '250': stripe(['#1f4e9b', '#fff', '#e23d4f'], true); break;
+    case '380': stripe(['#009246', '#fff', '#ce2b37'], true); break;
+    case '643': stripe(['#fff', '#2455a4', '#d9363e']); break;
+    case '276': stripe(['#111', '#d00', '#ffce00']); break;
+    case '616': stripe(['#fff', '#dc143c']); break;
+    case '724': stripe(['#c60b1e', '#f1c40f', '#c60b1e']); break;
+    case '620': stripe(['#006600', '#ff1d25'], true); break;
+    case '156': context.fillStyle = '#de2910'; context.fillRect(x, y, width, height); context.fillStyle = '#ffde00'; context.arc(x + 5, y + 4, 2.2, 0, Math.PI * 2); context.fill(); break;
+    case '392': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#bc002d'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
+    case '840':
+      stripe(['#b22234', '#fff', '#b22234', '#fff', '#b22234', '#fff', '#b22234']);
+      context.fillStyle = '#3c3b6e'; context.fillRect(x, y, width * 0.45, height * 0.55); break;
+    case '124': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#d52b3f'; context.fillRect(x, y, width * .25, height); context.fillRect(x + width * .75, y, width * .25, height); break;
+    case '826': context.fillStyle = '#173f78'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 3; context.beginPath(); context.moveTo(x, y); context.lineTo(x + width, y + height); context.moveTo(x + width, y); context.lineTo(x, y + height); context.moveTo(x + width / 2, y); context.lineTo(x + width / 2, y + height); context.moveTo(x, y + height / 2); context.lineTo(x + width, y + height / 2); context.stroke(); context.strokeStyle = '#cf2030'; context.lineWidth = 1; context.stroke(); break;
+    case '756': context.fillStyle = '#d52b3f'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.fillRect(x + width * .42, y + height * .2, width * .16, height * .6); context.fillRect(x + width * .2, y + height * .4, width * .6, height * .2); break;
+    case '784': context.fillStyle = '#17834b'; context.fillRect(x, y, width, height / 3); context.fillStyle = '#fff'; context.fillRect(x, y + height / 3, width, height / 3); context.fillStyle = '#111'; context.fillRect(x, y + height * 2 / 3, width, height / 3); context.fillStyle = '#ce1126'; context.fillRect(x, y, width * .25, height); break;
+    case '634': context.fillStyle = '#8a1538'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.fillRect(x, y, width * .3, height); break;
+    case '792': context.fillStyle = '#e30a17'; context.fillRect(x, y, width, height); context.fillStyle = '#fff'; context.beginPath(); context.arc(x + width * .45, y + height / 2, 4, 0, Math.PI * 2); context.fill(); context.fillStyle = '#e30a17'; context.beginPath(); context.arc(x + width * .51, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
+    case '076': context.fillStyle = '#009c3b'; context.fillRect(x, y, width, height); context.fillStyle = '#ffdf00'; context.beginPath(); context.moveTo(x + width / 2, y + 1); context.lineTo(x + width - 2, y + height / 2); context.lineTo(x + width / 2, y + height - 1); context.lineTo(x + 2, y + height / 2); context.closePath(); context.fill(); context.fillStyle = '#002776'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.2, 0, Math.PI * 2); context.fill(); break;
+    case '398': context.fillStyle = '#00afca'; context.fillRect(x, y, width, height); context.fillStyle = '#f6d24a'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3, 0, Math.PI * 2); context.fill(); break;
+    case '410': context.fillStyle = '#fff'; context.fillRect(x, y, width, height); context.fillStyle = '#cd2e3a'; context.beginPath(); context.arc(x + width / 2, y + height / 2, 3.3, 0, Math.PI * 2); context.fill(); context.fillStyle = '#0047a0'; context.beginPath(); context.arc(x + width / 2, y + height / 2 + 1, 2.4, 0, Math.PI * 2); context.fill(); break;
+    case '702': stripe(['#ed2939', '#fff']); break;
+    case '752': context.fillStyle = '#006aa7'; context.fillRect(x, y, width, height); context.fillStyle = '#fecc00'; context.fillRect(x + width * .28, y, width * .14, height); context.fillRect(x, y + height * .36, width, height * .18); break;
+    case '470': stripe(['#fff', '#cf142b'], true); break;
+    case '233': stripe(['#4891d1', '#111', '#fff']); break;
+    case '208': context.fillStyle = '#c8102e'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 2; context.beginPath(); context.moveTo(x + width * .32, y); context.lineTo(x + width * .32, y + height); context.moveTo(x, y + height * .4); context.lineTo(x + width, y + height * .4); context.stroke(); break;
+    case '578': context.fillStyle = '#ba0c2f'; context.fillRect(x, y, width, height); context.strokeStyle = '#fff'; context.lineWidth = 4; context.beginPath(); context.moveTo(x + width * .32, y); context.lineTo(x + width * .32, y + height); context.moveTo(x, y + height * .4); context.lineTo(x + width, y + height * .4); context.stroke(); break;
+    case '764': stripe(['#a51931', '#f4f5f8', '#2d2a4a', '#f4f5f8', '#a51931']); break;
+    case '616': stripe(['#fff', '#dc143c']); break;
+    default: stripe(['#284d89', '#fff', '#d9363e']);
+  }
+  context.restore();
+}
 
 export function GlobalBoutiqueGlobe({
   language,
@@ -204,7 +240,6 @@ export function GlobalBoutiqueGlobe({
           const label = city.labels[propsRef.current.language];
           const cityFontSize = isScrollSequence ? 14 : 12;
           const countryFontSize = isScrollSequence ? 11 : 10;
-          const flag = countryFlags[city.countryId] ?? '•';
           const flagWidth = 23;
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           const cityWidth = context.measureText(label.city).width;
@@ -229,8 +264,7 @@ export function GlobalBoutiqueGlobe({
           context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
           context.lineWidth = 1;
           context.stroke();
-          context.font = `${isScrollSequence ? 17 : 15}px "Segoe UI Emoji", "Apple Color Emoji", sans-serif`;
-          context.fillText(flag, labelX + 8, labelY + (isScrollSequence ? 18 : 16));
+          drawCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 20, isScrollSequence ? 14 : 12);
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           context.fillStyle = '#F4D66D';
           context.fillText(label.city, labelX + flagWidth + 5, labelY + cityFontSize + 3);
