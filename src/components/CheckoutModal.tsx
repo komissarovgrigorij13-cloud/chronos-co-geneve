@@ -77,7 +77,7 @@ export function CheckoutModal({
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-hidden p-2 sm:items-center sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -95,7 +95,7 @@ export function CheckoutModal({
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
             onWheel={(event) => event.stopPropagation()}
             onTouchMove={(event) => event.stopPropagation()}
-            className="relative w-full max-w-lg rounded-3xl bg-obsidian-850 border border-gold-600/35 overflow-x-hidden max-h-[90vh] overflow-y-auto overscroll-contain z-10 shadow-2xl shadow-black"
+            className="relative my-2 w-full max-w-lg rounded-2xl bg-obsidian-850 border border-gold-600/35 overflow-x-hidden max-h-[calc(100dvh-1rem)] overflow-y-auto overscroll-contain z-10 shadow-2xl shadow-black sm:my-auto sm:rounded-3xl sm:max-h-[90vh]"
           >
             {/* Close button */}
             {!bookingRef && (
@@ -110,7 +110,7 @@ export function CheckoutModal({
 
             {bookingRef ? (
               /* Confirmation Screen */
-              <div className="p-8 sm:p-10 text-center flex flex-col items-center gap-6">
+              <div className="p-5 sm:p-10 text-center flex flex-col items-center gap-5 sm:gap-6">
                 <div className="w-16 h-16 rounded-full border-2 border-gold-400 bg-gold-500/15 flex items-center justify-center shadow-lg shadow-gold-500/10">
                   <CheckCircle2 size={30} className="text-gold-400" />
                 </div>
@@ -153,7 +153,7 @@ export function CheckoutModal({
               </div>
             ) : (
               /* Checkout Form */
-              <div className="p-6 sm:p-8">
+              <div className="p-4 sm:p-8">
                 <div className="mb-6">
                   <p className="text-label text-gold-500/80 tracking-[0.35em] mb-1.5">{t.checkoutTitle}</p>
                   <h2 className="font-display text-3xl font-light text-platinum-200">{t.checkoutSubtitle}</h2>
@@ -211,7 +211,7 @@ export function CheckoutModal({
                         {delivery === 'showroom' && (
                           <motion.div
                             layout
-                            className={`mt-2.5 touch-pan-y overflow-y-auto overscroll-contain pr-1 ${citySelectionConfirmed
+                            className={`mt-2.5 max-h-[42dvh] touch-pan-y overflow-y-auto overscroll-contain pr-1 sm:max-h-56 ${citySelectionConfirmed
                               ? 'flex min-h-56 items-center justify-center'
                               : 'grid max-h-56 grid-cols-1 gap-1.5 sm:grid-cols-2'
                               }`}

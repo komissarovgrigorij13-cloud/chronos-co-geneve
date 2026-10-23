@@ -11,6 +11,11 @@
     scroll-behavior: smooth;
   }
 
+  html, body, #root {
+    width: 100%;
+    min-width: 0;
+  }
+
   body {
     @apply bg-obsidian-900 text-platinum-400 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
@@ -18,10 +23,20 @@
       radial-gradient(circle at 8% 0%, rgba(197, 168, 128, 0.08), transparent 28rem),
       radial-gradient(circle at 92% 18%, rgba(77, 91, 120, 0.08), transparent 32rem);
     background-attachment: fixed;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
   }
 
   button, a, input, select, textarea {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  button, a {
+    touch-action: manipulation;
+  }
+
+  img, canvas, svg {
+    max-width: 100%;
   }
 
   ::selection {
@@ -131,6 +146,30 @@
     border: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
     flex: 0 0 auto;
+  }
+
+  .mobile-chip-row {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mobile-chip-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    body {
+      background-attachment: scroll;
+    }
+
+    .backdrop-blur-luxury {
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+    }
+
+    .mobile-chip-row > * {
+      flex-shrink: 0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

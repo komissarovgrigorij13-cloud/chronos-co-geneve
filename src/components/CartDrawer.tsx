@@ -46,13 +46,13 @@ export function CartDrawer({
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="fixed top-0 right-0 z-50 h-full w-full max-w-md rounded-l-3xl bg-obsidian-850 border-l border-gold-600/25 flex flex-col overflow-hidden shadow-2xl shadow-black"
+            className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full max-w-md flex-col overflow-hidden rounded-l-2xl border-l border-gold-600/25 bg-obsidian-850 shadow-2xl shadow-black sm:h-full sm:rounded-l-3xl"
             role="dialog"
             aria-modal="true"
             aria-label="Allocation list"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-platinum-600/15 bg-obsidian-900/60">
+            <div className="flex items-center justify-between border-b border-platinum-600/15 bg-obsidian-900/60 px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6 sm:py-5">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gold-500/15 border border-gold-500/40 flex items-center justify-center">
                   <ShoppingBag size={15} className="text-gold-400" />
@@ -74,7 +74,7 @@ export function CartDrawer({
             </div>
 
             {/* List */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3.5">
+            <div className="flex-1 space-y-3.5 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full gap-4 text-center py-16">
                   <ShoppingBag size={40} className="text-platinum-600/25" strokeWidth={1} />
@@ -116,7 +116,7 @@ export function CartDrawer({
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="px-6 py-5 border-t border-platinum-600/15 bg-obsidian-900/80">
+              <div className="border-t border-platinum-600/15 bg-obsidian-900/80 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:py-5">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-label text-platinum-500">{t.estimatedTotal}</span>
                   <span className="font-display text-2xl text-gradient-gold">

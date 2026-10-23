@@ -1,4 +1,5 @@
-import { Search, ShoppingBag, ChevronDown, Crown, Globe2 } from 'lucide-react';
+import { useState } from 'react';
+import { Search, ShoppingBag, ChevronDown, Crown, Globe2, Menu, X } from 'lucide-react';
 import type { CurrencyCode } from '../data/watches';
 import { currencies } from '../data/watches';
 import { translations, type Language } from '../data/translations';
@@ -28,17 +29,18 @@ export function Header({
   onOpenVip,
   onOpenGlobe,
 }: HeaderProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currencyCodes = Object.keys(currencies) as CurrencyCode[];
   const languages: Language[] = ['EN', 'RU', 'FR', 'AR'];
   const t = translations[language];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-obsidian-900/95 backdrop-blur-md border-b border-platinum-600/15">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-4">
         {/* Logo */}
-        <div className="flex-shrink-0">
+        <div className="min-w-0 flex-shrink-0">
           <a href="#" className="group flex flex-col leading-none">
-            <span className="font-display text-base sm:text-lg font-light tracking-[0.3em] text-gradient-gold uppercase">
+            <span className="truncate font-display text-base sm:text-lg font-light tracking-[0.22em] sm:tracking-[0.3em] text-gradient-gold uppercase">
               {t.tagline}
             </span>
             <span className="text-[8px] sm:text-[9px] tracking-[0.45em] uppercase text-platinum-500 group-hover:text-gold-500 transition-colors">
@@ -63,7 +65,7 @@ export function Header({
         </div>
 
         {/* Right Actions: Lang, Currency, VIP, Cart */}
-        <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+        <div className="hidden md:flex items-center gap-3 sm:gap-4 flex-shrink-0">
           {/* Language Switcher */}
           <div className="relative group">
             <button className="flex items-center gap-1 text-[11px] font-medium tracking-widest uppercase text-platinum-400 hover:text-gold-400 transition-colors py-1">
@@ -157,6 +159,137 @@ export function Header({
               </span>
             )}
             <span className="text-[11px] tracking-widest uppercase hidden md:inline ml-1">{t.allocation}</span>
+          </button>
+        </div>
+
+        {/* Compact mobile actions */}
+        <div className="flex md:hidden items-center gap-1.5 flex-shrink-0">
+          <button
+            onClick={onOpenGlobe}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-platinum-600/25 text-platinum-400 transition-colors hover:border-gold-500/60 hover:text-gold-400"
+            title={t.globeTab}
+            aria-label={t.globeTab}
+          >
+            <Globe2 size={16} className="text-gold-400" />
+          </button>
+          <button
+            onClick={onCartOpen}
+            className="relative flex h-9 w-9 items-center justify-center rounded-full border border-platinum-600/25 text-platinum-400 transition-colors hover:border-gold-500/60 hover:text-gold-400"
+            aria-label="Open allocation drawer"
+          >
+            <ShoppingBag size={16} />
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-gold-500 text-[9px] font-bold text-obsidian-900 shadow-md">
+                {cartCount}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-gold-500/40 bg-gold-500/10 text-gold-400 transition-colors hover:bg-gold-500/20"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X size={17} /> : <Menu size={17} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile navigation panel */}
+      <div
+        className={`md:hidden absolute left-0 right-0 top-full border-b border-gold-600/25 bg-obsidian-900/98 px-4 pb-4 pt-3 shadow-2xl shadow-black/70 backdrop-blur-xl transition-[opacity,transform,visibility] duration-200 ${
+          mobileMenuOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
+        }`}
+        aria-hidden={!mobileMenuOpen}
+      >
+        <div className="relative mb-3">
+          <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-platinum-500" />
+          <input
+            type="search"
+            placeholder={t.searchPlaceholder}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="input-luxury w-full py-3 pl-9 text-xs bg-obsidian-800/90"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div className="rounded-xl border border-platinum-600/15 bg-obsidian-800/70 p-2.5">
+            <p className="mb-2 text-[9px] uppercase tracking-[0.2em] text-platinum-500">Language</p>
+            <div className="flex flex-wrap gap-1.5">
+              {languages.map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    setLanguage(lang);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-2 py-1.5 text-[10px] tracking-widest transition-colors ${
+                    language === lang
+                      ? 'border-gold-500/60 bg-gold-500/15 text-gold-300'
+                      : 'border-platinum-600/15 text-platinum-400 hover:border-gold-500/40 hover:text-gold-300'
+                  }`}
+                >
+                  <LanguageFlag language={lang} />
+                  {lang}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-platinum-600/15 bg-obsidian-800/70 p-2.5">
+            <p className="mb-2 text-[9px] uppercase tracking-[0.2em] text-platinum-500">Currency</p>
+            <div className="flex flex-wrap gap-1.5">
+              {currencyCodes.map((code) => (
+                <button
+                  key={code}
+                  onClick={() => {
+                    setCurrency(code);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`rounded-lg border px-2 py-1.5 text-[10px] tracking-widest transition-colors ${
+                    currency === code
+                      ? 'border-gold-500/60 bg-gold-500/15 text-gold-300'
+                      : 'border-platinum-600/15 text-platinum-400 hover:border-gold-500/40 hover:text-gold-300'
+                  }`}
+                >
+                  {currencies[code].symbol} {code}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <button
+            onClick={() => {
+              onOpenGlobe();
+              setMobileMenuOpen(false);
+            }}
+            className="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-platinum-600/20 bg-obsidian-800/70 px-3 text-[10px] tracking-[0.15em] uppercase text-platinum-300 transition-colors hover:border-gold-500/50 hover:text-gold-300"
+          >
+            <Globe2 size={14} className="text-gold-400" />
+            {t.globeTab}
+          </button>
+          <button
+            onClick={() => {
+              onOpenVip();
+              setMobileMenuOpen(false);
+            }}
+            className="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-gold-500/35 bg-gold-500/10 px-3 text-[10px] tracking-[0.15em] uppercase text-gold-300 transition-colors hover:bg-gold-500/20"
+          >
+            <Crown size={14} />
+            {t.vipLounge}
+          </button>
+          <button
+            onClick={() => {
+              onCartOpen();
+              setMobileMenuOpen(false);
+            }}
+            className="col-span-2 flex min-h-11 items-center justify-center gap-2 rounded-xl border border-platinum-600/20 bg-obsidian-800/70 px-3 text-[10px] tracking-[0.15em] uppercase text-platinum-300 transition-colors hover:border-gold-500/50 hover:text-gold-300"
+          >
+            <ShoppingBag size={14} />
+            {t.allocation}{cartCount > 0 ? ` · ${cartCount}` : ''}
           </button>
         </div>
       </div>

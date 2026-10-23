@@ -31,8 +31,8 @@ export function Filters({
     <div className="bg-obsidian-850/95 backdrop-blur-md border-b border-platinum-600/15 sticky top-16 z-30">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-3.5 space-y-3">
         {/* Brand filters */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 text-platinum-500 mr-1.5">
+        <div className="mobile-chip-row flex items-center gap-2 overflow-x-auto pb-0.5">
+          <div className="flex shrink-0 items-center gap-1.5 text-platinum-500 mr-1.5">
             <SlidersHorizontal size={13} />
             <span className="text-label text-[10px]">{t.brand}</span>
           </div>
@@ -53,8 +53,8 @@ export function Filters({
 
         {/* Material & Sort */}
         <div className="flex items-center justify-between gap-4 flex-wrap pt-1 border-t border-platinum-600/10">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-label text-[10px] text-platinum-500 mr-1">{t.material}</span>
+          <div className="mobile-chip-row flex min-w-0 items-center gap-2 overflow-x-auto pb-0.5">
+            <span className="text-label shrink-0 text-[10px] text-platinum-500 mr-1">{t.material}</span>
             <FilterPill
               label={t.all}
               active={activeMaterial === 'All'}
@@ -72,8 +72,8 @@ export function Filters({
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-label text-[10px] text-platinum-500">{t.sort}</span>
+          <div className="mobile-chip-row flex min-w-0 items-center gap-3 overflow-x-auto pb-0.5">
+            <span className="text-label shrink-0 text-[10px] text-platinum-500">{t.sort}</span>
             <SortButton
               label={t.priceAsc}
               active={sortOrder === 'price-asc'}
@@ -89,7 +89,7 @@ export function Filters({
               active={sortOrder === 'newest'}
               onClick={() => setSortOrder('newest')}
             />
-            <span className="text-label text-[10px] text-platinum-500/60 ml-2">
+            <span className="text-label shrink-0 text-[10px] text-platinum-500/60 ml-2">
               {totalCount} {t.piecesCount}
             </span>
           </div>

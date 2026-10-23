@@ -185,7 +185,7 @@ export function GlobalBoutiqueGlobe({
 
     const resize = () => {
       const bounds = canvas.getBoundingClientRect();
-      const ratio = window.devicePixelRatio || 1;
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
       canvas.width = Math.max(1, Math.round(bounds.width * ratio));
       canvas.height = Math.max(1, Math.round(bounds.height * ratio));
     };
@@ -206,7 +206,7 @@ export function GlobalBoutiqueGlobe({
       const bounds = canvas.getBoundingClientRect();
       const width = bounds.width;
       const height = bounds.height;
-      const ratio = window.devicePixelRatio || 1;
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
       context.clearRect(0, 0, width, height);
 
@@ -303,17 +303,19 @@ export function GlobalBoutiqueGlobe({
         const shouldDrawLabel = isScrollSequence
           ? focusedLabelIndices.has(cityIndex)
           : isActive;
-        if (showLabels && width > 520 && shouldDrawLabel) {
+        const canShowCompactLabel = isScrollSequence && isCurrent && width >= 220;
+        if (showLabels && shouldDrawLabel && (width > 520 || canShowCompactLabel)) {
           const label = city.labels[propsRef.current.language];
-          const cityFontSize = isScrollSequence ? 14 : 12;
-          const countryFontSize = isScrollSequence ? 11 : 10;
-          const flagWidth = 29;
+          const compactLabel = width <= 520;
+          const cityFontSize = compactLabel ? 12 : isScrollSequence ? 14 : 12;
+          const countryFontSize = compactLabel ? 9 : isScrollSequence ? 11 : 10;
+          const flagWidth = compactLabel ? 27 : 29;
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           const cityWidth = context.measureText(label.city).width;
           context.font = `${countryFontSize}px Inter, sans-serif`;
           const countryWidth = context.measureText(label.country).width;
           const labelWidth = Math.max(cityWidth, countryWidth) + flagWidth + 22;
-          const labelHeight = isScrollSequence ? 42 : 38;
+          const labelHeight = compactLabel ? 38 : isScrollSequence ? 42 : 38;
           const labelX = Math.max(8, Math.min(width - labelWidth - 8, point[0] + 10));
           const labelY = Math.max(8, Math.min(height - labelHeight - 8, point[1] - labelHeight - 8));
           const hasNearbyLabel = drawnLabels.some((drawn) => (
@@ -331,7 +333,7 @@ export function GlobalBoutiqueGlobe({
           context.strokeStyle = 'rgba(240, 208, 96, 0.46)';
           context.lineWidth = 1;
           context.stroke();
-          drawSharedCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 24, isScrollSequence ? 16 : 14);
+          drawSharedCountryFlag(context, city.countryId, labelX + 8, labelY + 8, 23, compactLabel ? 15 : isScrollSequence ? 16 : 14);
           context.font = `700 ${cityFontSize}px Inter, sans-serif`;
           context.fillStyle = '#F4D66D';
           context.fillText(label.city, labelX + flagWidth + 5, labelY + cityFontSize + 3);

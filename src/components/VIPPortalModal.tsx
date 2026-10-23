@@ -51,7 +51,7 @@ export function VIPPortalModal({
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-start justify-center p-2 sm:items-center sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -67,10 +67,10 @@ export function VIPPortalModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ type: 'spring', damping: 26, stiffness: 320 }}
-            className="relative w-full max-w-4xl rounded-3xl bg-obsidian-800 border border-gold-600/30 shadow-2xl shadow-black flex flex-col max-h-[88vh] overflow-hidden z-10"
+            className="relative my-2 flex h-[calc(100dvh-1rem)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-gold-600/30 bg-obsidian-800 shadow-2xl shadow-black z-10 sm:my-auto sm:h-auto sm:max-h-[88vh] sm:rounded-3xl"
           >
             {/* Top Bar */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-platinum-600/15 bg-obsidian-850">
+            <div className="flex items-center justify-between border-b border-platinum-600/15 bg-obsidian-850 px-4 py-3 sm:px-6 sm:py-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gold-500/15 border border-gold-500/40 flex items-center justify-center">
                   <Crown size={15} className="text-gold-400" />
@@ -119,7 +119,7 @@ export function VIPPortalModal({
             </div>
 
             {/* Tab Contents */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6">
               {activeTab === 'profile' && (
                 <div className="space-y-6">
                   {/* Status Banner */}
@@ -298,7 +298,7 @@ export function VIPPortalModal({
               )}
 
               {activeTab === 'chat' && (
-                <div className="flex flex-col h-[480px]">
+                <div className="flex h-[58dvh] min-h-[22rem] flex-col sm:h-[480px]">
                   <div className="flex items-center justify-between p-3 rounded-xl bg-obsidian-850 border border-platinum-600/10 mb-3 text-xs">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />

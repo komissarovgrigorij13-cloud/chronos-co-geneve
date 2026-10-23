@@ -48,7 +48,7 @@ export function QuickViewModal({
   return (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+        className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-label={`${watch.brand} ${watch.model}`}
@@ -68,7 +68,7 @@ export function QuickViewModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-          className="relative w-full max-w-4xl rounded-3xl bg-obsidian-800 border border-gold-600/30 overflow-hidden max-h-[90vh] overflow-y-auto z-10 shadow-2xl shadow-black"
+          className="relative w-full max-w-4xl rounded-2xl bg-obsidian-800 border border-gold-600/30 overflow-x-hidden overflow-y-auto max-h-[calc(100dvh-1rem)] sm:rounded-3xl sm:max-h-[90vh] z-10 shadow-2xl shadow-black"
         >
           {/* Close & Vault Buttons */}
           <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
@@ -94,7 +94,7 @@ export function QuickViewModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Image Preview */}
-            <div className="relative bg-obsidian-750 aspect-square md:aspect-auto">
+            <div className="relative h-[30dvh] min-h-[12rem] bg-obsidian-750 md:h-auto md:aspect-square">
               {!imgError ? (
                 <img
                   src={watch.imageUrl}
@@ -118,7 +118,7 @@ export function QuickViewModal({
             </div>
 
             {/* Specifications & Inquiry */}
-            <div className="p-6 sm:p-8 flex flex-col">
+            <div className="p-4 sm:p-8 flex flex-col">
               <div className="mb-5">
                 <p className="text-[10px] tracking-[0.25em] uppercase text-gold-500/80 mb-1 font-medium">{watch.ref}</p>
                 <p className="text-label text-platinum-500 mb-0.5">{watch.brand}</p>

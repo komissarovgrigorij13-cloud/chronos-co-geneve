@@ -367,7 +367,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
   const globeSequenceReady = globeState.progress > 0;
 
   return (
-    <div ref={containerRef} className="relative h-[4200vh] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative h-[2600vh] bg-[#0a0a0a] sm:h-[3600vh] lg:h-[4200vh]">
       {/* ── STICKY PINNED FULLSCREEN VIEWPORT ── */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0a0a0a] flex items-center justify-center z-20">
         {/* Subtle Luxury Vignette & Radial Light */}
@@ -389,7 +389,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
             scale: p1Scale,
             filter: useTransform(p1Blur, (b) => `blur(${b}px)`),
           }}
-          className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center z-10 pointer-events-none"
+          className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center z-10 pointer-events-none sm:px-6"
         >
           <div className="flex items-center gap-3 mb-6">
             <Shield size={16} className="text-gold-400" />
@@ -398,7 +398,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
             </span>
           </div>
 
-          <h2 className="font-display font-light text-5xl sm:text-7xl lg:text-9xl text-platinum-100 tracking-tight leading-[1.02] max-w-6xl mx-auto">
+          <h2 className="font-display font-light text-[2.65rem] sm:text-7xl lg:text-9xl text-platinum-100 tracking-tight leading-[1.02] max-w-6xl mx-auto">
             TIME IS THE<br />
             <span className="text-gradient-gold italic font-normal">ULTIMATE ASSET</span>
           </h2>
@@ -436,7 +436,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
             scale: p2Scale,
             perspective: 1200,
           }}
-          className="absolute inset-0 flex flex-col items-center justify-center px-6 z-10 pointer-events-none"
+          className="absolute inset-0 flex flex-col items-center justify-center px-3 z-10 pointer-events-none sm:px-6"
         >
           <div className="flex items-center gap-2 mb-6">
             <Sparkles size={16} className="text-gold-400" />
@@ -451,7 +451,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
               rotateX: p2RotateX,
               rotateY: p2RotateY,
             }}
-            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-[#C5A880]/30 bg-obsidian-900/90 p-6 shadow-2xl shadow-black backdrop-blur-xl sm:p-8 lg:p-10"
+            className="relative max-h-[calc(100dvh-8rem)] w-full max-w-4xl overflow-y-auto overflow-x-hidden rounded-3xl border border-[#C5A880]/30 bg-obsidian-900/90 p-4 shadow-2xl shadow-black backdrop-blur-xl sm:max-h-none sm:overflow-hidden sm:p-8 lg:p-10"
           >
             {/* Shimmer gradient line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/60 to-transparent" />
@@ -568,10 +568,10 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
           style={{
             opacity: p3Opacity,
           }}
-          className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 z-10 pointer-events-none overflow-hidden"
+          className="absolute inset-0 flex items-center justify-center px-2 sm:px-6 z-10 pointer-events-none overflow-hidden"
         >
           <div className="relative h-full w-full max-w-[1500px]">
-            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               <GlobalBoutiqueGlobe
                 language={language}
                 interactive={false}
@@ -579,11 +579,11 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 rotation={globeState.rotation}
                 activeCityId={globeSequenceReady ? activeGlobeCity.id : undefined}
                 showLabels
-                className="w-[min(78vw,680px)] max-w-none scale-105"
+                className="w-[min(94vw,680px)] max-w-none scale-100 sm:w-[min(78vw,680px)] sm:scale-105"
               />
             </div>
 
-            <div className="absolute inset-x-0 top-[11%] px-4 text-center">
+            <div className="absolute inset-x-0 top-[8%] px-3 text-center sm:top-[11%] sm:px-4">
               <div className="mb-5">
                 <div className="mb-2 flex items-center justify-center gap-2">
                   <Building2 size={16} className="text-gold-400" />
@@ -600,7 +600,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
               </div>
             </div>
 
-            <div ref={vaultViewportRef} className="absolute left-1/2 top-[72%] w-full max-w-[1080px] -translate-x-1/2 -translate-y-1/2 overflow-hidden px-2">
+            <div ref={vaultViewportRef} className="absolute left-1/2 top-[68%] w-full max-w-[1080px] -translate-x-1/2 -translate-y-1/2 overflow-hidden px-1 sm:top-[72%] sm:px-2">
               <motion.div
                 ref={vaultTrackRef}
                 style={{ x: p3TrackX }}
@@ -609,7 +609,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 {vaultItems.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`w-[300px] flex-shrink-0 rounded-2xl bg-obsidian-900/95 p-5 text-left shadow-2xl shadow-black backdrop-blur-xl transition-all duration-700 sm:w-[370px] sm:p-6 ${idx === globeState.index
+                    className={`w-[min(300px,calc(100vw-2rem))] flex-shrink-0 rounded-2xl bg-obsidian-900/95 p-4 text-left shadow-2xl shadow-black backdrop-blur-xl transition-all duration-700 sm:w-[370px] sm:p-6 ${idx === globeState.index
                         ? 'border border-gold-400/75 shadow-gold-500/15 scale-[1.02]'
                         : 'border border-gold-600/25 opacity-70'
                       }`}
