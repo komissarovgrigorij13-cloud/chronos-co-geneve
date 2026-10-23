@@ -26,6 +26,13 @@ const countryNames: Record<string, string> = {
   '724': 'Spain',
   '702': 'Singapore',
   '428': 'Latvia',
+  '398': 'Kazakhstan',
+  '764': 'Thailand',
+  '752': 'Sweden',
+  '410': 'South Korea',
+  '470': 'Malta',
+  '233': 'Estonia',
+  '208': 'Denmark',
 };
 
 export function CountryFlag({ countryId = '', className = '' }: CountryFlagProps) {
@@ -183,6 +190,55 @@ export function CountryFlag({ countryId = '', className = '' }: CountryFlagProps
         <>
           <rect width="32" height="20" fill="#9e3039" />
           <rect y="7" width="32" height="6" fill="#fff" />
+        </>
+      )}
+      {countryId === '398' && (
+        <>
+          <rect width="32" height="20" fill="#00afca" />
+          <circle cx="16" cy="10" r="3.8" fill="#f6d24a" opacity="0.95" />
+          <path d="M16 2v16M8 10h16" stroke="#f6d24a" strokeWidth="0.55" opacity="0.8" />
+          <path d="M4 4 7 6M28 4l-3 2M4 16l3-2M28 16l-3-2" stroke="#f6d24a" strokeWidth="0.75" />
+        </>
+      )}
+      {countryId === '764' && (
+        <>
+          <rect width="32" height="20" fill="#a51931" />
+          <rect y="3" width="32" height="14" fill="#f4f5f8" />
+          <rect y="6" width="32" height="8" fill="#2d2a4a" />
+        </>
+      )}
+      {countryId === '752' && (
+        <>
+          <rect width="32" height="20" fill="#006aa7" />
+          <path d="M9 0v20M0 8h32" stroke="#fecc00" strokeWidth="4" />
+        </>
+      )}
+      {countryId === '410' && (
+        <>
+          <rect width="32" height="20" fill="#fff" />
+          <circle cx="16" cy="10" r="4.5" fill="#cd2e3a" />
+          <path d="M16 5.5a4.5 4.5 0 0 1 0 9 2.25 2.25 0 0 0 0-4.5 2.25 2.25 0 0 1 0-4.5z" fill="#0047a0" />
+          <path d="m5 4 4 2M23 14l4 2M5 16l4-2M23 6l4-2" stroke="#111" strokeWidth="1.1" />
+        </>
+      )}
+      {countryId === '470' && (
+        <>
+          <rect width="16" height="20" fill="#fff" />
+          <rect x="16" width="16" height="20" fill="#cf142b" />
+          <path d="M5 3h3M6.5 1.5v3" stroke="#9b9b9b" strokeWidth="0.8" />
+        </>
+      )}
+      {countryId === '233' && (
+        <>
+          <rect width="32" height="6.67" fill="#4891d1" />
+          <rect y="6.67" width="32" height="6.66" fill="#111" />
+          <rect y="13.33" width="32" height="6.67" fill="#fff" />
+        </>
+      )}
+      {countryId === '208' && (
+        <>
+          <rect width="32" height="20" fill="#c8102e" />
+          <path d="M10 0v20M0 8h32" stroke="#fff" strokeWidth="5" />
         </>
       )}
       {!countryNames[countryId] && <rect width="32" height="20" fill="#5a6060" />}
