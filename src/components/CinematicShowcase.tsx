@@ -364,6 +364,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
 
   const vaultItems = buildVaultItems(language);
   const activeGlobeCity = ORDERED_BOUTIQUE_CITIES[globeState.index];
+  const globeSequenceReady = globeState.progress > 0;
 
   return (
     <div ref={containerRef} className="relative h-[1400vh] bg-[#0a0a0a]">
@@ -576,7 +577,7 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
                 interactive={false}
                 highlightProgress={globeState.progress}
                 rotation={globeState.rotation}
-                activeCityId={activeGlobeCity.id}
+                activeCityId={globeSequenceReady ? activeGlobeCity.id : undefined}
                 showLabels
                 className="w-[min(78vw,680px)] max-w-none scale-105"
               />

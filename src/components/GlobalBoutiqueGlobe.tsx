@@ -112,7 +112,7 @@ export function GlobalBoutiqueGlobe({
       const progress = Math.max(0, Math.min(1, propsRef.current.highlightProgress));
       const activeCountryIds = new Set(
         ORDERED_BOUTIQUE_CITIES
-          .slice(0, Math.max(1, Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length)))
+          .slice(0, Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length))
           .map((city) => city.countryId),
       );
 
@@ -165,7 +165,7 @@ export function GlobalBoutiqueGlobe({
         const point = projection(city.coordinates);
         if (!point) continue;
         const cityIndex = ORDERED_BOUTIQUE_CITIES.findIndex((candidate) => candidate.id === city.id);
-        const isActive = cityIndex < Math.max(1, Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length));
+        const isActive = cityIndex < Math.ceil(progress * ORDERED_BOUTIQUE_CITIES.length);
         const isCurrent = city.id === propsRef.current.activeCityId;
         const labelOpacity = isScrollSequence
           ? Math.max(0, 1 - Math.abs(activeCityPosition - cityIndex))
