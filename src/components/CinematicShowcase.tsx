@@ -320,21 +320,21 @@ export function CinematicShowcase({ language, onExploreCatalog }: CinematicShowc
 
   // ── PHASE 1: GENÈVE HERITAGE [0.00 -> 0.20] ──────────────────────────
   // Starts at scale 1, scales up to 1.3, blurs to 12px, fades out completely by 0.18
-  const p1Opacity = useTransform(scrollYProgress, [0, 0.12, 0.18, 0.20], [1, 1, 0, 0]);
-  const p1Scale = useTransform(scrollYProgress, [0, 0.18], [1, 1.3]);
-  const p1Blur = useTransform(scrollYProgress, [0, 0.18], [0, 14]);
-  const p1Display = useTransform(scrollYProgress, (v) => (v < 0.22 ? 'flex' : 'none'));
+  const p1Opacity = useTransform(scrollYProgress, [0, 0.04, 0.06, 0.067], [1, 1, 0, 0]);
+  const p1Scale = useTransform(scrollYProgress, [0, 0.06], [1, 1.3]);
+  const p1Blur = useTransform(scrollYProgress, [0, 0.06], [0, 14]);
+  const p1Display = useTransform(scrollYProgress, (v) => (v < 0.073 ? 'flex' : 'none'));
 
   // ── PHASE 2: THE PANTHEON 3D FLOATING CARDS [0.25 -> 0.50] ─────────────
   // Enters at 0.25 (scale 0.8 -> 1, opacity 0 -> 1), tilts in 3D, flies through at 0.45->0.48
-  const p2Opacity = useTransform(scrollYProgress, [0.24, 0.28, 0.44, 0.48, 0.50], [0, 1, 1, 0, 0]);
-  const p2Scale = useTransform(scrollYProgress, [0.24, 0.30, 0.44, 0.48], [0.82, 1, 1.05, 2.4]);
-  const p2RotateX = useTransform(scrollYProgress, [0.25, 0.35, 0.45], [12, 0, -8]);
-  const p2RotateY = useTransform(scrollYProgress, [0.25, 0.35, 0.45], [-15, 0, 12]);
-  const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.23 && v < 0.52 ? 'flex' : 'none'));
+  const p2Opacity = useTransform(scrollYProgress, [0.08, 0.093, 0.147, 0.16, 0.167], [0, 1, 1, 0, 0]);
+  const p2Scale = useTransform(scrollYProgress, [0.08, 0.10, 0.147, 0.16], [0.82, 1, 1.05, 2.4]);
+  const p2RotateX = useTransform(scrollYProgress, [0.083, 0.117, 0.15], [12, 0, -8]);
+  const p2RotateY = useTransform(scrollYProgress, [0.083, 0.117, 0.15], [-15, 0, 12]);
+  const p2Display = useTransform(scrollYProgress, (v) => (v >= 0.077 && v < 0.173 ? 'flex' : 'none'));
 
   // Let the final vault card arrive fully before fading this scene away.
-  const p3Opacity = useTransform(scrollYProgress, [0.46, 0.55, 0.985, 0.995], [0, 1, 1, 0]);
+  const p3Opacity = useTransform(scrollYProgress, [0.153, 0.183, 0.985, 0.995], [0, 1, 1, 0]);
   const p3TrackX = useTransform(scrollYProgress, [0.58, 0.98], [vaultTravel.start, vaultTravel.end]);
   const p3GlobeProgress = useTransform(scrollYProgress, [0.58, 0.98], [0, 1]);
   useMotionValueEvent(p3GlobeProgress, 'change', (value) => {
