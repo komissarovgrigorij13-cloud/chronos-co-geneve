@@ -185,7 +185,11 @@ export function CheckoutModal({
                         onSelect={() => setDelivery('showroom')}
                       >
                         {delivery === 'showroom' && (
-                          <div className="mt-2.5 grid max-h-56 grid-cols-1 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-2">
+                          <div
+                            className="mt-2.5 grid max-h-56 touch-pan-y grid-cols-1 gap-1.5 overflow-y-auto overscroll-contain pr-1 sm:grid-cols-2"
+                            onWheel={(event) => event.stopPropagation()}
+                            onTouchMove={(event) => event.stopPropagation()}
+                          >
                             {ORDERED_BOUTIQUE_CITIES.map((boutique) => {
                               const label = boutique.labels[language];
                               const selected = cityId === boutique.id;
