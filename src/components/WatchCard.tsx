@@ -54,7 +54,7 @@ export function WatchCard({
       transition={{ duration: 0.55, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -5, transition: { duration: 0.25 } }}
       onClick={() => onViewDetails(watch)}
-      className="card-luxury group relative flex flex-col overflow-hidden bg-obsidian-850/90 border border-platinum-600/15 hover:border-gold-500/50 shadow-2xl shadow-black/80 transition-all duration-300 cursor-pointer"
+      className="card-luxury group relative flex flex-col overflow-hidden bg-obsidian-850/90 border border-platinum-600/15 hover:border-gold-500/50 shadow-2xl shadow-black/80 cursor-pointer"
     >
       {/* Top Left: New Badge */}
       {watch.isNew && (
@@ -69,7 +69,7 @@ export function WatchCard({
           e.stopPropagation();
           onToggleVault(watch.id);
         }}
-        className={`absolute top-3 right-3 z-20 p-2 backdrop-blur-md border transition-all duration-200 ${
+        className={`absolute top-3 right-3 z-20 p-2 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 ${
           isVaulted
             ? 'bg-gold-500/25 border-gold-400 text-gold-400 shadow-md'
             : 'bg-obsidian-900/70 border-platinum-600/20 text-platinum-400 hover:text-gold-400 hover:border-gold-500/40'
@@ -80,7 +80,7 @@ export function WatchCard({
       </button>
 
       {/* Image Container with Luxury Fallback */}
-      <div className="relative overflow-hidden bg-gradient-to-b from-obsidian-750 to-obsidian-850 aspect-square">
+      <div className="relative overflow-hidden rounded-t-2xl bg-gradient-to-b from-obsidian-750 to-obsidian-850 aspect-square">
         {/* Shimmer skeleton while loading */}
         {!imgLoaded && !imgError && (
           <div className="absolute inset-0 shimmer-gold flex items-center justify-center">
@@ -95,7 +95,7 @@ export function WatchCard({
             loading="lazy"
             onLoad={() => setImgLoaded(true)}
             onError={() => setImgError(true)}
-            className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-108 group-hover:brightness-105 ${
+            className={`w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-105 group-hover:brightness-105 ${
               imgLoaded ? 'opacity-100' : 'opacity-0'
             }`}
           />
@@ -160,7 +160,7 @@ export function WatchCard({
               }
             }}
             disabled={watch.status === 'Sold Out' || inCart}
-            className={`w-full justify-center py-3 px-4 text-xs font-medium tracking-wider uppercase flex items-center gap-2 transition-all duration-300 whitespace-nowrap overflow-hidden ${
+            className={`w-full justify-center rounded-xl py-3 px-4 text-xs font-medium tracking-wider uppercase flex items-center gap-2 transition-all duration-500 whitespace-nowrap overflow-hidden ${
               inCart
                 ? 'bg-emerald-950/40 border border-emerald-500/50 text-emerald-400 cursor-default font-medium'
                 : watch.status === 'Sold Out'
