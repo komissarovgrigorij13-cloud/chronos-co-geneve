@@ -54,7 +54,7 @@ export function WatchCard({
       transition={{ duration: 0.55, delay: (index % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -5, transition: { duration: 0.25 } }}
       onClick={() => onViewDetails(watch)}
-      className="card-luxury group relative flex flex-col overflow-hidden bg-obsidian-850/90 border border-platinum-600/15 hover:border-gold-500/50 shadow-2xl shadow-black/80 cursor-pointer"
+      className="card-luxury group relative flex flex-col overflow-hidden bg-gradient-to-b from-[#1a1917] via-[#111110] to-[#090908] border border-platinum-600/15 hover:border-gold-500/50 shadow-2xl shadow-black/80 cursor-pointer"
     >
       {/* Top Left: New Badge */}
       {watch.isNew && (
@@ -80,7 +80,7 @@ export function WatchCard({
       </button>
 
       {/* Image Container with Luxury Fallback */}
-      <div className="relative overflow-hidden rounded-t-2xl bg-gradient-to-b from-obsidian-750 to-obsidian-850 aspect-square">
+      <div className="relative overflow-hidden rounded-t-2xl bg-[radial-gradient(circle_at_50%_25%,rgba(197,168,128,0.18),transparent_44%),linear-gradient(145deg,#29251e_0%,#151514_50%,#080807_100%)] aspect-square">
         {/* Shimmer skeleton while loading */}
         {!imgLoaded && !imgError && (
           <div className="absolute inset-0 shimmer-gold flex items-center justify-center">
@@ -110,6 +110,8 @@ export function WatchCard({
           </div>
         )}
 
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#111110] via-[#111110]/45 to-transparent" />
+
         {/* Hover Quick View Hint */}
         <div className="absolute inset-0 bg-obsidian-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 pointer-events-none">
           <span className="text-[10px] tracking-widest uppercase text-gold-300 flex items-center gap-1 rounded-lg bg-obsidian-900/90 px-3 py-1.5 border border-gold-500/40 backdrop-blur-sm">
@@ -119,7 +121,7 @@ export function WatchCard({
       </div>
 
       {/* Card Body */}
-      <div className="flex flex-col flex-1 p-5">
+      <div className="flex flex-col flex-1 p-5 bg-gradient-to-b from-[#111110]/95 via-[#111110] to-[#0a0a09]">
         {/* Status Badge & Condition */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[9px] font-semibold tracking-[0.15em] uppercase ${STATUS_STYLES[watch.status]}`}>
