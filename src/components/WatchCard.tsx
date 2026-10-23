@@ -4,6 +4,7 @@ import { Plus, CheckCircle2, Bookmark, ArrowUpRight } from 'lucide-react';
 import type { Watch, CurrencyCode } from '../data/watches';
 import { formatPrice } from '../data/watches';
 import { translations, type Language } from '../data/translations';
+import { getLocalizedWatch } from '../data/watchLocalization';
 
 interface WatchCardProps {
   watch: Watch;
@@ -31,6 +32,7 @@ export function WatchCard({
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
   const t = translations[language];
+  const localized = getLocalizedWatch(watch, language);
 
   const STATUS_LABELS: Record<Watch['status'], string> = {
     'In Vault': t.statusInVault,
@@ -127,9 +129,7 @@ export function WatchCard({
           <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[9px] font-semibold tracking-[0.15em] uppercase ${STATUS_STYLES[watch.status]}`}>
             {STATUS_LABELS[watch.status]}
           </span>
-          <span className="text-label text-[10px] text-platinum-500">
-            {watch.condition === 'Unworn' ? t.statusUnworn : t.statusPreOwned}
-          </span>
+          <span className="text-label text-[10px] text-platinum-500">{localized.condition}</span>
         </div>
 
         {/* Reference & Model Name */}
@@ -138,7 +138,7 @@ export function WatchCard({
         <h3 className="font-display text-xl font-light text-platinum-200 leading-tight mb-1 group-hover:text-gold-300 transition-colors">
           {watch.model}
         </h3>
-        <p className="text-xs text-platinum-400 leading-relaxed mb-4 line-clamp-2 font-light">{watch.variant}</p>
+        <p className="text-xs text-platinum-400 leading-relaxed mb-4 line-clamp-2 font-light">{localized.variant}</p>
 
         {/* Specs Strip */}
         <div className="flex gap-4 mb-4 py-2.5 border-y border-platinum-600/15 bg-obsidian-900/40 px-2.5">

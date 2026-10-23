@@ -4,6 +4,7 @@ import { X, Shield, CheckCircle2, Package, Plus, Send, Bookmark } from 'lucide-r
 import type { Watch, CurrencyCode } from '../data/watches';
 import { formatPrice } from '../data/watches';
 import { translations, type Language } from '../data/translations';
+import { getLocalizedWatch } from '../data/watchLocalization';
 
 interface QuickViewModalProps {
   watch: Watch | null;
@@ -35,6 +36,8 @@ export function QuickViewModal({
   const t = translations[language];
 
   if (!watch) return null;
+
+  const localized = getLocalizedWatch(watch, language);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,7 +125,7 @@ export function QuickViewModal({
                 <h2 className="font-display text-2xl sm:text-3xl font-light text-platinum-200 leading-tight mb-1">
                   {watch.model}
                 </h2>
-                <p className="text-xs text-platinum-400 mb-3">{watch.variant}</p>
+                <p className="text-xs text-platinum-400 mb-3">{localized.variant}</p>
                 <p className="font-display text-3xl font-light text-gradient-gold">
                   {formatPrice(watch.priceUSD, currency)}
                 </p>
@@ -132,20 +135,20 @@ export function QuickViewModal({
               <div className="divider-gold mb-5" />
               <div className="grid grid-cols-2 gap-x-5 gap-y-3.5 mb-5 text-xs">
                 <SpecRow label={t.caliber} value={watch.caliber} />
-                <SpecRow label={t.movement} value={watch.movement} />
+                <SpecRow label={t.movement} value={localized.movement} />
                 <SpecRow label={t.diameter} value={`${watch.caseDiameter}mm`} />
                 <SpecRow label={t.waterRes} value={`${watch.waterResistance}m`} />
                 <SpecRow label={t.reserve} value={`${watch.powerReserve}h`} />
                 <SpecRow label={t.year} value={String(watch.year)} />
-                <SpecRow label={t.material} value={watch.material} />
-                <SpecRow label={t.condition} value={watch.condition} />
+                <SpecRow label={t.material} value={localized.material} />
+                <SpecRow label={t.condition} value={localized.condition} />
               </div>
 
               {/* Complications */}
               <div className="mb-5">
                 <p className="text-label text-platinum-500 mb-2">{t.complications}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {watch.complications.map((c) => (
+                  {localized.complications.map((c) => (
                     <span
                       key={c}
                       className="px-2.5 py-0.5 rounded-md border border-platinum-600/25 text-platinum-300 text-[10px] tracking-wider uppercase bg-obsidian-750"
@@ -157,7 +160,7 @@ export function QuickViewModal({
               </div>
 
               {/* Description */}
-              <p className="text-xs text-platinum-400 leading-relaxed mb-6 font-light">{watch.description}</p>
+              <p className="text-xs text-platinum-400 leading-relaxed mb-6 font-light">{localized.description}</p>
 
               {/* Box & Papers */}
               <div className="flex items-center gap-2 mb-6">
